@@ -1,0 +1,24 @@
+{
+  "name": "webcoban_ban_sach_cu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nguyentvi0707/WEBCOBAN_ban_sach_cu.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nguyentvi0707/WEBCOBAN_ban_sach_cu/issues"
+  },
+  "homepage": "https://github.com/nguyentvi0707/WEBCOBAN_ban_sach_cu#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
