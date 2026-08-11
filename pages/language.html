@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>LANGUAGE - IUHSVBOOK</title>
+
+    <!-- FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400&family=Unica+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../css/language.css" />
+  </head>
+
+  <body>
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+      <!-- LOGO -->
+      <a href="index.html" class="logo">
+        <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
+
+        <span>IUHSVBOOK</span>
+      </a>
+
+      <!-- MENU -->
+      <nav class="header-menu">
+        <!-- SIGN IN + CREATE ACCOUNT -->
+        <a href="#" class="sign-in">
+          <img src="../images/iconlogin.png" alt="Sign In" />
+
+          <span>SIGN IN</span>
+
+          <small>Create account</small>
+        </a>
+
+        <!-- HOME -->
+        <a href="../index.html" class="home">
+          <img src="../images/iconhome.png" alt="Home" />
+        </a>
+
+        <!-- BOOKMARK -->
+        <a href="#" class="bookmark">
+          <img src="../images/iconbookmark.png" alt="Bookmark" />
+        </a>
+
+        <!-- CART -->
+        <a href="#" class="cart">
+          <img src="../images/iconcart.png" alt="Cart" />
+        </a>
+      </nav>
+    </header>
+
+    <main class="category-page">
+      <!-- ================= SEARCH ================= -->
+
+      <div class="category-search">
+        <input type="text" placeholder="Type the name of book or author..." />
+
+        <button type="button">
+          <img src="../images/iconkinhlup.png" alt="Search" />
+        </button>
+      </div>
+
+      <!-- ================= DANH MỤC ================= -->
+
+      <section class="category-section">
+        <h2 class="category-title">
+          <img src="../images/iconthumuc.png" alt="Danh mục" />
+          <span>Danh mục</span>
+        </h2>
+
+        <div class="category-list">
+          <!-- SÁCH ĐẠI CƯƠNG -->
+          <a href="category.html" class="category-item">
+            <span>Sách đại cương</span>
+          </a>
+
+          <!-- SÁCH NGOẠI NGỮ -->
+          <a href="language.html" class="category-item">
+            <span>Sách ngoại ngữ</span>
+          </a>
+
+          <!-- SÁCH KỸ THUẬT - CÔNG NGHỆ -->
+          <a href="technology.html" class="category-item">
+            <span>Sách khối kỹ thuật - công nghệ</span>
+          </a>
+
+          <!-- SÁCH KỸ NĂNG - VĂN HỌC -->
+          <a href="literature.html" class="category-item">
+            <span>Sách kỹ năng - văn học</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ================= SÁCH ================= -->
+
+      <section class="category-products">
+        <div class="category-products-header">
+          <h2>
+            <img src="../images/icongit.png" alt="" />
+            SÁCH NGOẠI NGỮ
+          </h2>
+
+          <select class="category-filter">
+            <option value="default">Lọc</option>
+            <option value="price-asc">Giá thấp - cao</option>
+            <option value="price-desc">Giá cao - thấp</option>
+            <option value="name-asc">Tên A - Z</option>
+            <option value="name-desc">Tên Z - A</option>
+          </select>
+        </div>
+
+        <!-- ================= GRID SÁCH ================= -->
+
+        <div class="products-grid">
+          <!-- CARD 1 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price"> 15.000đ </span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 2 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price"> 15.000đ </span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 3 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price"> 15.000đ </span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 4 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price"> 15.000đ </span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 5 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price"> 15.000đ </span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 6 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price"> 15.000đ </span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 7 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price">15.000đ</span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 8 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price">15.000đ</span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 9 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price">15.000đ</span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 10 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price">15.000đ</span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 11 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price">15.000đ</span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 12 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price">15.000đ</span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 13 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price">15.000đ</span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 14 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price">15.000đ</span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 15 -->
+          <article class="category-product-card">
+            <div class="category-product-image">
+              <img src="../images/booksach.png" alt="Sách ABCDEF" />
+            </div>
+
+            <div class="category-product-content">
+              <h3>SÁCH ABCDEF</h3>
+
+              <div class="category-product-bottom">
+                <span class="category-product-price">15.000đ</span>
+
+                <button class="category-bookmark" type="button">
+                  <img src="../images/iconbookmark.png" alt="Bookmark" />
+                </button>
+              </div>
+
+              <button class="category-cart" type="button">
+                <img src="../images/iconcart.png" alt="Thêm vào giỏ" />
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-container">
+          <!-- CỘT 1: HỖ TRỢ KHÁCH HÀNG -->
+          <div class="footer-column footer-support">
+            <h3>HỖ TRỢ KHÁCH HÀNG</h3>
+
+            <p>
+              Hotline: 12345678<br />
+              email: abc@gmail.com<br />
+              SĐT: 012345678<br />
+              Địa chỉ: 12 Nguyễn Văn Bảo, Hạnh Thông,<br />
+              Hồ Chí Minh 700000, Vietnam
+            </p>
+          </div>
+
+          <!-- CỘT 2: VỀ CHÚNG TÔI -->
+          <div class="footer-column footer-about">
+            <h3>VỀ CHÚNG TÔI</h3>
+
+            <p>
+              IUHSVBOOK – Nền tảng mua bán sách cũ dành cho sinh viên. Chúng tôi
+              mang đến những đầu sách phục vụ học tập với mức giá hợp lý, giúp
+              sinh viên các khóa dễ dàng tìm, mua, bán lại và tái sử dụng sách.
+              IUHSVBOOK không chỉ giúp tiết kiệm chi phí học tập mà còn góp phần
+              xây dựng thói quen học tập bền vững, chia sẻ tài nguyên tri thức
+              giữa các thế hệ sinh viên. Tiết kiệm hơn – tiện lợi hơn – cùng
+              nhau chia sẻ tri thức.
+            </p>
+          </div>
+
+          <!-- CỘT 3: ĐĂNG KÝ NHẬN THÔNG BÁO -->
+          <div class="footer-column footer-newsletter">
+            <h3>NHẬN THÔNG BÁO TỪ CHÚNG TÔI</h3>
+
+            <div class="newsletter-form">
+              <input type="email" placeholder="you@example.com" />
+
+              <button type="button">Submit</button>
+            </div>
+
+            <!-- LOGO + SLOGAN -->
+            <div class="footer-brand">
+              <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
+
+              <div class="footer-brand-text">
+                <h4>IUHSVBOOK</h4>
+                <p>Sách cũ, giá trị mới.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script src="../js/language.js"></script>
+  </body>
+</html>
