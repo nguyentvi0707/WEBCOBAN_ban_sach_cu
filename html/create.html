@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Create Account</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter&family=Unica+One&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../css/create.css">
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <img src="../images/logo.jpg" alt="Logo">
+                <p>IUHSVBOOK</p>
+            </div>
+            <button id="Login">
+                Login
+            </button>
+        </header>
+        <div class="main">
+            <div class="create-form">
+                <div class="form-header">
+                    <h1>Create now</h1>
+                    <p>Hi, Welcome to IUHSVBOOK 👋</p>
+                </div>
+                <div class="form-body">
+                    <form>
+                        <div class="input-group" id="usernameGroup">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" required placeholder="Enter your username">
+                        </div>
+                        <div class="input-group" id="passwordGroup">
+                            <label for="password">Password</label>
+                            <div class="passwordBox">
+                                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                                <img src="../images/eye.png" alt="Show Password" id="togglePassword">
+                            </div>
+                        </div>
+                        <button type="submit">Create account</button>
+                    </form>
+                    <div class="Login">
+                        <p>Have an account? <a href="#">Login</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="login-image">
+                <div class="img-bg"></div>
+                <img src="../images/loginImage.jpg" alt="Login Image">
+            </div>
+        </div>
+    </body>
+</html>

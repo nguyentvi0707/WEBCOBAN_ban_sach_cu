@@ -1,0 +1,151 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    padding: 86px 180px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+}
+
+.logo p {
+    margin: 0;
+    font-family: 'Unica One', sans-serif;
+    font-size: 20px;
+}
+
+#Login {
+    width: 200px;
+    height: 40px;
+    background-color: #F9784B;
+    border: none;
+    border-radius: 40px;
+    color: white;
+    font-weight: bold;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.create-form {
+    display: flex;
+    flex-direction: column;
+    width: 440px;
+}
+
+.form-header {
+    margin-bottom: 50px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 36px;
+}
+
+label {
+    font-weight: 600;
+    font-size: 25px;
+}
+
+input {
+    background-color: #F9784BB2;
+    width: 440px;
+    height: 46px;
+    border-radius: 5px;
+    padding: 20px 12px;
+    border: none;
+}
+
+#passwordGroup {
+    margin-bottom: 40px;
+}
+
+.passwordBox {
+    position: relative;
+    width: 100%;
+}
+
+.passwordBox input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 40px;
+}
+
+.passwordBox img {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+button {
+    width: 100%;
+    height: 46px;
+    background-color: #F9784B;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: medium;
+    font-size: 20px;
+}
+
+.register{
+    display: flex;
+    align-items: center;
+    font-weight: medium;
+}
+
+.Login a {
+    text-decoration: none;
+    color: #FFA3BE;
+}
+
+.login-image {
+    position: relative;
+    width: 484px;
+    height: 503px;
+}
+
+.img-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 484px;
+    height: 503px;
+
+    background-color: #3AB8EB;
+    border-radius: 0px 12px;
+}
+
+.login-image img {
+    position: absolute;
+    top: 32px;
+    left: 40px;
+
+    object-fit: cover;
+}
