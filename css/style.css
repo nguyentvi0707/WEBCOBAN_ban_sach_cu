@@ -1,13 +1,31 @@
+/* =====================================================
+   RESET
+===================================================== */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
+  width: 100%;
+  min-height: 100vh;
+
   font-family: Arial, Helvetica, sans-serif;
-  background-color: white;
+
+  background-color: #fff;
   color: #333;
-} /* =====================================================
+
+  overflow-x: hidden;
+}
+
+/* =====================================================
    HEADER
 ===================================================== */
 
@@ -24,9 +42,9 @@ body {
   border-top: 1px solid #222;
   background: #fff;
 
-  /* Giữ header khi cuộn trang */
   position: sticky;
   top: 0;
+
   z-index: 1000;
 }
 
@@ -37,6 +55,7 @@ body {
 .logo {
   display: flex;
   align-items: center;
+
   gap: 8px;
 
   text-decoration: none;
@@ -50,20 +69,23 @@ body {
   height: 58px;
 
   object-fit: cover;
+
   border-radius: 50%;
 }
 
 .logo span {
   font-size: 13px;
   letter-spacing: 1px;
+
   white-space: nowrap;
 }
 
 /* =====================================================
-   MENU
+   HEADER MENU
 ===================================================== */
 
-.header-menu {
+.header-menu,
+.auth-menu {
   display: flex;
   align-items: center;
 
@@ -72,8 +94,10 @@ body {
   flex-shrink: 0;
 }
 
-.header-menu a {
+.header-menu a,
+.auth-menu a {
   text-decoration: none;
+
   color: #333;
 
   display: flex;
@@ -88,43 +112,55 @@ body {
 .sign-in {
   display: flex;
   align-items: center;
+
   gap: 6px;
 }
 
 .sign-in img {
   width: 23px;
   height: 21px;
+
   object-fit: contain;
 }
 
 .sign-in span {
   font-family: Arial, Helvetica, sans-serif;
+
   font-size: 8px;
   font-weight: 400;
+
   letter-spacing: 0.3px;
 }
 
-/* CREATE ACCOUNT */
+/* =====================================================
+   CREATE ACCOUNT
+===================================================== */
 
-.sign-in small {
+.sign-in small,
+.create-account {
   display: flex;
   align-items: center;
   justify-content: center;
 
   height: 24px;
+
   padding: 0 10px;
   margin-left: 6px;
 
   background: #ff7048;
+
   border-radius: 14px;
 
   font-family: Arial, Helvetica, sans-serif;
+
   font-size: 10px;
   font-weight: 400;
+
   color: #222;
 
   white-space: nowrap;
 }
+
 /* =====================================================
    HOME
 ===================================================== */
@@ -174,396 +210,310 @@ body {
 }
 
 /* =====================================================
-   TABLET
-   701px → 1000px
+   HERO
 ===================================================== */
 
-@media (max-width: 1000px) {
-  .header {
-    height: 90px;
-    padding: 0 30px;
-  }
-
-  /* Logo nhỏ hơn */
-  .logo img {
-    width: 52px;
-    height: 52px;
-  }
-
-  .logo span {
-    font-size: 12px;
-  }
-
-  /* Menu */
-  .header-menu {
-    gap: 20px;
-  }
-
-  .sign-in {
-    margin-right: 15px;
-  }
-
-  .sign-in img {
-    width: 19px;
-    height: 19px;
-  }
-
-  .sign-in span {
-    font-size: 9px;
-  }
-
-  .home,
-  .bookmark,
-  .cart {
-    width: 21px;
-    height: 21px;
-  }
-
-  .home img,
-  .bookmark img,
-  .cart img {
-    width: 20px;
-    height: 20px;
-  }
-}
-
-/* =====================================================
-   MOBILE
-   481px → 700px
-===================================================== */
-
-@media (max-width: 700px) {
-  .header {
-    height: 75px;
-    padding: 0 18px;
-  }
-
-  /* Logo */
-  .logo {
-    gap: 6px;
-  }
-
-  .logo img {
-    width: 44px;
-    height: 44px;
-  }
-
-  .logo span {
-    font-size: 10px;
-    letter-spacing: 0.7px;
-  }
-
-  /* Menu */
-  .header-menu {
-    gap: 13px;
-  }
-
-  /* Sign in */
-  .sign-in {
-    gap: 4px;
-    margin-right: 3px;
-  }
-
-  .sign-in img {
-    width: 18px;
-    height: 18px;
-  }
-
-  .sign-in span {
-    font-size: 8px;
-  }
-
-  /* Icons */
-  .home,
-  .bookmark,
-  .cart {
-    width: 20px;
-    height: 20px;
-  }
-
-  .home img,
-  .bookmark img,
-  .cart img {
-    width: 19px;
-    height: 19px;
-  }
-}
-
-/* =====================================================
-   MOBILE NHỎ
-   361px → 480px
-===================================================== */
-
-@media (max-width: 480px) {
-  .header {
-    height: 68px;
-    padding: 0 12px;
-  }
-
-  /* Logo */
-  .logo {
-    gap: 5px;
-  }
-
-  .logo img {
-    width: 38px;
-    height: 38px;
-  }
-
-  .logo span {
-    font-size: 9px;
-    letter-spacing: 0.5px;
-  }
-
-  /* Menu */
-  .header-menu {
-    gap: 9px;
-  }
-
-  /* Sign in */
-  .sign-in {
-    gap: 3px;
-    margin-right: 0;
-  }
-
-  .sign-in img {
-    width: 16px;
-    height: 16px;
-  }
-
-  .sign-in span {
-    font-size: 7px;
-  }
-
-  /* Icons */
-  .home,
-  .bookmark,
-  .cart {
-    width: 18px;
-    height: 18px;
-  }
-
-  .home img,
-  .bookmark img,
-  .cart img {
-    width: 17px;
-    height: 17px;
-  }
-}
-
-/* =====================================================
-   ĐIỆN THOẠI RẤT NHỎ
-   ≤ 360px
-===================================================== */
-
-@media (max-width: 360px) {
-  .header {
-    height: 62px;
-    padding: 0 8px;
-  }
-
-  .logo {
-    gap: 4px;
-  }
-
-  .logo img {
-    width: 34px;
-    height: 34px;
-  }
-
-  .logo span {
-    font-size: 8px;
-  }
-
-  .header-menu {
-    gap: 7px;
-  }
-
-  .sign-in {
-    gap: 2px;
-  }
-
-  .sign-in img {
-    width: 15px;
-    height: 15px;
-  }
-
-  .sign-in span {
-    font-size: 6px;
-  }
-
-  .home,
-  .bookmark,
-  .cart {
-    width: 17px;
-    height: 17px;
-  }
-
-  .home img,
-  .bookmark img,
-  .cart img {
-    width: 16px;
-    height: 16px;
-  }
-} /* ========================= CART ========================= */
-.cart {
-  width: 22px;
-  height: 22px;
-}
-.cart img {
-  width: 21px;
-  height: 21px;
-  object-fit: contain;
-} /* ========================= HERO ========================= */
 .hero {
   width: 100%;
   min-height: 510px;
+
   display: flex;
   align-items: center;
+
   padding: 20px 49px 40px;
+
+  gap: 0;
+
   overflow: hidden;
-} /* ========================= HERO - LEFT ========================= */
+}
+
+/* =====================================================
+   HERO - LEFT
+===================================================== */
+
 .hero-content {
   width: 58%;
+
   padding-top: 20px;
-} /* ========================= TITLE ========================= */
+
+  min-width: 0;
+}
+
+/* =====================================================
+   HERO TITLE
+===================================================== */
+
 .hero-title {
+  width: 100%;
+
   display: flex;
   align-items: center;
+
   gap: 0;
 }
+
 .hero-title h1 {
   margin: 0;
+
+  width: 500px;
+  max-width: 100%;
+
   font-size: 60px;
   line-height: 1.25;
+
   font-weight: 400;
+
   color: #3d3c3c;
-} /* ICON QUYỂN SÁCH */
+}
+
+/* =====================================================
+   BOOK ICON
+===================================================== */
+
 .book-icon {
   width: 141px;
   height: 141px;
+
   object-fit: contain;
-  margin-top: 35px;
-} /* ========================= DESCRIPTION ========================= */
+
+  margin-top: 75px;
+  margin-left: -175px;
+
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
 .hero-description {
   margin-top: 22px;
   margin-bottom: 32px;
+
   font-size: 16px;
+  line-height: 1.4;
+
   color: #676767;
-} /* ========================= SEARCH ========================= */
+}
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
 .search-box {
   width: 550px;
-  height: 45px;
+  max-width: 100%;
+
+  height: 55px;
+
   display: flex;
   align-items: center;
-  background: white;
+
+  box-sizing: border-box;
+
+  background: #fff;
+
   border: 2px solid #3d3c3c;
-  border-radius: 25px;
+
+  border-radius: 28px;
+
   box-shadow: 5px 9px 0 #ffb800;
 }
+
 .search-box input {
+  flex: 1;
+
   width: 100%;
+  min-width: 0;
+
   height: 100%;
+
   border: none;
   outline: none;
+
   padding: 0 20px;
+
   border-radius: 25px;
+
+  background: transparent;
+
   font-size: 13px;
+
   color: #333;
 }
+
 .search-box input::placeholder {
   color: #676767;
 }
+
 .search-box img {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
+
   object-fit: contain;
+
   margin-right: 18px;
-} /* ========================= BUTTON + DOTTED LINE ========================= */
+
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   BUTTON + DOTTED LINE
+===================================================== */
+
 .hero-bottom {
+  width: 100%;
+
   display: flex;
   align-items: center;
+
   margin-top: 35px;
-} /* EXPLORE BUTTON */
+
+  max-width: 100%;
+}
+
+/* =====================================================
+   EXPLORE BUTTON
+===================================================== */
+
 .explore-btn {
   width: 158px;
   height: 52px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 18px;
+
   background: #ffb800;
+
   border: 2px solid #3d3c3c;
+
   border-radius: 9px;
+
   cursor: pointer;
+
   font-size: 15px;
+
   color: #3d3c3c;
+
+  flex-shrink: 0;
 }
+
 .explore-btn img {
   width: 27px;
   height: 27px;
+
   object-fit: contain;
-} /* ĐƯỜNG CHẤM */
+}
+
+/* =====================================================
+   DOTTED LINE
+===================================================== */
+
 .dotted-line {
   width: 365px;
+  max-width: 100%;
+
   margin-left: 25px;
+
   border-top: 3px dotted #777;
-} /* ========================= HERO - RIGHT ========================= */
+}
+
+/* =====================================================
+   HERO - RIGHT
+===================================================== */
+
 .hero-image {
   width: 42%;
   height: 460px;
+
   position: relative;
-} /* NỀN XANH */
+
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   BLUE BACKGROUND
+===================================================== */
+
 .blue-background {
   position: absolute;
+
   width: 500px;
   height: 420px;
+
   right: 40px;
   top: 0;
+
   background: #3aabeb;
+
   border-radius: 0 22px 22px 22px;
-} /* ========================= ẢNH THƯ VIỆN ========================= */
+}
+
+/* =====================================================
+   LIBRARY IMAGE
+===================================================== */
+
 .library-image {
   position: absolute;
+
   width: 500px;
   height: 520px;
+
   right: 0;
   top: 30px;
+
   object-fit: cover;
+
   border: 2px solid #3d3c3c;
+
   border-radius: 0 20px 0 20px;
-} /* =========================
+}
+
+/* =====================================================
    TOP BOOKS
-========================= */
+===================================================== */
 
 .top-books {
   width: 100%;
+
   padding: 45px 38px 60px;
 }
+
+/* =====================================================
+   TOP BOOKS TITLE
+===================================================== */
 
 .top-books-title {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   margin-bottom: 28px;
 }
 
 .top-books-title h2 {
   margin: 0;
+
   font-size: 27px;
   font-weight: 400;
+
   color: #3d3c3c;
 }
 
 .sparkle {
   margin-top: 4px;
+
   font-size: 23px;
+
   color: #676767;
 }
 
-/* =========================
-   KHUNG TÌM KIẾM HÀNG ĐẦU
-========================= */
+/* =====================================================
+   BOOKS BOX
+===================================================== */
 
 .books-box {
   width: 100%;
@@ -572,6 +522,7 @@ body {
   position: relative;
 
   border: 2px dashed #777;
+
   border-radius: 20px;
 
   display: flex;
@@ -582,9 +533,9 @@ body {
   overflow: hidden;
 }
 
-/* =========================
-   DANH SÁCH
-========================= */
+/* =====================================================
+   BOOKS LIST
+===================================================== */
 
 .books-list {
   display: flex;
@@ -604,12 +555,13 @@ body {
 
 .books-list.dragging {
   cursor: grabbing;
+
   transition: none;
 }
 
-/* =========================
+/* =====================================================
    BOOK CARD
-========================= */
+===================================================== */
 
 .book-card {
   width: 165px;
@@ -644,9 +596,9 @@ body {
   text-align: center;
 }
 
-/* =========================
-   NÚT TRÁI / PHẢI
-========================= */
+/* =====================================================
+   BOOKS PREV / NEXT
+===================================================== */
 
 .books-prev,
 .books-next {
@@ -689,25 +641,33 @@ body {
 .books-prev:disabled,
 .books-next:disabled {
   opacity: 0.4;
-} /* =====================================================
+
+  cursor: default;
+}
+
+/* =====================================================
    CATEGORY SECTION
 ===================================================== */
 
 .category-section {
   width: 1218px;
+
   margin: 0 auto;
 }
 
 /* =====================================================
-   TIÊU ĐỀ CATEGORY
+   CATEGORY TITLE
 ===================================================== */
 
 .category-title {
   margin: 0 0 62px 0;
 
   font-family: "Unica One", sans-serif;
+
   font-weight: 400;
+
   font-size: 36px;
+
   line-height: 1;
 
   color: #3d3c3c;
@@ -716,7 +676,7 @@ body {
 }
 
 /* =====================================================
-   DANH SÁCH CATEGORY
+   CATEGORY LIST
 ===================================================== */
 
 .category-list {
@@ -725,6 +685,7 @@ body {
   grid-template-columns: 580px 580px;
 
   column-gap: 58px;
+
   row-gap: 33px;
 }
 
@@ -734,17 +695,23 @@ body {
 
 .category-item {
   position: relative;
+
   width: 580px;
   height: 120px;
+
   display: block;
 
   background: transparent;
+
   border-radius: 6px;
 
   text-decoration: none;
 }
 
-/* BÓNG CAM */
+/* =====================================================
+   CATEGORY ORANGE SHADOW
+===================================================== */
+
 .category-item::after {
   content: "";
 
@@ -757,12 +724,16 @@ body {
   left: 6px;
 
   background: #ff7048;
+
   border-radius: 6px;
 
   z-index: 0;
 }
 
-/* Ô TRẮNG */
+/* =====================================================
+   CATEGORY WHITE BOX
+===================================================== */
+
 .category-item::before {
   content: "";
 
@@ -777,12 +748,16 @@ body {
   background: #fff;
 
   border: 1px solid #3d3c3c;
+
   border-radius: 6px;
 
   z-index: 1;
 }
 
-/* CHỮ */
+/* =====================================================
+   CATEGORY TEXT
+===================================================== */
+
 .category-item span {
   position: absolute;
 
@@ -797,15 +772,18 @@ body {
   justify-content: center;
 
   font-family: "Syne", sans-serif;
+
   font-size: 30px;
+
   font-weight: 400;
 
   color: #3d3c3c;
 
   z-index: 2;
 }
+
 /* =====================================================
-   HOVER
+   CATEGORY HOVER
 ===================================================== */
 
 .category-item:hover span {
@@ -817,57 +795,21 @@ body {
 }
 
 /* =====================================================
-   RESPONSIVE
-===================================================== */
-
-@media (max-width: 1300px) {
-  .category-section {
-    width: calc(100% - 80px);
-  }
-
-  .category-list {
-    grid-template-columns: 1fr 1fr;
-    column-gap: 40px;
-  }
-
-  .category-item {
-    width: 100%;
-  }
-}
-
-@media (max-width: 700px) {
-  .category-section {
-    width: calc(100% - 40px);
-  }
-
-  .category-list {
-    grid-template-columns: 1fr;
-    row-gap: 33px;
-  }
-
-  .category-item {
-    width: 100%;
-    height: 120px;
-  }
-
-  .category-item span {
-    font-size: 22px;
-  }
-}
-/* =====================================================
    BOOK CATEGORY
 ===================================================== */
 
 .book-category-section {
   width: 100%;
   max-width: 1218px;
+
   margin: 0 auto;
+
   padding: 45px 0 0;
 }
 
-/* =========================
-   TITLE
-========================= */
+/* =====================================================
+   BOOK CATEGORY TITLE
+===================================================== */
 
 .book-category-header {
   margin-bottom: 38px;
@@ -876,12 +818,15 @@ body {
 .book-category-title {
   display: flex;
   align-items: center;
+
   gap: 8px;
 }
 
 .book-category-title .title-icon {
   font-size: 27px;
+
   line-height: 1;
+
   color: #3d3c3c;
 }
 
@@ -889,7 +834,9 @@ body {
   margin: 0;
 
   font-family: "Unica One", sans-serif;
+
   font-size: 25px;
+
   font-weight: 400;
 
   color: #3d3c3c;
@@ -901,23 +848,26 @@ body {
 
 .product-slider {
   position: relative;
+
   width: 100%;
+
   overflow: hidden;
 }
 
 /* =====================================================
-   VÙNG NHÌN THẤY SẢN PHẨM
+   PRODUCT WINDOW
 ===================================================== */
 
 .product-window {
   width: 100%;
+
   overflow: hidden;
 
   padding: 0 16px 8px;
 }
 
 /* =====================================================
-   DANH SÁCH SẢN PHẨM
+   PRODUCT LIST
 ===================================================== */
 
 .product-list {
@@ -941,6 +891,7 @@ body {
 
 .product-list.dragging {
   cursor: grabbing;
+
   transition: none;
 }
 
@@ -950,8 +901,8 @@ body {
 
 .product-card {
   flex: 0 0 118px;
-  width: 118px;
 
+  width: 118px;
   min-width: 118px;
 
   display: flex;
@@ -962,7 +913,7 @@ body {
 }
 
 /* =====================================================
-   ẢNH SÁCH
+   PRODUCT IMAGE
 ===================================================== */
 
 .product-image {
@@ -990,7 +941,7 @@ body {
 }
 
 /* =====================================================
-   TÊN SÁCH
+   PRODUCT NAME
 ===================================================== */
 
 .product-name {
@@ -1001,6 +952,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 
   font-size: 10px;
+
   font-weight: 400;
 
   color: #333;
@@ -1008,12 +960,14 @@ body {
   text-align: center;
 
   white-space: nowrap;
+
   overflow: hidden;
+
   text-overflow: ellipsis;
 }
 
 /* =====================================================
-   GIÁ + BOOKMARK
+   PRODUCT INFO
 ===================================================== */
 
 .product-info {
@@ -1025,9 +979,9 @@ body {
   gap: 6px;
 }
 
-/* =========================
+/* =====================================================
    PRICE
-========================= */
+===================================================== */
 
 .product-price {
   width: 80px;
@@ -1048,9 +1002,9 @@ body {
   white-space: nowrap;
 }
 
-/* =========================
-   BOOKMARK
-========================= */
+/* =====================================================
+   PRODUCT BOOKMARK
+===================================================== */
 
 .product-bookmark {
   width: 34px;
@@ -1080,14 +1034,12 @@ body {
   object-fit: contain;
 }
 
-/* BOOKMARK ACTIVE */
-
 .product-bookmark.active {
   background: #ffb800;
 }
 
 /* =====================================================
-   CART
+   ADD CART
 ===================================================== */
 
 .add-cart {
@@ -1119,7 +1071,7 @@ body {
 }
 
 /* =====================================================
-   NÚT TRÁI / PHẢI
+   PRODUCT PREV / NEXT
 ===================================================== */
 
 .product-prev,
@@ -1146,6 +1098,7 @@ body {
   color: #333;
 
   font-size: 25px;
+
   line-height: 1;
 
   cursor: pointer;
@@ -1153,19 +1106,13 @@ body {
   z-index: 20;
 }
 
-/* TRÁI */
-
 .product-prev {
   left: 0;
 }
 
-/* PHẢI */
-
 .product-next {
   right: 0;
 }
-
-/* DISABLED */
 
 .product-prev:disabled,
 .product-next:disabled {
@@ -1175,203 +1122,26 @@ body {
 }
 
 /* =====================================================
-   RESPONSIVE
-===================================================== */
-
-/* ---------- LAPTOP ---------- */
-
-@media (max-width: 1300px) {
-  .book-category-section {
-    width: calc(100% - 80px);
-  }
-
-  .product-list {
-    gap: 35px;
-  }
-}
-
-/* ---------- TABLET ---------- */
-
-@media (max-width: 900px) {
-  .book-category-section {
-    width: calc(100% - 50px);
-
-    padding-top: 35px;
-  }
-
-  .book-category-title h2 {
-    font-size: 23px;
-  }
-
-  .product-window {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-
-  .product-list {
-    gap: 28px;
-  }
-
-  .product-card {
-    flex-basis: 115px;
-    width: 115px;
-    min-width: 115px;
-  }
-
-  .product-image {
-    width: 115px;
-    height: 170px;
-  }
-
-  .add-cart {
-    width: 115px;
-  }
-
-  .product-price {
-    width: 77px;
-  }
-
-  .product-bookmark {
-    width: 33px;
-  }
-}
-
-/* ---------- MOBILE ---------- */
-
-@media (max-width: 600px) {
-  .book-category-section {
-    width: calc(100% - 30px);
-
-    padding-top: 30px;
-  }
-
-  .book-category-header {
-    margin-bottom: 28px;
-  }
-
-  .book-category-title {
-    gap: 6px;
-  }
-
-  .book-category-title .title-icon {
-    font-size: 22px;
-  }
-
-  .book-category-title h2 {
-    font-size: 20px;
-  }
-
-  .product-window {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .product-list {
-    gap: 22px;
-  }
-
-  .product-card {
-    flex-basis: 105px;
-    width: 105px;
-    min-width: 105px;
-  }
-
-  .product-image {
-    width: 105px;
-    height: 155px;
-  }
-
-  .product-name {
-    margin-top: 14px;
-    margin-bottom: 10px;
-
-    font-size: 9px;
-  }
-
-  .product-info {
-    gap: 4px;
-  }
-
-  .product-price {
-    width: 70px;
-    height: 26px;
-
-    font-size: 11px;
-  }
-
-  .product-bookmark {
-    width: 31px;
-    height: 26px;
-  }
-
-  .add-cart {
-    width: 105px;
-    height: 27px;
-  }
-
-  .product-prev,
-  .product-next {
-    width: 28px;
-    height: 28px;
-
-    top: 91px;
-
-    font-size: 22px;
-  }
-}
-
-/* ---------- ĐIỆN THOẠI NHỎ ---------- */
-
-@media (max-width: 400px) {
-  .book-category-section {
-    width: calc(100% - 20px);
-  }
-
-  .product-list {
-    gap: 18px;
-  }
-
-  .product-card {
-    flex-basis: 100px;
-    width: 100px;
-    min-width: 100px;
-  }
-
-  .product-image {
-    width: 100px;
-    height: 148px;
-  }
-
-  .add-cart {
-    width: 100px;
-  }
-
-  .product-price {
-    width: 66px;
-  }
-
-  .product-bookmark {
-    width: 30px;
-  }
-}
-
-/* =====================================================
    FOOTER
 ===================================================== */
 
 .footer {
   width: 100%;
+
   padding: 50px 5% 0;
+
   margin-top: 100px;
-  background: #ffffff;
+
+  background: #fff;
 }
 
 /* =====================================================
-   KHUNG XANH
+   FOOTER CONTAINER
 ===================================================== */
 
 .footer-container {
   width: 100%;
+
   min-height: 410px;
 
   background: #3aabeb;
@@ -1380,10 +1150,7 @@ body {
 
   display: grid;
 
-  grid-template-columns:
-    1fr
-    1.35fr
-    1fr;
+  grid-template-columns: 1fr 1.35fr 1fr;
 
   column-gap: 55px;
 
@@ -1393,7 +1160,7 @@ body {
 }
 
 /* =====================================================
-   CỘT FOOTER
+   FOOTER COLUMN
 ===================================================== */
 
 .footer-column {
@@ -1401,7 +1168,7 @@ body {
 }
 
 /* =====================================================
-   TIÊU ĐỀ
+   FOOTER TITLE
 ===================================================== */
 
 .footer-column h3 {
@@ -1419,7 +1186,7 @@ body {
 }
 
 /* =====================================================
-   TEXT
+   FOOTER TEXT
 ===================================================== */
 
 .footer-column p {
@@ -1435,7 +1202,7 @@ body {
 }
 
 /* =====================================================
-   HỖ TRỢ KHÁCH HÀNG
+   FOOTER SUPPORT
 ===================================================== */
 
 .footer-support {
@@ -1443,7 +1210,7 @@ body {
 }
 
 /* =====================================================
-   VỀ CHÚNG TÔI
+   FOOTER ABOUT
 ===================================================== */
 
 .footer-about {
@@ -1459,7 +1226,7 @@ body {
 }
 
 /* =====================================================
-   NEWSLETTER
+   FOOTER NEWSLETTER
 ===================================================== */
 
 .footer-newsletter {
@@ -1467,22 +1234,19 @@ body {
 }
 
 /* =====================================================
-   FORM
+   NEWSLETTER FORM
 ===================================================== */
 
 .newsletter-form {
   width: 100%;
 
   display: flex;
-
   align-items: center;
 
   gap: 14px;
 
   margin-bottom: 18px;
 }
-
-/* INPUT */
 
 .newsletter-form input {
   flex: 1;
@@ -1514,8 +1278,6 @@ body {
   color: #333;
 }
 
-/* BUTTON */
-
 .newsletter-form button {
   height: 50px;
 
@@ -1545,12 +1307,11 @@ body {
 }
 
 /* =====================================================
-   LOGO FOOTER
+   FOOTER BRAND
 ===================================================== */
 
 .footer-brand {
   display: flex;
-
   align-items: center;
 
   gap: 22px;
@@ -1558,21 +1319,14 @@ body {
   margin-top: 10px;
 }
 
-/* LOGO */
-
 .footer-brand img {
   width: 165px;
-
   height: 165px;
 
   object-fit: contain;
 
   border-radius: 50%;
 }
-
-/* =====================================================
-   TÊN WEBSITE
-===================================================== */
 
 .footer-brand-text {
   display: flex;
@@ -1605,12 +1359,1080 @@ body {
 }
 
 /* =====================================================
-   FOOTER RESPONSIVE - TABLET
+   RESPONSIVE - HEADER
 ===================================================== */
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+  .header {
+    height: 90px;
+
+    padding: 0 30px;
+  }
+
+  .logo img {
+    width: 52px;
+    height: 52px;
+  }
+
+  .logo span {
+    font-size: 12px;
+  }
+
+  .header-menu,
+  .auth-menu {
+    gap: 20px;
+  }
+
+  .sign-in {
+    margin-right: 15px;
+  }
+
+  .sign-in img {
+    width: 19px;
+    height: 19px;
+  }
+
+  .sign-in span {
+    font-size: 9px;
+  }
+
+  .home,
+  .bookmark,
+  .cart {
+    width: 21px;
+    height: 21px;
+  }
+
+  .home img,
+  .bookmark img,
+  .cart img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+  .header {
+    height: 75px;
+
+    padding: 0 18px;
+  }
+
+  .logo {
+    gap: 6px;
+  }
+
+  .logo img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .logo span {
+    font-size: 10px;
+
+    letter-spacing: 0.7px;
+  }
+
+  .header-menu,
+  .auth-menu {
+    gap: 10px;
+  }
+
+  .sign-in {
+    gap: 4px;
+
+    margin-right: 3px;
+  }
+
+  .sign-in img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sign-in span {
+    display: none;
+  }
+
+  .sign-in small,
+  .create-account {
+    height: 28px;
+
+    padding: 0 9px;
+
+    margin-left: 0;
+
+    font-size: 11px;
+  }
+
+  .home,
+  .bookmark,
+  .cart {
+    width: 20px;
+    height: 20px;
+  }
+
+  .home img,
+  .bookmark img,
+  .cart img {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+/* =========================
+   MOBILE NHỎ
+========================= */
+
+@media (max-width: 480px) {
+  .header {
+    height: 68px;
+
+    padding: 0 12px;
+  }
+
+  .logo {
+    gap: 5px;
+  }
+
+  .logo img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .logo span {
+    font-size: 9px;
+
+    letter-spacing: 0.5px;
+  }
+
+  .header-menu,
+  .auth-menu {
+    gap: 8px;
+  }
+
+  .sign-in {
+    gap: 3px;
+
+    margin-right: 0;
+  }
+
+  .sign-in img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .sign-in small,
+  .create-account {
+    height: 26px;
+
+    padding: 0 7px;
+
+    font-size: 9px;
+  }
+
+  .home,
+  .bookmark,
+  .cart {
+    width: 18px;
+    height: 18px;
+  }
+
+  .home img,
+  .bookmark img,
+  .cart img {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* =========================
+   VERY SMALL PHONE
+========================= */
+
+@media (max-width: 360px) {
+  .header {
+    height: 62px;
+
+    padding: 0 8px;
+  }
+
+  .logo {
+    gap: 4px;
+  }
+
+  .logo img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .logo span {
+    font-size: 8px;
+  }
+
+  .header-menu,
+  .auth-menu {
+    gap: 6px;
+  }
+
+  .sign-in img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .sign-in small,
+  .create-account {
+    height: 24px;
+
+    padding: 0 6px;
+
+    font-size: 8px;
+  }
+
+  .home,
+  .bookmark,
+  .cart {
+    width: 17px;
+    height: 17px;
+  }
+
+  .home img,
+  .bookmark img,
+  .cart img {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* =====================================================
+   HERO RESPONSIVE
+===================================================== */
+
+/* =====================================================
+   LAPTOP
+   1200px trở xuống
+===================================================== */
+
+@media (max-width: 1200px) {
+  .hero {
+    min-height: 500px;
+
+    padding: 30px 35px 50px;
+
+    gap: 25px;
+  }
+
+  .hero-content {
+    width: 55%;
+  }
+
+  .hero-image {
+    width: 45%;
+
+    height: 420px;
+  }
+
+  .hero-title h1 {
+    width: 100%;
+
+    max-width: 450px;
+
+    font-size: 52px;
+
+    line-height: 1.2;
+  }
+
+  .book-icon {
+    width: 105px;
+    height: 105px;
+
+    margin-top: 40px;
+
+    margin-left: -120px;
+  }
+
+  .search-box {
+    width: 100%;
+
+    max-width: 500px;
+  }
+
+  .dotted-line {
+    width: 220px;
+  }
+
+  .blue-background {
+    width: 95%;
+    height: 370px;
+
+    right: 15px;
+  }
+
+  .library-image {
+    width: 95%;
+    height: 400px;
+
+    right: 0;
+    top: 25px;
+  }
+}
+
+/* =====================================================
+   TABLET
+   900px trở xuống
+===================================================== */
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+
+    padding: 45px 30px 60px;
+
+    gap: 20px;
+  }
+
+  .hero-content {
+    width: 55%;
+  }
+
+  .hero-image {
+    width: 45%;
+
+    height: 350px;
+  }
+
+  .hero-title h1 {
+    width: 100%;
+
+    font-size: 42px;
+
+    line-height: 1.15;
+  }
+
+  .book-icon {
+    width: 85px;
+    height: 85px;
+
+    margin-top: 30px;
+
+    margin-left: -90px;
+  }
+
+  .hero-description {
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin-top: 18px;
+
+    margin-bottom: 25px;
+  }
+
+  .search-box {
+    width: 100%;
+
+    height: 48px;
+  }
+
+  .hero-bottom {
+    margin-top: 28px;
+  }
+
+  .explore-btn {
+    width: 135px;
+
+    height: 48px;
+
+    font-size: 14px;
+  }
+
+  .dotted-line {
+    flex: 1;
+
+    width: auto;
+
+    margin-left: 15px;
+  }
+
+  .blue-background {
+    width: 95%;
+
+    height: 300px;
+
+    right: 0;
+  }
+
+  .library-image {
+    width: 95%;
+
+    height: 330px;
+
+    right: 0;
+
+    top: 20px;
+  }
+}
+
+/* =====================================================
+   MOBILE
+   700px trở xuống
+===================================================== */
+
+@media (max-width: 700px) {
+  .hero {
+    width: 100%;
+
+    min-height: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    padding: 35px 20px 55px;
+
+    gap: 45px;
+
+    overflow: hidden;
+  }
+
+  /* =========================
+       LEFT
+    ========================= */
+
+  .hero-content {
+    width: 100%;
+
+    padding-top: 0;
+  }
+
+  /* =========================
+       TITLE
+    ========================= */
+
+  .hero-title {
+    width: 100%;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 8px;
+  }
+
+  .hero-title h1 {
+    flex: 1;
+
+    width: auto;
+
+    max-width: none;
+
+    margin: 0;
+
+    font-size: clamp(32px, 8vw, 42px);
+
+    line-height: 1.15;
+  }
+
+  .book-icon {
+    width: 65px;
+    height: 65px;
+
+    object-fit: contain;
+
+    margin: 0;
+
+    flex-shrink: 0;
+  }
+
+  /* =========================
+       DESCRIPTION
+    ========================= */
+
+  .hero-description {
+    margin-top: 20px;
+
+    margin-bottom: 25px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+  }
+
+  /* =========================
+       SEARCH
+    ========================= */
+
+  .search-box {
+    width: 100%;
+
+    max-width: none;
+
+    height: 48px;
+
+    box-shadow: 4px 7px 0 #ffb800;
+  }
+
+  .search-box input {
+    min-width: 0;
+
+    padding: 0 15px;
+
+    font-size: 12px;
+  }
+
+  .search-box img {
+    width: 22px;
+    height: 22px;
+
+    margin-right: 14px;
+  }
+
+  /* =========================
+       BUTTON
+    ========================= */
+
+  .hero-bottom {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    margin-top: 28px;
+  }
+
+  .explore-btn {
+    width: 140px;
+
+    height: 48px;
+
+    gap: 10px;
+
+    font-size: 14px;
+  }
+
+  .explore-btn img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .dotted-line {
+    flex: 1;
+
+    width: auto;
+
+    margin-left: 15px;
+  }
+
+  /* =========================
+       RIGHT IMAGE
+    ========================= */
+
+  .hero-image {
+    width: 100%;
+
+    height: 350px;
+
+    min-height: 350px;
+
+    margin-top: 0;
+  }
+
+  .blue-background {
+    width: calc(100% - 25px);
+
+    height: 300px;
+
+    right: 15px;
+
+    top: 0;
+  }
+
+  .library-image {
+    width: calc(100% - 5px);
+
+    height: 325px;
+
+    right: 0;
+
+    top: 20px;
+
+    object-fit: cover;
+  }
+}
+
+/* =====================================================
+   MOBILE NHỎ
+   480px trở xuống
+===================================================== */
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 30px 15px 45px;
+
+    gap: 40px;
+  }
+
+  /* TITLE */
+
+  .hero-title {
+    gap: 5px;
+
+    align-items: flex-end;
+  }
+
+  .hero-title h1 {
+    font-size: 31px;
+
+    line-height: 1.15;
+  }
+
+  /* ICON */
+
+  .book-icon {
+    width: 58px;
+
+    height: 58px;
+
+    margin: 0;
+  }
+
+  /* DESCRIPTION */
+
+  .hero-description {
+    margin-top: 18px;
+
+    margin-bottom: 23px;
+
+    font-size: 13px;
+  }
+
+  /* SEARCH */
+
+  .search-box {
+    height: 46px;
+  }
+
+  .search-box input {
+    padding: 0 13px;
+
+    font-size: 12px;
+  }
+
+  .search-box img {
+    width: 21px;
+
+    height: 21px;
+
+    margin-right: 12px;
+  }
+
+  /* BUTTON */
+
+  .hero-bottom {
+    margin-top: 25px;
+  }
+
+  .explore-btn {
+    width: 125px;
+
+    height: 46px;
+
+    font-size: 13px;
+  }
+
+  .explore-btn img {
+    width: 22px;
+
+    height: 22px;
+  }
+
+  .dotted-line {
+    margin-left: 12px;
+  }
+
+  /* IMAGE */
+
+  .hero-image {
+    height: 290px;
+
+    min-height: 290px;
+  }
+
+  .blue-background {
+    width: calc(100% - 15px);
+
+    height: 245px;
+
+    right: 10px;
+  }
+
+  .library-image {
+    width: calc(100% - 3px);
+
+    height: 270px;
+
+    right: 0;
+
+    top: 18px;
+  }
+}
+
+/* =====================================================
+   VERY SMALL PHONE
+   360px trở xuống
+===================================================== */
+
+@media (max-width: 360px) {
+  .hero {
+    padding: 25px 12px 40px;
+
+    gap: 35px;
+  }
+
+  /* TITLE */
+
+  .hero-title {
+    gap: 4px;
+  }
+
+  .hero-title h1 {
+    font-size: 27px;
+
+    line-height: 1.15;
+  }
+
+  /* ICON */
+
+  .book-icon {
+    width: 50px;
+
+    height: 50px;
+
+    margin: 0;
+  }
+
+  /* DESCRIPTION */
+
+  .hero-description {
+    font-size: 12px;
+  }
+
+  /* SEARCH */
+
+  .search-box {
+    height: 44px;
+  }
+
+  .search-box input {
+    font-size: 11px;
+
+    padding: 0 11px;
+  }
+
+  .search-box img {
+    width: 20px;
+
+    height: 20px;
+
+    margin-right: 10px;
+  }
+
+  /* BUTTON */
+
+  .explore-btn {
+    width: 115px;
+
+    height: 44px;
+
+    font-size: 12px;
+  }
+
+  .explore-btn img {
+    width: 21px;
+
+    height: 21px;
+  }
+
+  .dotted-line {
+    margin-left: 10px;
+  }
+
+  /* IMAGE */
+
+  .hero-image {
+    height: 260px;
+
+    min-height: 260px;
+  }
+
+  .blue-background {
+    height: 220px;
+  }
+
+  .library-image {
+    height: 240px;
+
+    top: 15px;
+  }
+}
+
+/* =====================================================
+   CATEGORY RESPONSIVE
+===================================================== */
+
+@media (max-width: 1300px) {
+  .category-section {
+    width: calc(100% - 80px);
+  }
+
+  .category-list {
+    grid-template-columns: 1fr 1fr;
+
+    column-gap: 40px;
+  }
+
+  .category-item {
+    width: 100%;
+  }
+
+  .category-item::after {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .category-section {
+    width: calc(100% - 40px);
+  }
+
+  .category-list {
+    grid-template-columns: 1fr;
+
+    row-gap: 33px;
+  }
+
+  .category-item {
+    width: 100%;
+
+    height: 120px;
+  }
+
+  .category-item span {
+    font-size: 22px;
+  }
+}
+
+/* =====================================================
+   BOOK CATEGORY RESPONSIVE
+===================================================== */
+
+@media (max-width: 1300px) {
+  .book-category-section {
+    width: calc(100% - 80px);
+  }
+
+  .product-list {
+    gap: 35px;
+  }
+}
+
+@media (max-width: 900px) {
+  .book-category-section {
+    width: calc(100% - 50px);
+
+    padding-top: 35px;
+  }
+
+  .book-category-title h2 {
+    font-size: 23px;
+  }
+
+  .product-window {
+    padding-left: 12px;
+
+    padding-right: 12px;
+  }
+
+  .product-list {
+    gap: 28px;
+  }
+
+  .product-card {
+    flex-basis: 115px;
+
+    width: 115px;
+
+    min-width: 115px;
+  }
+
+  .product-image {
+    width: 115px;
+
+    height: 170px;
+  }
+
+  .add-cart {
+    width: 115px;
+  }
+
+  .product-price {
+    width: 77px;
+  }
+
+  .product-bookmark {
+    width: 33px;
+  }
+}
+
+@media (max-width: 600px) {
+  .book-category-section {
+    width: calc(100% - 30px);
+
+    padding-top: 30px;
+  }
+
+  .book-category-header {
+    margin-bottom: 28px;
+  }
+
+  .book-category-title {
+    gap: 6px;
+  }
+
+  .book-category-title .title-icon {
+    font-size: 22px;
+  }
+
+  .book-category-title h2 {
+    font-size: 20px;
+  }
+
+  .product-window {
+    padding-left: 10px;
+
+    padding-right: 10px;
+  }
+
+  .product-list {
+    gap: 22px;
+  }
+
+  .product-card {
+    flex-basis: 105px;
+
+    width: 105px;
+
+    min-width: 105px;
+  }
+
+  .product-image {
+    width: 105px;
+
+    height: 155px;
+  }
+
+  .product-name {
+    margin-top: 14px;
+
+    margin-bottom: 10px;
+
+    font-size: 9px;
+  }
+
+  .product-info {
+    gap: 4px;
+  }
+
+  .product-price {
+    width: 70px;
+
+    height: 26px;
+
+    font-size: 11px;
+  }
+
+  .product-bookmark {
+    width: 31px;
+
+    height: 26px;
+  }
+
+  .add-cart {
+    width: 105px;
+
+    height: 27px;
+  }
+
+  .product-prev,
+  .product-next {
+    width: 28px;
+
+    height: 28px;
+
+    top: 91px;
+
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 400px) {
+  .book-category-section {
+    width: calc(100% - 20px);
+  }
+
+  .product-list {
+    gap: 18px;
+  }
+
+  .product-card {
+    flex-basis: 100px;
+
+    width: 100px;
+
+    min-width: 100px;
+  }
+
+  .product-image {
+    width: 100px;
+
+    height: 148px;
+  }
+
+  .add-cart {
+    width: 100px;
+  }
+
+  .product-price {
+    width: 66px;
+  }
+
+  .product-bookmark {
+    width: 30px;
+  }
+}
+
+/* =====================================================
+   FOOTER RESPONSIVE
+===================================================== */
+
+/* =========================
+   TABLET
+========================= */
 
 @media (max-width: 1000px) {
   .footer {
     padding: 60px 30px 0;
+
     margin-top: 70px;
   }
 
@@ -1641,9 +2463,9 @@ body {
   }
 }
 
-/* =====================================================
-   FOOTER RESPONSIVE - MOBILE
-===================================================== */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 700px) {
   .footer {
@@ -1662,9 +2484,7 @@ body {
     border-radius: 10px 10px 0 0;
   }
 
-  /* =========================
-     SUPPORT
-  ========================= */
+  /* SUPPORT */
 
   .footer-support {
     max-width: 100%;
@@ -1672,9 +2492,7 @@ body {
     text-align: center;
   }
 
-  /* =========================
-     ABOUT
-  ========================= */
+  /* ABOUT */
 
   .footer-about {
     max-width: 100%;
@@ -1686,9 +2504,7 @@ body {
     text-align: center;
   }
 
-  /* =========================
-     NEWSLETTER
-  ========================= */
+  /* NEWSLETTER */
 
   .footer-newsletter {
     max-width: 100%;
@@ -1712,9 +2528,7 @@ body {
     width: 100%;
   }
 
-  /* =========================
-     LOGO
-  ========================= */
+  /* FOOTER LOGO */
 
   .footer-brand {
     flex-direction: column;
@@ -1742,9 +2556,7 @@ body {
     font-size: 14px;
   }
 
-  /* =========================
-     TEXT
-  ========================= */
+  /* TEXT */
 
   .footer-column h3 {
     font-size: 23px;
@@ -1757,359 +2569,36 @@ body {
   }
 }
 
-@media (max-width: 700px) {
-  .auth-menu {
-    gap: 5px;
-  }
-
-  .sign-in span {
-    display: none;
-  }
-
-  .sign-in img {
-    width: 21px;
-    height: 21px;
-  }
-
-  .create-account {
-    height: 28px;
-    padding: 0 9px;
-    font-size: 11px;
-  }
-}
-
 /* =====================================================
-   HERO RESPONSIVE
+   FINAL MOBILE SAFETY
 ===================================================== */
 
-/* =========================
-   TABLET
-   1200px trở xuống
-========================= */
-
-@media (max-width: 1200px) {
-  .hero {
-    padding: 30px 40px 50px;
-
-    gap: 30px;
+@media (max-width: 480px) {
+  .footer {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
-  .hero-content {
-    width: 55%;
-
-    flex-shrink: 0;
+  .footer-container {
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
-  .hero-image {
-    width: 45%;
-
-    height: 400px;
-
-    min-width: 0;
+  .newsletter-form input,
+  .newsletter-form button {
+    height: 46px;
   }
 
-  .hero-title h1 {
-    font-size: clamp(42px, 5vw, 60px);
-  }
-
-  .book-icon {
+  .footer-brand img {
     width: 110px;
     height: 110px;
   }
 
-  .search-box {
-    width: 100%;
-    max-width: 550px;
+  .footer-brand-text h4 {
+    font-size: 22px;
   }
 
-  .blue-background {
-    width: 100%;
-    height: 350px;
-
-    right: 20px;
-  }
-
-  .library-image {
-    width: 100%;
-    height: 420px;
-
-    right: 0;
-    top: 25px;
-  }
-
-  .dotted-line {
-    width: 250px;
-  }
-}
-
-/* =========================
-   TABLET NHỎ
-   900px trở xuống
-========================= */
-
-@media (max-width: 900px) {
-  .hero {
-    padding: 30px 30px 50px;
-
-    gap: 20px;
-  }
-
-  .hero-content {
-    width: 55%;
-  }
-
-  .hero-image {
-    width: 45%;
-    height: 340px;
-  }
-
-  .hero-title h1 {
-    font-size: 40px;
-
-    line-height: 1.2;
-  }
-
-  .book-icon {
-    width: 85px;
-    height: 85px;
-
-    margin-top: 25px;
-  }
-
-  .hero-description {
-    font-size: 14px;
-
-    margin-top: 18px;
-    margin-bottom: 25px;
-  }
-
-  .search-box {
-    height: 42px;
-  }
-
-  .hero-bottom {
-    margin-top: 28px;
-  }
-
-  .explore-btn {
-    width: 135px;
-    height: 48px;
-
-    font-size: 14px;
-  }
-
-  .dotted-line {
-    width: 150px;
-  }
-
-  .blue-background {
-    height: 300px;
-  }
-
-  .library-image {
-    height: 350px;
-
-    top: 20px;
-  }
-}
-
-/* =========================
-   MOBILE
-   700px trở xuống
-========================= */
-
-@media (max-width: 700px) {
-  .hero {
-    width: 100%;
-
-    min-height: auto;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: stretch;
-
-    padding: 35px 20px 50px;
-
-    gap: 45px;
-  }
-
-  /* =========================
-     LEFT
-  ========================= */
-
-  .hero-content {
-    width: 100%;
-
-    padding-top: 0;
-  }
-
-  .hero-title {
-    width: 100%;
-
-    justify-content: flex-start;
-
-    align-items: center;
-  }
-
-  .hero-title h1 {
-    font-size: clamp(34px, 9vw, 46px);
-
-    line-height: 1.15;
-  }
-
-  .book-icon {
-    width: 75px;
-    height: 75px;
-
-    margin-top: 25px;
-
-    flex-shrink: 0;
-  }
-
-  .hero-description {
-    margin-top: 20px;
-    margin-bottom: 25px;
-
-    font-size: 14px;
-
-    line-height: 1.5;
-  }
-
-  /* =========================
-     SEARCH
-  ========================= */
-
-  .search-box {
-    width: 100%;
-
-    max-width: none;
-
-    height: 45px;
-  }
-
-  .search-box input {
+  .footer-brand-text p {
     font-size: 12px;
-
-    padding: 0 15px;
-  }
-
-  .search-box img {
-    width: 21px;
-    height: 21px;
-
-    margin-right: 15px;
-  }
-
-  /* =========================
-     BUTTON
-  ========================= */
-
-  .hero-bottom {
-    width: 100%;
-
-    margin-top: 28px;
-  }
-
-  .explore-btn {
-    width: 140px;
-
-    height: 48px;
-
-    flex-shrink: 0;
-  }
-
-  .dotted-line {
-    flex: 1;
-
-    width: auto;
-
-    margin-left: 15px;
-  }
-
-  /* =========================
-     RIGHT IMAGE
-  ========================= */
-
-  .hero-image {
-    width: 100%;
-
-    height: 350px;
-
-    min-height: 350px;
-  }
-
-  .blue-background {
-    width: calc(100% - 20px);
-
-    height: 300px;
-
-    right: 20px;
-
-    top: 0;
-  }
-
-  .library-image {
-    width: calc(100% - 5px);
-
-    height: 330px;
-
-    right: 0;
-
-    top: 20px;
-
-    object-fit: cover;
-  }
-}
-
-/* =========================
-   MOBILE NHỎ
-   450px trở xuống
-========================= */
-
-@media (max-width: 450px) {
-  .hero {
-    padding: 30px 15px 40px;
-
-    gap: 35px;
-  }
-
-  .hero-title h1 {
-    font-size: 32px;
-  }
-
-  .book-icon {
-    width: 62px;
-    height: 62px;
-  }
-
-  .hero-description {
-    font-size: 13px;
-  }
-
-  .explore-btn {
-    width: 125px;
-
-    font-size: 13px;
-  }
-
-  .explore-btn img {
-    width: 23px;
-    height: 23px;
-  }
-
-  .hero-image {
-    height: 290px;
-
-    min-height: 290px;
-  }
-
-  .blue-background {
-    height: 250px;
-  }
-
-  .library-image {
-    height: 270px;
   }
 }
