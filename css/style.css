@@ -399,6 +399,8 @@ body {
   color: #3d3c3c;
 
   flex-shrink: 0;
+
+  text-decoration: none;
 }
 
 .explore-btn img {

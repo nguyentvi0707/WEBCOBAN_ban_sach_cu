@@ -672,3 +672,17 @@ IUHSVBOOK - TOP BOOKS
 
   console.log("=================================");
 });
+
+const homeSearchInput = document.querySelector(".hero-search-input");
+const exploreBtn = document.querySelector(".explore-btn");
+
+if (exploreBtn) {
+  exploreBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const keyword = homeSearchInput?.value.trim() || "";
+
+    window.location.href =
+      `./pages/catalog.html?search=${encodeURIComponent(keyword)}`;
+  });
+}
