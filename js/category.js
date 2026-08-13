@@ -1,10 +1,28 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const productsGrid = document.querySelector(".products-grid");
 
+  const searchInput = document.querySelector(".category-search input");
+  const searchButton = document.querySelector(".category-search button");
+
+  const sortSelect = document.querySelector(".category-filter");
+
   if (!productsGrid) {
     console.log("KHÔNG TÌM THẤY .products-grid");
     return;
   }
+
+  // =====================================================
+  // CATEGORY CỦA TRANG NÀY
+  // =====================================================
+
+  const pageCategory = "Đại cương";
+
+  let books = [];
+  let categoryBooks = [];
+
+  // =====================================================
+  // LOAD BOOK.JSON
+  // =====================================================
 
   try {
     const response = await fetch("../data/book.json");
@@ -15,17 +33,143 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error("Không đọc được book.json");
     }
 
-    const books = await response.json();
+    books = await response.json();
 
     console.log("BOOKS:", books);
 
-    const categoryBooks = books.filter((book) => book.category === "Đại cương");
+    // ===================================================
+    // CHỈ LẤY SÁCH ĐẠI CƯƠNG
+    // ===================================================
+
+    categoryBooks = books.filter((book) => {
+      return (
+        String(book.category || "")
+          .trim()
+          .toLowerCase() === pageCategory.toLowerCase()
+      );
+    });
 
     console.log("ĐẠI CƯƠNG:", categoryBooks);
 
+    // Hiển thị lần đầu
+    updateResults();
+
+    console.log("ĐÃ HIỂN THỊ:", categoryBooks.length, "CUỐN");
+  } catch (error) {
+    console.error("LỖI:", error);
+
+    productsGrid.innerHTML = `
+      <p style="color:red;">
+        Không tải được book.json
+      </p>
+    `;
+  }
+
+  // =====================================================
+  // SEARCH
+  // =====================================================
+
+  function searchBooks(list, keyword) {
+    const text = keyword.trim().toLowerCase();
+
+    // Không nhập gì → trả lại toàn bộ sách của category
+    if (!text) {
+      return [...list];
+    }
+
+    return list.filter((book) => {
+      const name = String(book.name || "").toLowerCase();
+
+      const author = String(book.author || "").toLowerCase();
+
+      return name.includes(text) || author.includes(text);
+    });
+  }
+
+  // =====================================================
+  // SORT
+  // =====================================================
+
+  function sortBooks(list, value) {
+    const result = [...list];
+
+    switch (value) {
+      case "price-asc":
+        result.sort((a, b) => Number(a.price || 0) - Number(b.price || 0));
+        break;
+
+      case "price-desc":
+        result.sort((a, b) => Number(b.price || 0) - Number(a.price || 0));
+        break;
+
+      case "name-asc":
+        result.sort((a, b) =>
+          String(a.name || "").localeCompare(String(b.name || ""), "vi"),
+        );
+        break;
+
+      case "name-desc":
+        result.sort((a, b) =>
+          String(b.name || "").localeCompare(String(a.name || ""), "vi"),
+        );
+        break;
+    }
+
+    return result;
+  }
+
+  // =====================================================
+  // UPDATE RESULTS
+  // =====================================================
+
+  function updateResults() {
+    const keyword = searchInput?.value || "";
+
+    // 1. SEARCH
+    let result = searchBooks(categoryBooks, keyword);
+
+    // 2. SORT
+    result = sortBooks(result, sortSelect?.value || "default");
+
+    // 3. RENDER
+    renderResults(result);
+
+    console.log("SEARCH:", keyword);
+    console.log("RESULT:", result);
+  }
+
+  // =====================================================
+  // RENDER BOOK
+  // =====================================================
+
+  function renderResults(list) {
     productsGrid.innerHTML = "";
 
-    categoryBooks.forEach((book) => {
+    // ===================================================
+    // KHÔNG TÌM THẤY
+    // ===================================================
+
+    if (list.length === 0) {
+      productsGrid.innerHTML = `
+        <div class="empty-results">
+          <div class="empty-book">
+            <div class="book-left"></div>
+            <div class="book-right"></div>
+            <div class="book-center"></div>
+          </div>
+
+          <p>Nothing was found :(</p>
+        </div>
+      `;
+
+      return;
+    }
+
+    // ===================================================
+    // CÓ SÁCH
+    // ===================================================
+
+    list.forEach((book) => {
       const card = document.createElement("article");
 
       card.className = "category-product-card";
@@ -43,10 +187,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           <div class="category-product-bottom">
             <span class="category-product-price">
-              ${Number(book.price).toLocaleString("vi-VN")}đ
+              ${Number(book.price || 0).toLocaleString("vi-VN")}đ
             </span>
 
-            <button class="category-bookmark" type="button">
+            <button
+              class="category-bookmark"
+              type="button"
+            >
               <img
                 src="../images/iconbookmark.png"
                 alt="Bookmark"
@@ -54,7 +201,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             </button>
           </div>
 
-          <button class="category-cart" type="button">
+          <button
+            class="category-cart"
+            type="button"
+          >
             <img
               src="../images/iconcart.png"
               alt="Cart"
@@ -65,70 +215,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       productsGrid.appendChild(card);
     });
+  }
 
-    // =====================================================
-    // FILTER / SORT
-    // =====================================================
+  // =====================================================
+  // SEARCH KHI GÕ
+  // =====================================================
 
-    const sortSelect = document.querySelector(".category-filter");
+  if (searchInput) {
+    searchInput.addEventListener("input", updateResults);
 
-    if (sortSelect) {
-      sortSelect.addEventListener("change", () => {
-        const cards = Array.from(
-          productsGrid.querySelectorAll(".category-product-card"),
-        );
+    // Enter cũng search
+    searchInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        updateResults();
+      }
+    });
+  }
 
-        const value = sortSelect.value;
+  // =====================================================
+  // CLICK KÍNH LÚP
+  // =====================================================
 
-        cards.sort((a, b) => {
-          const nameA = a.querySelector("h3")?.textContent.trim() || "";
+  if (searchButton) {
+    searchButton.addEventListener("click", updateResults);
+  }
 
-          const nameB = b.querySelector("h3")?.textContent.trim() || "";
+  // =====================================================
+  // FILTER / SORT
+  // =====================================================
 
-          const priceA = Number(
-            a
-              .querySelector(".category-product-price")
-              ?.textContent.replace(/\D/g, "") || 0,
-          );
-
-          const priceB = Number(
-            b
-              .querySelector(".category-product-price")
-              ?.textContent.replace(/\D/g, "") || 0,
-          );
-
-          switch (value) {
-            case "price-asc":
-              return priceA - priceB;
-
-            case "price-desc":
-              return priceB - priceA;
-
-            case "name-asc":
-              return nameA.localeCompare(nameB, "vi");
-
-            case "name-desc":
-              return nameB.localeCompare(nameA, "vi");
-
-            default:
-              return 0;
-          }
-        });
-
-        cards.forEach((card) => {
-          productsGrid.appendChild(card);
-        });
-      });
-    }
-
-    console.log("ĐÃ HIỂN THỊ:", categoryBooks.length, "CUỐN");
-  } catch (error) {
-    console.error("LỖI:", error);
-
-    productsGrid.innerHTML = `
-      <p style="color:red;">
-        Không tải được book.json
-      </p>
-    `;
+  if (sortSelect) {
+    sortSelect.addEventListener("change", updateResults);
   }
 });
