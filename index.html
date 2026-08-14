@@ -65,31 +65,35 @@
       <!-- LEFT -->
       <div class="hero-content">
         <div class="hero-title">
-          <h1>BOOK<br />STORE</h1>
+          <h1>What book you looking for?</h1>
 
           <img src="./images/iconbook.png" alt="Book" class="book-icon" />
         </div>
 
         <p class="hero-description">
-          Tìm kiếm, mua bán và tái sử dụng sách cũ dành cho sinh viên.
+          Explore our catalog and find your next read.
         </p>
 
         <!-- SEARCH -->
         <div class="search-box">
-          <input type="text" placeholder="Type the name of book or author..." />
+          <input
+            type="text"
+            class="hero-search-input"
+            placeholder="Type the name of book or author..."
+          />
 
           <img src="./images/iconkinhlup.png" alt="Search" />
         </div>
 
         <!-- BUTTON -->
         <div class="hero-bottom">
-          <button class="explore-btn" type="button">
-            <span>Explore</span>
+  <a href="./pages/catalog.html" class="explore-btn">
+    <span>Explore</span>
+    <img src="./images/iconongnhom.png" alt="Explore" />
+  </a>
 
-            <img src="./images/iconongnhom.png" alt="Explore" />
-          </button>
-
-          <div class="dotted-line"></div>
+  <div class="dotted-line"></div>
+</div>
         </div>
       </div>
 
@@ -117,45 +121,7 @@
         </button>
 
         <div class="books-list">
-          <article class="book-card">
-            <img src="./images/booksach.png" alt="Book 1" />
-            <p>Sách ABCDEF</p>
-          </article>
-
-          <article class="book-card">
-            <img src="./images/booksach.png" alt="Book 2" />
-            <p>Sách ABCDEF</p>
-          </article>
-
-          <article class="book-card">
-            <img src="./images/booksach.png" alt="Book 3" />
-            <p>Sách ABCDEF</p>
-          </article>
-
-          <article class="book-card">
-            <img src="./images/booksach.png" alt="Book 4" />
-            <p>Sách ABCDEF</p>
-          </article>
-
-          <article class="book-card">
-            <img src="./images/booksach.png" alt="Book 5" />
-            <p>Sách ABCDEF</p>
-          </article>
-
-          <article class="book-card">
-            <img src="./images/booksach.png" alt="Book 6" />
-            <p>Sách ABCDEF</p>
-          </article>
-
-          <article class="book-card">
-            <img src="./images/booksach.png" alt="Book 7" />
-            <p>Sách ABCDEF</p>
-          </article>
-
-          <article class="book-card">
-            <img src="./images/booksach.png" alt="Book 8" />
-            <p>Sách ABCDEF</p>
-          </article>
+          <!-- JS tự thêm sách từ book.json -->
         </div>
 
         <button type="button" class="books-next" aria-label="Next books">
@@ -168,7 +134,7 @@
        CATEGORY
   ===================================================== -->
 
-    <section class="category-section">
+    <section class="book-category-section" data-category="Đại cương">
       <h2 class="category-title">
         <span>Danh mục</span>
       </h2>
@@ -414,7 +380,7 @@
       </div>
     </section>
 
-    <section class="book-category-section">
+    <section class="book-category-section" data-category="Công nghệ thông tin">
       <div class="book-category-header">
         <div class="book-category-title">
           <span class="title-icon">✦</span>
