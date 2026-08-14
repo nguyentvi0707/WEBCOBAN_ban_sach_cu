@@ -14,9 +14,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     books = await response.json();
 
+    if (!Array.isArray(books)) {
+      throw new Error("book.json không phải là một mảng");
+    }
+
     console.log("BOOK JSON:", books);
   } catch (error) {
     console.error("LỖI LOAD BOOK.JSON:", error);
+    return;
+  }
+
+  if (books.length === 0) {
+    console.error("book.json không có sản phẩm.");
+    return;
   }
 
   /* =====================================================
@@ -40,15 +50,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   const emptyResults = document.querySelector("#emptyResults");
 
   /* =====================================================
-   NHẬN TỪ KHÓA TỪ HOME
-===================================================== */
+     URL SEARCH
+  ===================================================== */
 
-const params = new URLSearchParams(window.location.search);
-const keywordFromHome = params.get("search");
+  const params = new URLSearchParams(window.location.search);
 
-if (keywordFromHome && searchInput) {
-  searchInput.value = keywordFromHome;
-}
+  const keywordFromURL = params.get("search") || "";
+
+  if (searchInput && keywordFromURL) {
+    searchInput.value = keywordFromURL;
+  }
+
   /* =====================================================
      STATE
   ===================================================== */
@@ -85,6 +97,43 @@ if (keywordFromHome && searchInput) {
   }
 
   /* =====================================================
+     UPDATE URL SEARCH
+  ===================================================== */
+
+  function updateSearchURL(keyword) {
+    const url = new URL(window.location.href);
+
+    const text = String(keyword || "").trim();
+
+    if (text) {
+      url.searchParams.set("search", text);
+    } else {
+      url.searchParams.delete("search");
+    }
+
+    window.history.replaceState({}, "", url);
+  }
+
+  /* =====================================================
+     GET CATEGORY
+  ===================================================== */
+
+  function getBookCategory(book) {
+    if (!book) {
+      return "";
+    }
+
+    return String(
+      book.category ??
+        book.categoryName ??
+        book.categoryId ??
+        book.type ??
+        book.typeName ??
+        "",
+    ).trim();
+  }
+
+  /* =====================================================
      GET CATEGORY BOOKS
   ===================================================== */
 
@@ -96,7 +145,7 @@ if (keywordFromHome && searchInput) {
     const selected = normalizeText(category);
 
     return list.filter((book) => {
-      const bookCategory = normalizeText(book.category);
+      const bookCategory = normalizeText(getBookCategory(book));
 
       return bookCategory === selected;
     });
@@ -174,6 +223,135 @@ if (keywordFromHome && searchInput) {
   }
 
   /* =====================================================
+     BOOKMARK STORAGE
+  ===================================================== */
+
+  function getBookmarks() {
+    try {
+      const bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+
+      return Array.isArray(bookmarks) ? bookmarks : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveBookmarks(bookmarks) {
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  }
+
+  function isBookmarked(id) {
+    return getBookmarks().some((item) => String(item) === String(id));
+  }
+
+  function toggleBookmark(id) {
+    let bookmarks = getBookmarks();
+
+    const index = bookmarks.findIndex((item) => String(item) === String(id));
+
+    if (index >= 0) {
+      bookmarks.splice(index, 1);
+      saveBookmarks(bookmarks);
+      return false;
+    }
+
+    bookmarks.push(id);
+    saveBookmarks(bookmarks);
+    return true;
+  }
+
+  /* =====================================================
+     CART STORAGE
+  ===================================================== */
+
+  function getCart() {
+    try {
+      const cart = JSON.parse(localStorage.getItem("shoppingCart"));
+
+      return Array.isArray(cart) ? cart : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveCart(cart) {
+    localStorage.setItem("shoppingCart", JSON.stringify(cart));
+  }
+
+  /* =====================================================
+     ADD TO CART
+  ===================================================== */
+
+  function addToCart(book, quantity = 1) {
+    if (!book) {
+      return;
+    }
+
+    const cart = getCart();
+
+    const existing = cart.find((item) => String(item.id) === String(book.id));
+
+    if (existing) {
+      existing.quantity = Number(existing.quantity || 0) + Number(quantity);
+    } else {
+      cart.push({
+        id: book.id,
+        name: book.name,
+        author: book.author,
+        image: book.image,
+        price: Number(book.price || 0),
+        quantity: Number(quantity),
+      });
+    }
+
+    saveCart(cart);
+
+    /* Nếu shoppingCartSidebar.js có renderCart */
+    if (typeof window.renderCart === "function") {
+      window.renderCart();
+    }
+
+    console.log("Đã thêm vào giỏ:", book.name);
+  }
+
+  /* =====================================================
+     OPEN CART SIDEBAR
+  ===================================================== */
+
+  function openCartSidebar() {
+    const sidebar = document.querySelector(".shoppingCartSidebar");
+
+    const background = document.querySelector(".shoppingCartSidebar-bg");
+
+    if (sidebar) {
+      sidebar.classList.add("active");
+    }
+
+    if (background) {
+      background.classList.add("active");
+    }
+  }
+
+  /* =====================================================
+     GO TO PRODUCT DETAIL
+  ===================================================== */
+
+  function goToProductDetail(book) {
+    if (!book) {
+      return;
+    }
+
+    /*
+     * catalog.html nằm trong /pages
+     * productDetail.html cũng nằm trong /pages
+     */
+
+    const url = `./productDetail.html?id=${encodeURIComponent(book.id)}`;
+
+    window.location.href = url;
+  }
+
+  /* =====================================================
      CREATE PRODUCT CARD
   ===================================================== */
 
@@ -182,22 +360,30 @@ if (keywordFromHome && searchInput) {
 
     card.className = "product-card";
 
+    card.dataset.productId = String(book.id);
+
     const price = Number(book.price || 0).toLocaleString("vi-VN");
+
+    const image = book.image || "../images/COVER_BOOK.png";
+
+    const name = book.name || "Không có tên";
+
+    const bookmarked = isBookmarked(book.id);
 
     card.innerHTML = `
       <div class="product-image">
         <img
-          src="${book.image || ""}"
-          alt="${book.name || "Book"}"
+          src="${image}"
+          alt="${name}"
           draggable="false"
         />
       </div>
 
       <p
         class="product-name"
-        title="${book.name || ""}"
+        title="${name}"
       >
-        ${book.name || "Không có tên"}
+        ${name}
       </p>
 
       <div class="product-info">
@@ -207,54 +393,101 @@ if (keywordFromHome && searchInput) {
         </span>
 
         <button
-          class="product-bookmark"
           type="button"
+          class="product-bookmark ${bookmarked ? "active" : ""}"
           aria-label="Bookmark"
         >
           <img
             src="../images/iconbookmark.png"
             alt="Bookmark"
+            draggable="false"
           />
         </button>
 
       </div>
 
       <button
-        class="add-cart"
         type="button"
+        class="add-cart"
         aria-label="Thêm vào giỏ hàng"
       >
         <img
           src="../images/iconcart.png"
-          alt="Thêm vào giỏ hàng"
+          alt="Thêm vào giỏ"
+          draggable="false"
         />
       </button>
     `;
 
-    /* BOOKMARK */
+    /* =================================================
+       BOOKMARK
+    ================================================= */
 
     const bookmarkButton = card.querySelector(".product-bookmark");
 
-    bookmarkButton.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    if (bookmarkButton) {
+      bookmarkButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
-      bookmarkButton.classList.toggle("active");
-    });
+        const active = toggleBookmark(book.id);
 
-    /* CART */
+        bookmarkButton.classList.toggle("active", active);
+      });
+    }
+
+    /* =================================================
+       CART
+    ================================================= */
 
     const cartButton = card.querySelector(".add-cart");
 
-    cartButton.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    if (cartButton) {
+      cartButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
-      cartButton.classList.add("added");
+        addToCart(book, 1);
 
-      setTimeout(() => {
-        cartButton.classList.remove("added");
-      }, 300);
+        cartButton.classList.add("added");
+
+        setTimeout(() => {
+          cartButton.classList.remove("added");
+        }, 300);
+
+        openCartSidebar();
+      });
+    }
+
+    /* =================================================
+       PREVENT IMAGE DRAG
+    ================================================= */
+
+    const imageElement = card.querySelector(".product-image img");
+
+    if (imageElement) {
+      imageElement.addEventListener("dragstart", (event) => {
+        event.preventDefault();
+      });
+    }
+
+    /* =================================================
+       CLICK CARD
+       → PRODUCT DETAIL
+    ================================================= */
+
+    card.addEventListener("click", (event) => {
+      /*
+       * Không mở detail khi click button
+       */
+      if (
+        event.target.closest(".product-bookmark") ||
+        event.target.closest(".add-cart")
+      ) {
+        return;
+      }
+
+      goToProductDetail(book);
     });
 
     return card;
@@ -269,17 +502,20 @@ if (keywordFromHome && searchInput) {
       return;
     }
 
-    /* XÓA CARD CŨ, KHÔNG XÓA emptyResults */
-    catalogResults
-      .querySelectorAll(".product-card")
-      .forEach((card) => card.remove());
+    /*
+     * Xóa card cũ
+     */
+    catalogResults.querySelectorAll(".product-card").forEach((card) => {
+      card.remove();
+    });
 
-    /* KHÔNG CÓ KẾT QUẢ */
+    /*
+     * KHÔNG CÓ KẾT QUẢ
+     */
     if (list.length === 0) {
       if (emptyResults) {
         emptyResults.style.display = "flex";
 
-        // Đưa emptyResults vào catalogResults nếu chưa có
         if (!catalogResults.contains(emptyResults)) {
           catalogResults.appendChild(emptyResults);
         }
@@ -288,18 +524,21 @@ if (keywordFromHome && searchInput) {
       return;
     }
 
-    /* CÓ KẾT QUẢ → ẨN Nothing was found */
+    /*
+     * CÓ KẾT QUẢ
+     */
     if (emptyResults) {
       emptyResults.style.display = "none";
     }
 
-    /* RENDER SÁCH */
+    /*
+     * Render
+     */
     list.forEach((book) => {
-      const card = createProductCard(book);
-
-      catalogResults.appendChild(card);
+      catalogResults.appendChild(createProductCard(book));
     });
   }
+
   /* =====================================================
      UPDATE RESULTS
   ===================================================== */
@@ -307,16 +546,24 @@ if (keywordFromHome && searchInput) {
   function updateResults() {
     const keyword = searchInput?.value.trim() || "";
 
-    /* SEARCH */
+    /*
+     * SEARCH
+     */
     let result = searchBooks(books, keyword);
 
-    /* CATEGORY */
+    /*
+     * CATEGORY
+     */
     result = getCategoryBooks(result, selectedCategory);
 
-    /* FILTER */
+    /*
+     * FILTER
+     */
     result = sortBooks(result, selectedFilter);
 
-    /* KEYWORD */
+    /*
+     * HIỂN THỊ KEYWORD
+     */
     if (resultsKeyword) {
       if (keyword) {
         resultsKeyword.textContent = `“${keyword}”`;
@@ -325,29 +572,32 @@ if (keywordFromHome && searchInput) {
       }
     }
 
-    /* =========================================
-     RENDER
-  ========================================= */
+    /*
+     * CẬP NHẬT URL
+     */
+    updateSearchURL(keyword);
 
+    /*
+     * RENDER
+     */
     renderResults(result);
 
-    console.log("RESULT:", result);
+    console.log("CATALOG RESULT:", result);
   }
+
   /* =====================================================
-     CATEGORY DROPDOWN OPEN / CLOSE
+     CATEGORY DROPDOWN
   ===================================================== */
 
   if (categoryButton && categoryDropdown) {
-    categoryButton.addEventListener("click", (e) => {
-      e.stopPropagation();
+    categoryButton.addEventListener("click", (event) => {
+      event.stopPropagation();
 
       const isOpen = categoryDropdown.classList.contains("open");
 
       categoryDropdown.classList.toggle("open", !isOpen);
 
       categoryButton.setAttribute("aria-expanded", String(!isOpen));
-
-      /* ĐÓNG FILTER */
 
       if (filterDropdown) {
         filterDropdown.classList.remove("open");
@@ -362,13 +612,11 @@ if (keywordFromHome && searchInput) {
   ===================================================== */
 
   if (categoryMenu) {
-    const categoryButtons = categoryMenu.querySelectorAll(
-      "button[data-category]",
-    );
+    const buttons = categoryMenu.querySelectorAll("button[data-category]");
 
-    categoryButtons.forEach((button) => {
-      button.addEventListener("click", (e) => {
-        e.stopPropagation();
+    buttons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
 
         const category = button.dataset.category;
 
@@ -378,8 +626,6 @@ if (keywordFromHome && searchInput) {
 
         selectedCategory = category;
 
-        /* ĐỔI TEXT BUTTON */
-
         const selectedText =
           categoryButton?.querySelector(".category-selected");
 
@@ -388,21 +634,15 @@ if (keywordFromHome && searchInput) {
             category === "all" ? "Categories" : category;
         }
 
-        /* ACTIVE */
-
-        categoryButtons.forEach((item) => {
+        buttons.forEach((item) => {
           item.classList.remove("active");
         });
 
         button.classList.add("active");
 
-        /* ĐÓNG */
-
         categoryDropdown?.classList.remove("open");
 
         categoryButton?.setAttribute("aria-expanded", "false");
-
-        /* UPDATE */
 
         updateResults();
       });
@@ -410,20 +650,18 @@ if (keywordFromHome && searchInput) {
   }
 
   /* =====================================================
-     FILTER DROPDOWN OPEN / CLOSE
+     FILTER DROPDOWN
   ===================================================== */
 
   if (filterButton && filterDropdown) {
-    filterButton.addEventListener("click", (e) => {
-      e.stopPropagation();
+    filterButton.addEventListener("click", (event) => {
+      event.stopPropagation();
 
       const isOpen = filterDropdown.classList.contains("open");
 
       filterDropdown.classList.toggle("open", !isOpen);
 
       filterButton.setAttribute("aria-expanded", String(!isOpen));
-
-      /* ĐÓNG CATEGORY */
 
       if (categoryDropdown) {
         categoryDropdown.classList.remove("open");
@@ -438,11 +676,11 @@ if (keywordFromHome && searchInput) {
   ===================================================== */
 
   if (filterMenu) {
-    const filterButtons = filterMenu.querySelectorAll("button[data-filter]");
+    const buttons = filterMenu.querySelectorAll("button[data-filter]");
 
-    filterButtons.forEach((button) => {
-      button.addEventListener("click", (e) => {
-        e.stopPropagation();
+    buttons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
 
         const filter = button.dataset.filter;
 
@@ -452,29 +690,21 @@ if (keywordFromHome && searchInput) {
 
         selectedFilter = filter;
 
-        /* ĐỔI TEXT */
-
         const selectedText = filterButton?.querySelector(".filter-selected");
 
         if (selectedText) {
           selectedText.textContent = button.textContent.trim();
         }
 
-        /* ACTIVE */
-
-        filterButtons.forEach((item) => {
+        buttons.forEach((item) => {
           item.classList.remove("active");
         });
 
         button.classList.add("active");
 
-        /* ĐÓNG */
-
         filterDropdown?.classList.remove("open");
 
         filterButton?.setAttribute("aria-expanded", "false");
-
-        /* UPDATE */
 
         updateResults();
       });
@@ -482,7 +712,7 @@ if (keywordFromHome && searchInput) {
   }
 
   /* =====================================================
-     CLICK OUTSIDE
+     CLICK OUTSIDE DROPDOWN
   ===================================================== */
 
   document.addEventListener("click", () => {
@@ -504,9 +734,9 @@ if (keywordFromHome && searchInput) {
       updateResults();
     });
 
-    searchInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
+    searchInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
 
         updateResults();
       }
@@ -533,7 +763,7 @@ if (keywordFromHome && searchInput) {
 
   console.log("IUHSVBOOK CATALOG READY");
 
-  console.log("Tổng số sách:", books.length);
+  console.log("TỔNG SỐ SÁCH:", books.length);
 
   console.log("=================================");
 });
