@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Product Detail | IUHSVBOOK</title>
+
+    <!-- =====================================================
+         GOOGLE FONTS
+    ====================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&family=Unica+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- =====================================================
+         CSS
+    ====================================================== -->
+
+    <link rel="stylesheet" href="../css/productDetail.css" />
+
+    <link rel="stylesheet" href="../css/shoppingCartSideBar.css" />
+  </head>
+
+  <body>
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="product-header">
+      <!-- LOGO -->
+
+      <div class="logo">
+        <img src="../images/logo.jpg" alt="IUHSVBOOK Logo" />
+
+        <p>IUHSVBOOK</p>
+      </div>
+
+      <!-- HEADER BUTTONS -->
+
+      <div class="headerButtons">
+        <!-- USER -->
+        <div class="user-area">
+          <!-- CHƯA ĐĂNG NHẬP -->
+          <a href="./login.html" class="sign-in" id="signInButton">
+            <img src="../images/user 1.png" alt="User" />
+
+            <span>SIGN IN</span>
+
+            <small>Create account</small>
+          </a>
+
+          <!-- ĐÃ ĐĂNG NHẬP -->
+          <div class="user-info" id="userInfo" style="display: none">
+            <img src="../images/user 1.png" alt="User" />
+
+            <span id="usernameDisplay"></span>
+
+            <button type="button" id="logoutButton">Đăng xuất</button>
+          </div>
+        </div>
+
+        <!-- HOME -->
+        <img src="../images/HOME_SIMPLE.png" alt="Home" id="homeIcon" />
+
+        <!-- BOOKMARK -->
+        <img
+          src="../images/BOOKMARK_SIMPLE.png"
+          alt="Bookmark"
+          id="bookmarkIcon"
+        />
+
+        <!-- CART -->
+        <img
+          src="../images/SHOPPING_CART.png"
+          alt="Shopping Cart"
+          id="cartIcon"
+        />
+      </div>
+    </header>
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main>
+      <!-- ===================================================
+           SEARCH
+      ==================================================== -->
+
+      <div class="searchBox">
+        <div class="search-bg"></div>
+
+        <div class="searchBar">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Type the name of book or author..."
+            autocomplete="off"
+          />
+
+          <img src="../images/search.png" alt="Search" id="searchIcon" />
+        </div>
+      </div>
+
+      <!-- ===================================================
+           PRODUCT DETAIL
+      ==================================================== -->
+
+      <section class="productDetail">
+        <!-- =================================================
+             PRODUCT IMAGE
+        ================================================== -->
+
+        <div class="productImage">
+          <img
+            id="productImage"
+            src="../images/COVER_BOOK.png"
+            alt="Product Image"
+          />
+        </div>
+
+        <!-- =================================================
+             PRODUCT INFORMATION
+        ================================================== -->
+
+        <div class="productInfo">
+          <!-- TITLE + BOOKMARK -->
+
+          <div class="productTitle">
+            <p id="productName">Đang tải...</p>
+
+            <button
+              class="bookMarkBlock"
+              id="productBookmark"
+              type="button"
+              aria-label="Bookmark"
+            >
+              <img src="../images/BOOKMARK_SIMPLE.png" alt="Bookmark" />
+            </button>
+          </div>
+
+          <!-- =================================================
+               AUTHOR
+          ================================================== -->
+
+          <div class="productAuthor">
+            <div class="productInfo-bg"></div>
+
+            <div class="author">
+              <p>
+                Tác giả:
+
+                <span id="productAuthorText"> Đang tải... </span>
+              </p>
+            </div>
+          </div>
+
+          <!-- =================================================
+               DESCRIPTION
+          ================================================== -->
+
+          <div class="productDescription">
+            <div class="productInfo-bg"></div>
+
+            <div class="description">
+              <p>Mô tả:</p>
+
+              <p id="productDescriptionText">Đang tải...</p>
+
+              <p>
+                Tình trạng:
+
+                <span id="productStatus"> Còn hàng </span>
+              </p>
+            </div>
+          </div>
+
+          <!-- =================================================
+               SHOPPING
+          ================================================== -->
+
+          <div class="shopping">
+            <!-- PRICE + QUANTITY -->
+
+            <div class="price">
+              <p id="productPrice">0đ</p>
+
+              <!-- QUANTITY -->
+
+              <div class="amount">
+                <!-- MINUS -->
+
+                <button
+                  id="minusProduct"
+                  class="quantityButton"
+                  type="button"
+                  aria-label="Giảm số lượng"
+                >
+                  <img src="../images/MINUS_CIRCLE.png" alt="Giảm" />
+                </button>
+
+                <!-- VALUE -->
+
+                <div id="productQuantity" class="quantityValue">01</div>
+
+                <!-- PLUS -->
+
+                <button
+                  id="plusProduct"
+                  class="quantityButton"
+                  type="button"
+                  aria-label="Tăng số lượng"
+                >
+                  <img src="../images/PLUS_CIRCLE.png" alt="Tăng" />
+                </button>
+              </div>
+            </div>
+
+            <!-- BUYING -->
+
+            <div class="buying">
+              <!-- ADD TO CART -->
+
+              <button
+                class="shoppingCart"
+                id="addToCartButton"
+                type="button"
+                aria-label="Thêm vào giỏ hàng"
+              >
+                <img
+                  src="../images/SHOPPING_CART.png"
+                  alt="Thêm vào giỏ hàng"
+                />
+              </button>
+
+              <!-- BUY NOW -->
+
+              <button class="buy" id="buyNowButton" type="button">
+                Buy now
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- =====================================================
+         RECOMMENDATION
+         FOOTER KHÔNG ĐƯỢC NẰM TRONG SECTION NÀY
+    ====================================================== -->
+
+    <section class="recommend">
+      <!-- MAIN TITLE -->
+
+      <div class="recommendTitle">
+        <img src="../images/Path.png" alt="Gợi ý" />
+
+        <p>Có thể bạn sẽ thích</p>
+      </div>
+
+      <!-- ===================================================
+           SAME CATEGORY
+      ==================================================== -->
+
+      <div class="recommendCategory" id="sameCategorySection">
+        <!-- TITLE -->
+
+        <div class="recommendCategoryTitle">
+          <h3>Sách cùng danh mục</h3>
+        </div>
+
+        <!-- SLIDER -->
+
+        <div class="recommendSlider" data-slider="same">
+          <!-- PREVIOUS -->
+
+          <button
+            class="recommendArrow recommendPrev"
+            id="sameCategoryPrev"
+            type="button"
+            aria-label="Sách cùng danh mục trước"
+          >
+            <img src="../images/CARET_LEFT.png" alt="Previous" />
+          </button>
+
+          <!-- WINDOW -->
+
+          <div class="recommendWindow" id="sameCategoryWindow">
+            <div class="recommendList" id="sameCategoryList">
+              <!-- JS tạo sách -->
+            </div>
+          </div>
+
+          <!-- NEXT -->
+
+          <button
+            class="recommendArrow recommendNext"
+            id="sameCategoryNext"
+            type="button"
+            aria-label="Sách cùng danh mục tiếp theo"
+          >
+            <img src="../images/CARET_RIGHT.png" alt="Next" />
+          </button>
+        </div>
+      </div>
+
+      <!-- ===================================================
+           OTHER CATEGORY
+      ==================================================== -->
+
+      <div class="recommendCategory" id="otherCategorySection">
+        <!-- TITLE -->
+
+        <div class="recommendCategoryTitle">
+          <h3>Sách khác danh mục</h3>
+        </div>
+
+        <!-- SLIDER -->
+
+        <div class="recommendSlider" data-slider="other">
+          <!-- PREVIOUS -->
+
+          <button
+            class="recommendArrow recommendPrev"
+            id="otherCategoryPrev"
+            type="button"
+            aria-label="Sách khác danh mục trước"
+          >
+            <img src="../images/CARET_LEFT.png" alt="Previous" />
+          </button>
+
+          <!-- WINDOW -->
+
+          <div class="recommendWindow" id="otherCategoryWindow">
+            <div class="recommendList" id="otherCategoryList">
+              <!-- JS tạo sách -->
+            </div>
+          </div>
+
+          <!-- NEXT -->
+
+          <button
+            class="recommendArrow recommendNext"
+            id="otherCategoryNext"
+            type="button"
+            aria-label="Sách khác danh mục tiếp theo"
+          >
+            <img src="../images/CARET_RIGHT.png" alt="Next" />
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         FOOTER
+         ĐẶT NGOÀI .recommend
+    ====================================================== -->
+
+    <footer class="footer">
+      <div class="footer-container">
+        <!-- =================================================
+             COLUMN 1
+        ================================================== -->
+
+        <div class="footer-column footer-support">
+          <h3>HỖ TRỢ KHÁCH HÀNG</h3>
+
+          <p>
+            Hotline: 12345678<br />
+            email: abc@gmail.com<br />
+            SĐT: 012345678<br />
+            Địa chỉ: 12 Nguyễn Văn Bảo, Hạnh Thông,<br />
+            Hồ Chí Minh 700000, Vietnam
+          </p>
+        </div>
+
+        <!-- =================================================
+             COLUMN 2
+        ================================================== -->
+
+        <div class="footer-column footer-about">
+          <h3>VỀ CHÚNG TÔI</h3>
+
+          <p>
+            IUHSVBOOK – Nền tảng mua bán sách cũ dành cho sinh viên. Chúng tôi
+            mang đến những đầu sách phục vụ học tập với mức giá hợp lý, giúp
+            sinh viên các khóa dễ dàng tìm, mua, bán lại và tái sử dụng sách.
+            IUHSVBOOK không chỉ giúp tiết kiệm chi phí học tập mà còn góp phần
+            xây dựng thói quen học tập bền vững, chia sẻ tài nguyên tri thức
+            giữa các thế hệ sinh viên. Tiết kiệm hơn – tiện lợi hơn – cùng nhau
+            chia sẻ tri thức.
+          </p>
+        </div>
+
+        <!-- =================================================
+             COLUMN 3
+        ================================================== -->
+
+        <div class="footer-column footer-newsletter">
+          <h3>NHẬN THÔNG BÁO TỪ CHÚNG TÔI</h3>
+
+          <div class="newsletter-form">
+            <input type="email" placeholder="you@example.com" />
+
+            <button type="button">Submit</button>
+          </div>
+
+          <!-- LOGO -->
+
+          <div class="footer-brand">
+            <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
+
+            <div class="footer-brand-text">
+              <h4>IUHSVBOOK</h4>
+
+              <p>Sách cũ, giá trị mới.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <!-- SHOPPING CART SIDEBAR -->
+
+    <script src="../js/shoppingCartSidebar.js"></script>
+
+    <!-- CART BUTTON -->
+
+    <script src="../js/shoppingCartButton.js"></script>
+
+    <!-- PRODUCT DETAIL -->
+
+    <script src="../js/productDetail.js"></script>
+  </body>
+</html>

@@ -3,6 +3,10 @@
 ===================================================== */
 
 document.addEventListener("DOMContentLoaded", async () => {
+  console.log("=================================");
+  console.log("IUHSVBOOK SCRIPT START");
+  console.log("=================================");
+
   /* =====================================================
      LOAD BOOK.JSON
   ===================================================== */
@@ -10,33 +14,204 @@ document.addEventListener("DOMContentLoaded", async () => {
   let books = [];
 
   try {
-    const response = await fetch("../data/book.json");
+    const jsonURL = new URL("./data/book.json", window.location.href);
+
+    console.log("BOOK.JSON URL:", jsonURL.href);
+
+    const response = await fetch(jsonURL.href, {
+      cache: "no-store",
+    });
 
     console.log("BOOK JSON STATUS:", response.status);
 
     if (!response.ok) {
-      throw new Error("Không đọc được book.json");
+      throw new Error(`HTTP ${response.status}`);
     }
 
-    books = await response.json();
+    const data = await response.json();
 
-    console.log("BOOK JSON:", books);
+    if (!Array.isArray(data)) {
+      throw new Error("book.json không phải là mảng.");
+    }
+
+    books = data;
+
+    console.log("BOOK JSON LOADED:", books);
+
+    console.log("TOTAL BOOKS:", books.length);
   } catch (error) {
+    console.error("=================================");
+
     console.error("LỖI LOAD BOOK.JSON:", error);
+
+    console.error("Kiểm tra file:", "./data/book.json");
+
+    console.error("=================================");
+
+    books = [];
   }
 
   /* =====================================================
-     HÀM TẠO CARD SÁCH
-  ===================================================== */
+     LOGIN
+===================================================== */
 
-  function createBookCard(book) {
+  const getCurrentUser = () => {
+    const currentUser = localStorage.getItem("currentUser");
+
+    if (!currentUser) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(currentUser);
+    } catch (error) {
+      console.error("Lỗi đọc currentUser:", error);
+
+      localStorage.removeItem("currentUser");
+
+      return null;
+    }
+  };
+
+  /* =====================================================
+     REQUIRE LOGIN
+===================================================== */
+
+  const requireLogin = () => {
+    const user = getCurrentUser();
+
+    if (user) {
+      return true;
+    }
+
+    alert("Bạn cần đăng nhập trước khi xem sản phẩm!");
+
+    /*
+     * Lưu trang hiện tại để sau này
+     * có thể quay lại Index.
+     */
+
+    const currentPage = window.location.pathname;
+
+    const loginURL =
+      "./pages/login.html?redirect=" + encodeURIComponent(currentPage);
+
+    window.location.href = loginURL;
+
+    return false;
+  };
+
+  /* =====================================================
+     HELPER
+===================================================== */
+
+  const normalizeText = (value) => {
+    return String(value || "")
+      .trim()
+      .toLowerCase();
+  };
+
+  const getBookId = (book) => {
+    if (!book || book.id === undefined || book.id === null) {
+      return "";
+    }
+
+    return String(book.id);
+  };
+
+  /* =====================================================
+     OPEN PRODUCT DETAIL
+===================================================== */
+
+  const openProductDetail = (book) => {
+    if (!book) {
+      return;
+    }
+
+    /*
+     * QUAN TRỌNG:
+     * Mọi đường dẫn vào Product Detail
+     * đều phải đi qua requireLogin().
+     */
+
+    if (!requireLogin()) {
+      return;
+    }
+
+    const id = getBookId(book);
+
+    if (!id) {
+      console.error("Book không có ID:", book);
+
+      return;
+    }
+
+    const detailURL = "./pages/productDetail.html?id=" + encodeURIComponent(id);
+
+    console.log("OPEN PRODUCT DETAIL:", detailURL);
+
+    window.location.href = detailURL;
+  };
+
+  /* =====================================================
+     BOOKMARK
+===================================================== */
+
+  const getBookmarks = () => {
+    try {
+      const data = JSON.parse(localStorage.getItem("bookmarks"));
+
+      return Array.isArray(data) ? data : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const saveBookmarks = (bookmarks) => {
+    localStorage.setItem(
+      "bookmarks",
+      JSON.stringify(Array.isArray(bookmarks) ? bookmarks : []),
+    );
+  };
+
+  const isBookmarked = (id) => {
+    return getBookmarks().some((item) => String(item) === String(id));
+  };
+
+  const toggleBookmark = (id) => {
+    let bookmarks = getBookmarks();
+
+    const index = bookmarks.findIndex((item) => String(item) === String(id));
+
+    if (index >= 0) {
+      bookmarks.splice(index, 1);
+
+      saveBookmarks(bookmarks);
+
+      return false;
+    }
+
+    bookmarks.push(id);
+
+    saveBookmarks(bookmarks);
+
+    return true;
+  };
+
+  /* =====================================================
+     CREATE TOP BOOK CARD
+===================================================== */
+
+  const createBookCard = (book) => {
     const card = document.createElement("article");
 
     card.className = "book-card";
 
+    card.dataset.productId = getBookId(book);
+
     card.innerHTML = `
       <img
-        src="${book.image}"
+        src="${book.image || "./images/COVER_BOOK.png"}"
         alt="${book.name || "Book"}"
         draggable="false"
       />
@@ -46,34 +221,69 @@ document.addEventListener("DOMContentLoaded", async () => {
       </p>
     `;
 
+    /* IMAGE DRAG */
+
+    const image = card.querySelector("img");
+
+    if (image) {
+      image.addEventListener("dragstart", (event) => {
+        event.preventDefault();
+      });
+    }
+
+    /* CLICK */
+
+    card.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      /*
+       * Nếu vừa kéo slider thì không mở detail.
+       */
+
+      if (
+        document.querySelector(".books-list")?.dataset.justDragged === "true"
+      ) {
+        return;
+      }
+
+      openProductDetail(book);
+    });
+
     return card;
-  }
+  };
 
   /* =====================================================
-     HÀM TẠO PRODUCT CARD
-  ===================================================== */
+     CREATE PRODUCT CARD
+===================================================== */
 
-  function createProductCard(book) {
+  const createProductCard = (book) => {
     const card = document.createElement("article");
 
     card.className = "product-card";
 
+    card.dataset.productId = getBookId(book);
+
     const price = Number(book.price || 0).toLocaleString("vi-VN");
+
+    const image = book.image || "./images/COVER_BOOK.png";
+
+    const name = book.name || "Không có tên";
 
     card.innerHTML = `
       <div class="product-image">
         <img
-          src="${book.image}"
-          alt="${book.name || "Book"}"
+          src="${image}"
+          alt="${name}"
           draggable="false"
         />
       </div>
 
       <p
         class="product-name"
-        title="${book.name || ""}"
+        title="${name}"
       >
-        ${book.name || "Không có tên"}
+        ${name}
       </p>
 
       <div class="product-info">
@@ -83,13 +293,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         </span>
 
         <button
-          class="product-bookmark"
+          class="product-bookmark ${isBookmarked(book.id) ? "active" : ""}"
           type="button"
           aria-label="Bookmark"
         >
           <img
-            src="../images/iconbookmark.png"
+            src="./images/iconbookmark.png"
             alt="Bookmark"
+            draggable="false"
           />
         </button>
 
@@ -98,269 +309,360 @@ document.addEventListener("DOMContentLoaded", async () => {
       <button
         class="add-cart"
         type="button"
+        aria-label="Xem chi tiết"
       >
         <img
-          src="../images/iconcart.png"
-          alt="Thêm vào giỏ hàng"
+          src="./images/iconcart.png"
+          alt="Xem chi tiết"
+          draggable="false"
         />
       </button>
     `;
 
+    /* =================================================
+       BOOKMARK
+    ================================================= */
+
+    const bookmark = card.querySelector(".product-bookmark");
+
+    if (bookmark) {
+      bookmark.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const active = toggleBookmark(book.id);
+
+        bookmark.classList.toggle("active", active);
+      });
+    }
+
+    /* =================================================
+       BUY / CART BUTTON
+       
+       BẮT ĐĂNG NHẬP TRƯỚC
+    ================================================= */
+
+    const buyButton = card.querySelector(".add-cart");
+
+    if (buyButton) {
+      buyButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        /*
+         * Không cho mua nếu chưa đăng nhập.
+         *
+         * requireLogin() sẽ tự chuyển Login.
+         */
+
+        if (!requireLogin()) {
+          return;
+        }
+
+        /*
+         * Đã login -> Product Detail.
+         */
+
+        openProductDetail(book);
+      });
+    }
+
+    /* =================================================
+       IMAGE DRAG
+    ================================================= */
+
+    const imageElement = card.querySelector(".product-image img");
+
+    if (imageElement) {
+      imageElement.addEventListener("dragstart", (event) => {
+        event.preventDefault();
+      });
+    }
+
+    /* =================================================
+       CARD CLICK
+    ================================================= */
+
+    card.addEventListener("click", (event) => {
+      /*
+       * Bookmark có event riêng.
+       */
+
+      if (event.target.closest(".product-bookmark")) {
+        return;
+      }
+
+      /*
+       * Buy có event riêng.
+       */
+
+      if (event.target.closest(".add-cart")) {
+        return;
+      }
+
+      /*
+       * Nếu slider vừa kéo.
+       */
+
+      const list = card.closest(".product-list");
+
+      if (list?.dataset.justDragged === "true") {
+        return;
+      }
+
+      /*
+       * Mọi click card
+       * đều đi qua openProductDetail()
+       * và bị requireLogin() kiểm tra.
+       */
+
+      openProductDetail(book);
+    });
+
     return card;
-  }
+  };
 
   /* =====================================================
-     HÀM LẤY CATEGORY
-  ===================================================== */
+     CATEGORY
+===================================================== */
 
-  function getCategoryBooks(categoryNames) {
-    if (!Array.isArray(books)) {
+  const getBookCategory = (book) => {
+    if (!book) {
+      return "";
+    }
+
+    return String(
+      book.category ??
+        book.categoryName ??
+        book.categoryId ??
+        book.type ??
+        book.typeName ??
+        "",
+    ).trim();
+  };
+
+  const getCategoryBooks = (categoryNames) => {
+    if (!Array.isArray(categoryNames)) {
       return [];
     }
 
     return books.filter((book) => {
-      const category = String(book.category || "")
-        .trim()
-        .toLowerCase();
+      const category = normalizeText(getBookCategory(book));
 
-      return categoryNames.some((name) => category === name.toLowerCase());
+      return categoryNames.some((name) => category === normalizeText(name));
     });
-  }
+  };
 
   /* =====================================================
-IUHSVBOOK - TOP BOOKS
+     TOP BOOKS
 ===================================================== */
 
   const booksBox = document.querySelector(".books-box");
+
   const booksList = document.querySelector(".books-list");
+
   const booksPrev = document.querySelector(".books-prev");
+
   const booksNext = document.querySelector(".books-next");
 
   if (booksBox && booksList) {
-    let booksPosition = 0;
-    let booksStartX = 0;
-    let booksStartPosition = 0;
-    let booksDragging = false;
+    console.log("TOP BOOKS ELEMENT FOUND");
 
-    /* =====================================================
-     LOAD BOOK.JSON
-  ===================================================== */
+    let position = 0;
+    let dragging = false;
 
-    const loadTopBooks = async () => {
-      try {
-        const response = await fetch("./data/book.json");
+    let startX = 0;
+    let startPosition = 0;
 
-        if (!response.ok) {
-          throw new Error("Không đọc được book.json");
-        }
+    let moved = false;
+    let pointerId = null;
 
-        const books = await response.json();
+    /* RENDER */
 
-        console.log("TOP BOOKS:", books);
+    const renderTopBooks = () => {
+      booksList.innerHTML = "";
 
-        /*
-         * Lấy tối đa 12 cuốn đầu tiên.
-         * Nếu muốn nhiều hơn thì đổi 12 thành số khác.
-         */
-        const topBooks = books.slice(0, 12);
+      const topBooks = books.slice(0, 12);
 
-        /*
-         * Xóa các card mẫu trong HTML
-         */
-        booksList.innerHTML = "";
+      topBooks.forEach((book) => {
+        booksList.appendChild(createBookCard(book));
+      });
 
-        /*
-         * Tạo card từ book.json
-         */
-        topBooks.forEach((book) => {
-          const card = document.createElement("article");
+      position = 0;
 
-          card.className = "book-card";
-
-          card.innerHTML = `
-          <img
-            src="${book.image}"
-            alt="${book.name}"
-          />
-
-          <p title="${book.name}">
-            ${book.name}
-          </p>
-        `;
-
-          booksList.appendChild(card);
-        });
-
-        /*
-         * Reset vị trí slider sau khi tạo sách
-         */
-        booksPosition = 0;
-
-        updateBooks();
-      } catch (error) {
-        console.error("LỖI TOP BOOKS:", error);
-
-        booksList.innerHTML = `
-        <p style="color:red;">
-          Không tải được danh sách sách
-        </p>
-      `;
-      }
+      requestAnimationFrame(() => {
+        updateSlider();
+      });
     };
 
-    /* =====================================================
-     TÍNH GIỚI HẠN SLIDER
-  ===================================================== */
+    /* MAX */
 
-    const getBooksMaxPosition = () => {
-      return Math.max(0, booksBox.scrollWidth - booksBox.clientWidth);
+    const getMaxPosition = () => {
+      return Math.max(0, booksList.scrollWidth - booksBox.clientWidth);
     };
 
-    /* =====================================================
-     CẬP NHẬT SLIDER
-  ===================================================== */
+    /* UPDATE */
 
-    const updateBooks = () => {
-      const maxPosition = getBooksMaxPosition();
+    const updateSlider = () => {
+      const max = getMaxPosition();
 
-      booksPosition = Math.max(0, Math.min(booksPosition, maxPosition));
+      position = Math.max(0, Math.min(position, max));
 
-      booksList.style.transform = `translate3d(-${booksPosition}px, 0, 0)`;
+      booksList.style.transform = `translate3d(-${position}px,0,0)`;
 
       if (booksPrev) {
-        booksPrev.disabled = booksPosition <= 0;
+        booksPrev.disabled = position <= 0;
       }
 
       if (booksNext) {
-        booksNext.disabled = booksPosition >= maxPosition;
+        booksNext.disabled = position >= max;
       }
     };
 
-    /* =====================================================
-     KHOẢNG DI CHUYỂN MỖI LẦN BẤM
-  ===================================================== */
+    /* STEP */
 
-    const getBooksStep = () => {
+    const getStep = () => {
       const card = booksList.querySelector(".book-card");
 
-      if (!card) return 200;
+      if (!card) {
+        return 200;
+      }
 
-      const gap = parseFloat(getComputedStyle(booksList).gap) || 0;
+      const styles = getComputedStyle(booksList);
 
-      return card.offsetWidth + gap;
+      const gap = parseFloat(styles.columnGap) || parseFloat(styles.gap) || 0;
+
+      return card.getBoundingClientRect().width + gap;
     };
 
-    /* =====================================================
-     NÚT PREVIOUS
-  ===================================================== */
+    /* PREVIOUS */
 
     if (booksPrev) {
-      booksPrev.addEventListener("click", () => {
-        booksPosition -= getBooksStep();
+      booksPrev.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
-        updateBooks();
+        position -= getStep();
+
+        updateSlider();
       });
     }
 
-    /* =====================================================
-     NÚT NEXT
-  ===================================================== */
+    /* NEXT */
 
     if (booksNext) {
-      booksNext.addEventListener("click", () => {
-        booksPosition += getBooksStep();
+      booksNext.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
-        updateBooks();
+        position += getStep();
+
+        updateSlider();
       });
     }
 
-    /* =====================================================
-     DRAG TOP BOOKS
-  ===================================================== */
+    /* POINTER DOWN */
 
-    booksList.addEventListener("pointerdown", (e) => {
-      /*
-       * Không drag khi click button
-       */
-      if (e.target.closest("button")) return;
+    booksList.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) {
+        return;
+      }
 
-      booksDragging = true;
+      if (event.target.closest("button")) {
+        return;
+      }
 
-      booksStartX = e.clientX;
+      if (getMaxPosition() <= 0) {
+        return;
+      }
 
-      booksStartPosition = booksPosition;
+      dragging = true;
+      moved = false;
+
+      startX = event.clientX;
+
+      startPosition = position;
+
+      pointerId = event.pointerId;
 
       booksList.classList.add("dragging");
-
-      booksList.setPointerCapture(e.pointerId);
     });
 
-    /* =====================================================
-     DI CHUYỂN KHI DRAG
-  ===================================================== */
+    /* POINTER MOVE */
 
-    booksList.addEventListener("pointermove", (e) => {
-      if (!booksDragging) return;
+    booksList.addEventListener("pointermove", (event) => {
+      if (!dragging) {
+        return;
+      }
 
-      const distance = booksStartX - e.clientX;
+      if (pointerId !== null && event.pointerId !== pointerId) {
+        return;
+      }
 
-      booksPosition = booksStartPosition + distance;
+      const distance = startX - event.clientX;
 
-      updateBooks();
+      if (Math.abs(distance) >= 8) {
+        moved = true;
+      }
+
+      if (!moved) {
+        return;
+      }
+
+      event.preventDefault();
+
+      position = startPosition + distance;
+
+      updateSlider();
     });
 
-    /* =====================================================
-     KẾT THÚC DRAG
-  ===================================================== */
+    /* POINTER UP */
 
-    const stopBooksDrag = (e) => {
-      if (!booksDragging) return;
+    const stopDrag = (event) => {
+      if (!dragging) {
+        return;
+      }
 
-      booksDragging = false;
+      if (pointerId !== null && event.pointerId !== pointerId) {
+        return;
+      }
+
+      const wasDragged = moved;
+
+      dragging = false;
+      pointerId = null;
 
       booksList.classList.remove("dragging");
 
-      if (
-        e &&
-        booksList.hasPointerCapture &&
-        booksList.hasPointerCapture(e.pointerId)
-      ) {
-        booksList.releasePointerCapture(e.pointerId);
+      if (wasDragged) {
+        booksList.dataset.justDragged = "true";
+
+        setTimeout(() => {
+          delete booksList.dataset.justDragged;
+        }, 250);
       }
 
-      updateBooks();
+      moved = false;
+
+      updateSlider();
     };
 
-    booksList.addEventListener("pointerup", stopBooksDrag);
+    booksList.addEventListener("pointerup", stopDrag);
 
-    booksList.addEventListener("pointercancel", stopBooksDrag);
-
-    /* =====================================================
-     MOBILE
-  ===================================================== */
+    booksList.addEventListener("pointercancel", stopDrag);
 
     booksList.style.touchAction = "pan-y";
 
-    /* =====================================================
-     RESPONSIVE
-  ===================================================== */
+    window.addEventListener("resize", updateSlider);
 
-    window.addEventListener("resize", () => {
-      updateBooks();
-    });
-
-    /* =====================================================
-     CHẠY LOAD
-  ===================================================== */
-
-    loadTopBooks();
+    renderTopBooks();
+  } else {
+    console.warn("Không tìm thấy .books-box hoặc .books-list");
   }
+
   /* =====================================================
-     BOOK CATEGORY
-     - ĐẠI CƯƠNG
-     - CÔNG NGHỆ THÔNG TIN
-     - CÁC CATEGORY KHÁC
-  ===================================================== */
+     PRODUCT CATEGORY SLIDERS
+===================================================== */
 
   const productSliders = document.querySelectorAll(".product-slider");
 
@@ -369,88 +671,80 @@ IUHSVBOOK - TOP BOOKS
 
     const productList = slider.querySelector(".product-list");
 
-    const prevButton = slider.querySelector(".product-prev");
+    const prev = slider.querySelector(".product-prev");
 
-    const nextButton = slider.querySelector(".product-next");
+    const next = slider.querySelector(".product-next");
 
     if (!productWindow || !productList) {
       return;
     }
 
-    /* =====================================================
-         XÁC ĐỊNH CATEGORY CỦA SECTION
-      ===================================================== */
+    const section = slider.closest(".book-category-section");
 
-    let section = slider.closest(".book-category-section");
+    const titleElement = section?.querySelector(".book-category-title h2");
 
-    let sectionTitle = section?.querySelector(".book-category-title h2");
-
-    let title = sectionTitle?.textContent.trim().toLowerCase() || "";
-
-    /*
-     * Tìm category dựa trên tiêu đề.
-     */
+    const title = titleElement?.textContent.trim().toLowerCase() || "";
 
     let categoryBooks = [];
+
+    /* ĐẠI CƯƠNG */
 
     if (title.includes("đại cương") || title.includes("general")) {
       categoryBooks = getCategoryBooks(["Đại cương", "General"]);
     } else if (
+
+    /* CÔNG NGHỆ */
       title.includes("công nghệ") ||
       title.includes("technology") ||
       title.includes("it")
     ) {
       categoryBooks = getCategoryBooks([
+        "Kỹ thuật - Công nghệ",
         "Kỹ thuật công nghệ",
+        "Công nghệ thông tin",
         "Technology",
         "IT",
       ]);
     }
 
-    /*
-     * Nếu không xác định được category
-     * thì giữ sách HTML cũ.
-     */
+    /* RENDER JSON */
 
     if (categoryBooks.length > 0) {
       productList.innerHTML = "";
 
       categoryBooks.forEach((book) => {
-        const card = createProductCard(book);
-
-        productList.appendChild(card);
+        productList.appendChild(createProductCard(book));
       });
     }
 
-    /* =====================================================
-         SLIDER
-      ===================================================== */
+    /* SLIDER */
 
     let position = 0;
-
     let dragging = false;
 
     let startX = 0;
-
     let startPosition = 0;
 
-    const getMaxPosition = () => {
-      return Math.max(0, productWindow.scrollWidth - productWindow.clientWidth);
+    let moved = false;
+    let pointerId = null;
+
+    const getMax = () => {
+      return Math.max(0, productList.scrollWidth - productWindow.clientWidth);
     };
 
-    const updateSlider = () => {
-      const maxPosition = getMaxPosition();
+    const update = () => {
+      const max = getMax();
 
-      position = Math.max(0, Math.min(position, maxPosition));
+      position = Math.max(0, Math.min(position, max));
 
-      productList.style.transform = `translate3d(-${position}px, 0, 0)`;
+      productList.style.transform = `translate3d(-${position}px,0,0)`;
 
-      if (prevButton) {
-        prevButton.disabled = position <= 0;
+      if (prev) {
+        prev.disabled = position <= 0;
       }
 
-      if (nextButton) {
-        nextButton.disabled = position >= maxPosition;
+      if (next) {
+        next.disabled = position >= max;
       }
     };
 
@@ -458,231 +752,257 @@ IUHSVBOOK - TOP BOOKS
       const card = productList.querySelector(".product-card");
 
       if (!card) {
-        return 160;
+        return 180;
       }
 
-      const style = getComputedStyle(productList);
+      const styles = getComputedStyle(productList);
 
-      const gap = parseFloat(style.columnGap || style.gap) || 0;
+      const gap = parseFloat(styles.columnGap) || parseFloat(styles.gap) || 0;
 
       return card.getBoundingClientRect().width + gap;
     };
 
-    /* =====================================================
-         PREVIOUS
-      ===================================================== */
+    /* PREV */
 
-    if (prevButton) {
-      prevButton.addEventListener("click", () => {
+    if (prev) {
+      prev.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
         position -= getStep();
 
-        updateSlider();
+        update();
       });
     }
 
-    /* =====================================================
-         NEXT
-      ===================================================== */
+    /* NEXT */
 
-    if (nextButton) {
-      nextButton.addEventListener("click", () => {
-        const maxPosition = getMaxPosition();
+    if (next) {
+      next.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
         position += getStep();
 
-        if (position > maxPosition) {
-          position = maxPosition;
-        }
-
-        updateSlider();
+        update();
       });
     }
 
-    /* =====================================================
-         DRAG
-      ===================================================== */
+    /* DRAG */
 
-    productList.addEventListener("pointerdown", (e) => {
-      if (e.target.closest("button")) {
+    productList.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) {
+        return;
+      }
+
+      if (event.target.closest("button")) {
+        return;
+      }
+
+      if (getMax() <= 0) {
         return;
       }
 
       dragging = true;
+      moved = false;
 
-      startX = e.clientX;
+      startX = event.clientX;
 
       startPosition = position;
 
-      productList.classList.add("dragging");
+      pointerId = event.pointerId;
 
-      productList.setPointerCapture(e.pointerId);
+      productList.classList.add("dragging");
     });
 
-    productList.addEventListener("pointermove", (e) => {
+    productList.addEventListener("pointermove", (event) => {
       if (!dragging) {
         return;
       }
 
-      const distance = startX - e.clientX;
+      if (pointerId !== null && event.pointerId !== pointerId) {
+        return;
+      }
+
+      const distance = startX - event.clientX;
+
+      if (Math.abs(distance) >= 8) {
+        moved = true;
+      }
+
+      if (!moved) {
+        return;
+      }
+
+      event.preventDefault();
 
       position = startPosition + distance;
 
-      updateSlider();
+      update();
     });
 
-    const stopDrag = (e) => {
+    const stopProductDrag = (event) => {
       if (!dragging) {
         return;
       }
 
+      if (pointerId !== null && event.pointerId !== pointerId) {
+        return;
+      }
+
+      const wasDragged = moved;
+
       dragging = false;
+      moved = false;
+      pointerId = null;
 
       productList.classList.remove("dragging");
 
-      if (
-        e &&
-        productList.hasPointerCapture &&
-        productList.hasPointerCapture(e.pointerId)
-      ) {
-        productList.releasePointerCapture(e.pointerId);
+      if (wasDragged) {
+        productList.dataset.justDragged = "true";
+
+        setTimeout(() => {
+          delete productList.dataset.justDragged;
+        }, 250);
       }
 
-      updateSlider();
+      update();
     };
 
-    productList.addEventListener("pointerup", stopDrag);
+    productList.addEventListener("pointerup", stopProductDrag);
 
-    productList.addEventListener("pointercancel", stopDrag);
-
-    /*
-     * MOBILE
-     */
+    productList.addEventListener("pointercancel", stopProductDrag);
 
     productList.style.touchAction = "pan-y";
 
-    updateSlider();
-
-    window.addEventListener("resize", updateSlider);
-  });
-
-  /* =====================================================
-     BOOKMARK
-  ===================================================== */
-
-  document.querySelectorAll(".product-bookmark").forEach((button) => {
-    button.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      e.stopPropagation();
-
-      button.classList.toggle("active");
+    requestAnimationFrame(() => {
+      update();
     });
+
+    window.addEventListener("resize", update);
   });
 
   /* =====================================================
-     ADD CART
-  ===================================================== */
+     HOME SEARCH → CATALOG
+===================================================== */
 
-  document.querySelectorAll(".add-cart").forEach((button) => {
-    button.addEventListener("click", (e) => {
-      e.preventDefault();
+  const searchInput = document.querySelector(".hero-search-input");
 
-      e.stopPropagation();
+  const searchIcon = document.querySelector("#searchIcon");
 
-      button.classList.add("added");
+  const goToCatalog = () => {
+    const keyword = searchInput?.value.trim() || "";
 
-      setTimeout(() => {
-        button.classList.remove("added");
-      }, 300);
+    if (!keyword) {
+      window.location.href = "./pages/catalog.html";
+
+      return;
+    }
+
+    window.location.href = `./pages/catalog.html?search=${encodeURIComponent(
+      keyword,
+    )}`;
+  };
+
+  if (searchInput) {
+    searchInput.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter") {
+        return;
+      }
+
+      event.preventDefault();
+
+      goToCatalog();
     });
-  });
+  }
+
+  if (searchIcon) {
+    searchIcon.addEventListener("click", goToCatalog);
+  }
 
   /* =====================================================
-     EXPLORE BUTTON
-  ===================================================== */
+     EXPLORE
+===================================================== */
 
   const exploreButton = document.querySelector(".explore-btn");
 
   if (exploreButton) {
-    exploreButton.addEventListener("click", () => {
-      const categorySection = document.querySelector(".category-section");
+    exploreButton.addEventListener("click", (event) => {
+      event.preventDefault();
 
-      if (categorySection) {
-        categorySection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
+      goToCatalog();
     });
   }
 
   /* =====================================================
-     SEARCH
-  ===================================================== */
+     USER LOGIN UI
+===================================================== */
 
-  const searchInput = document.querySelector(".search-box input");
+  const signInButton = document.querySelector("#signInButton");
 
-  if (searchInput) {
-    searchInput.addEventListener("keydown", (e) => {
-      if (e.key !== "Enter") {
-        return;
+  const userInfo = document.querySelector("#userInfo");
+
+  const usernameDisplay = document.querySelector("#usernameDisplay");
+
+  const logoutButton = document.querySelector("#logoutButton");
+
+  const updateUserUI = () => {
+    const currentUser = getCurrentUser();
+
+    if (!currentUser) {
+      if (signInButton) {
+        signInButton.style.display = "flex";
       }
 
-      const keyword = searchInput.value.trim();
-
-      if (!keyword) {
-        return;
+      if (userInfo) {
+        userInfo.style.display = "none";
       }
 
-      console.log("Search:", keyword);
+      return;
+    }
+
+    if (signInButton) {
+      signInButton.style.display = "none";
+    }
+
+    if (userInfo) {
+      userInfo.style.display = "flex";
+    }
+
+    if (usernameDisplay) {
+      usernameDisplay.textContent =
+        currentUser.username || currentUser.name || currentUser.email || "";
+    }
+  };
+
+  updateUserUI();
+
+  /* =====================================================
+     LOGOUT
+===================================================== */
+
+  if (logoutButton) {
+    logoutButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      localStorage.removeItem("currentUser");
+
+      updateUserUI();
+
+      alert("Đã đăng xuất!");
     });
   }
 
   /* =====================================================
-     FOOTER NEWSLETTER
-  ===================================================== */
-
-  const newsletterInput = document.querySelector(".newsletter-form input");
-
-  const newsletterButton = document.querySelector(".newsletter-form button");
-
-  if (newsletterInput && newsletterButton) {
-    newsletterButton.addEventListener("click", () => {
-      const email = newsletterInput.value.trim();
-
-      if (!email) {
-        return;
-      }
-
-      console.log("Newsletter:", email);
-
-      newsletterInput.value = "";
-    });
-  }
-
-  /* =====================================================
-     DEBUG
-  ===================================================== */
+     FINISH
+===================================================== */
 
   console.log("=================================");
 
   console.log("IUHSVBOOK SCRIPT READY");
 
-  console.log("Tổng số sách:", books.length);
+  console.log("BOOK COUNT:", books.length);
 
   console.log("=================================");
 });
-
-const homeSearchInput = document.querySelector(".hero-search-input");
-const exploreBtn = document.querySelector(".explore-btn");
-
-if (exploreBtn) {
-  exploreBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const keyword = homeSearchInput?.value.trim() || "";
-
-    window.location.href =
-      `./pages/catalog.html?search=${encodeURIComponent(keyword)}`;
-  });
-}

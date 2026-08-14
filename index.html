@@ -33,12 +33,19 @@
 
       <!-- MENU -->
       <nav class="header-menu">
-        <!-- SIGN IN -->
-        <a href="#" class="sign-in">
-          <img src="./images/iconlogin.png" alt="Sign In" />
-          <span>SIGN IN</span>
-          <small>Create account</small>
-        </a>
+        <div class="user-area">
+  <a href="./pages/login.html" class="sign-in" id="signInButton">
+    <img src="./images/iconlogin.png" alt="Sign In" />
+    <span>SIGN IN</span>
+    <small>Create account</small>
+  </a>
+
+  <div class="user-info" id="userInfo">
+    <img src="./images/iconlogin.png" alt="User" />
+    <span id="usernameDisplay"></span>
+    <button type="button" id="logoutButton">Đăng xuất</button>
+  </div>
+</div>
 
         <!-- HOME -->
         <a href="./index.html" class="home">
@@ -51,9 +58,9 @@
         </a>
 
         <!-- CART -->
-        <a href="#" class="cart">
-          <img src="./images/iconcart.png" alt="Cart" />
-        </a>
+        <a href="#" class="cart" id="cartIcon">
+  <img src="./images/iconcart.png" alt="Cart" />
+</a>
       </nav>
     </header>
 
@@ -582,7 +589,11 @@
               </div>
 
               <button type="button" class="add-cart">
-                <img src="./images/iconcart.png" alt="Thêm vào giỏ" />
+                <img
+  src="./images/iconcart.png"
+  alt="Cart"
+  id="cartIcon"
+/>
               </button>
             </article>
           </div>
@@ -650,7 +661,8 @@
     <!-- =====================================================
        JAVASCRIPT
   ===================================================== -->
-
+    <script src="./js/shoppingCartSidebar.js"></script>
+<script src="./js/shoppingCartButton.js"></script>
     <script src="./js/script.js"></script>
   </body>
 </html>

@@ -1,0 +1,685 @@
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  padding: 35px 8%;
+  font-family: "Inter", sans-serif;
+  color: #222;
+  background: #fff;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  text-decoration: none;
+  color: #222;
+}
+
+.logo img {
+  width: 62px;
+  height: 62px;
+
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.logo p {
+  margin: 0;
+
+  font-family: "Unica One", sans-serif;
+  font-size: 21px;
+}
+
+/* =====================================================
+   HEADER ACTIONS
+===================================================== */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* HOME BUTTON */
+
+#homeButton {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background-color: transparent;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+#homeButton img {
+  width: 25px;
+  height: 25px;
+
+  object-fit: contain;
+}
+
+#homeButton:hover {
+  background-color: rgba(249, 120, 75, 0.12);
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   CREATE ACCOUNT BUTTON
+===================================================== */
+
+#createAccount {
+  width: 210px;
+  height: 44px;
+
+  border: none;
+  border-radius: 40px;
+
+  background-color: #f9784b;
+
+  color: #fff;
+
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+#createAccount:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 100px;
+
+  margin-top: 75px;
+}
+
+/* =====================================================
+   LOGIN FORM
+===================================================== */
+
+.login-form {
+  width: 500px;
+
+  display: flex;
+  flex-direction: column;
+
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   FORM HEADER
+===================================================== */
+
+.form-header {
+  margin-bottom: 48px;
+}
+
+.form-header h1 {
+  margin-bottom: 10px;
+
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.form-header p {
+  font-size: 17px;
+}
+
+/* =====================================================
+   INPUT GROUP
+===================================================== */
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 13px;
+
+  margin-bottom: 30px;
+}
+
+#passwordGroup {
+  margin-bottom: 22px;
+}
+
+/* =====================================================
+   LABEL
+===================================================== */
+
+label {
+  font-size: 21px;
+  font-weight: 600;
+}
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+.input-group > input,
+.passwordBox input {
+  width: 100%;
+  height: 50px;
+
+  padding: 0 14px;
+
+  border: none;
+  border-radius: 6px;
+
+  outline: none;
+
+  background-color: rgba(249, 120, 75, 0.7);
+
+  color: #222;
+
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.input-group > input:focus,
+.passwordBox input:focus {
+  background-color: rgba(249, 120, 75, 0.82);
+
+  box-shadow: 0 0 0 2px rgba(249, 120, 75, 0.2);
+}
+
+.input-group input::placeholder {
+  color: rgba(34, 34, 34, 0.6);
+}
+
+/* =====================================================
+   PASSWORD
+===================================================== */
+
+.passwordBox {
+  position: relative;
+  width: 100%;
+}
+
+.passwordBox input {
+  width: 100%;
+  height: 50px;
+  padding: 0 52px 0 14px;
+  border: none;
+  border-radius: 6px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 24px;
+  height: 24px;
+
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.password-toggle img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+/* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+.forgot-password {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 38px;
+}
+
+/* =====================================================
+   REMEMBER ME
+===================================================== */
+
+.remember-me {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+#rememberMe {
+  width: 18px;
+  height: 18px;
+
+  margin: 0;
+
+  cursor: pointer;
+}
+
+.remember-me label {
+  font-size: 16px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+/* =====================================================
+   FORGOT PASSWORD LINK
+===================================================== */
+
+.forgot-password a {
+  font-size: 16px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  color: #474bca;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* =====================================================
+   LOGIN BUTTON
+===================================================== */
+
+form > button {
+  width: 100%;
+  height: 50px;
+
+  border: none;
+  border-radius: 6px;
+
+  background-color: #f9784b;
+
+  color: #fff;
+
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+form > button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   REGISTER
+===================================================== */
+
+.register {
+  margin-top: 18px;
+}
+
+.register p {
+  font-size: 15px;
+}
+
+.register a {
+  text-decoration: none;
+
+  color: #474bca;
+  font-weight: 600;
+}
+
+.register a:hover {
+  text-decoration: underline;
+}
+
+/* =====================================================
+   IMAGE SECTION
+===================================================== */
+
+.login-image {
+  position: relative;
+
+  width: 550px;
+  height: 540px;
+
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   BLUE BACKGROUND
+===================================================== */
+
+.img-bg {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 385px;
+  height: 400px;
+
+  background-color: #3ab8eb;
+
+  border-radius: 12px;
+
+  z-index: 1;
+}
+
+/* =====================================================
+   IMAGE
+===================================================== */
+
+.login-image img {
+  position: absolute;
+
+  top: 28px;
+  left: 35px;
+
+  width: 495px;
+  height: 515px;
+
+  object-fit: cover;
+
+  border-radius: 10px;
+
+  box-shadow: 8px 12px 20px rgba(0, 0, 0, 0.25);
+
+  z-index: 2;
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1200px) {
+  body {
+    padding: 30px 5%;
+  }
+
+  .main {
+    gap: 50px;
+  }
+
+  .login-form {
+    width: 450px;
+  }
+
+  .login-image {
+    width: 470px;
+    height: 480px;
+  }
+
+  .login-image img {
+    width: 430px;
+    height: 450px;
+  }
+
+  .img-bg {
+    width: 330px;
+    height: 350px;
+  }
+}
+
+/* =====================================================
+   SMALL LAPTOP / TABLET
+===================================================== */
+
+@media (max-width: 950px) {
+  body {
+    padding: 25px 30px;
+  }
+
+  .main {
+    gap: 40px;
+  }
+
+  .login-form {
+    width: 400px;
+  }
+
+  .login-image {
+    width: 400px;
+    height: 420px;
+  }
+
+  .login-image img {
+    top: 22px;
+    left: 25px;
+
+    width: 365px;
+    height: 390px;
+  }
+
+  .img-bg {
+    width: 290px;
+    height: 320px;
+  }
+
+  #createAccount {
+    width: 170px;
+  }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 750px) {
+  body {
+    padding: 20px 20px 40px;
+  }
+
+  header {
+    align-items: center;
+  }
+
+  .logo img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .logo p {
+    font-size: 17px;
+  }
+
+  #createAccount {
+    width: 140px;
+    height: 38px;
+
+    font-size: 13px;
+  }
+
+  .main {
+    flex-direction: column;
+
+    gap: 50px;
+
+    margin-top: 45px;
+  }
+
+  .login-form {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .form-header {
+    margin-bottom: 35px;
+  }
+
+  .form-header h1 {
+    font-size: 34px;
+  }
+
+  .form-header p {
+    font-size: 14px;
+  }
+
+  label {
+    font-size: 18px;
+  }
+
+  .login-image {
+    width: 100%;
+    max-width: 500px;
+    height: 480px;
+  }
+
+  .login-image img {
+    top: 25px;
+    left: 8%;
+
+    width: 84%;
+    height: 440px;
+  }
+
+  .img-bg {
+    width: 65%;
+    height: 350px;
+  }
+}
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+  body {
+    padding: 18px 15px 30px;
+  }
+
+  .logo img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .logo p {
+    font-size: 15px;
+  }
+
+  #createAccount {
+    width: 115px;
+    height: 35px;
+
+    font-size: 11px;
+  }
+
+  .main {
+    margin-top: 35px;
+  }
+
+  .form-header h1 {
+    font-size: 30px;
+  }
+
+  .form-header p {
+    font-size: 13px;
+  }
+
+  .input-group {
+    margin-bottom: 25px;
+  }
+
+  .input-group > input,
+  .passwordBox input {
+    height: 46px;
+  }
+
+  .forgot-password {
+    margin-bottom: 30px;
+  }
+
+  .remember-me label,
+  .forgot-password a {
+    font-size: 13px;
+  }
+
+  form > button {
+    height: 46px;
+    font-size: 16px;
+  }
+
+  .login-image {
+    height: 390px;
+  }
+
+  .login-image img {
+    height: 350px;
+  }
+
+  .img-bg {
+    height: 280px;
+  }
+}
