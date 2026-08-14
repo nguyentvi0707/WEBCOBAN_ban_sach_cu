@@ -15,6 +15,19 @@ document.addEventListener("DOMContentLoaded", () => {
   let visibleBooks = []; // sau khi search + sort
 
   /* =====================================================
+     XÁO TRỘN NGẪU NHIÊN DANH SÁCH SÁCH
+  ===================================================== */
+
+  function shuffleArray(list) {
+    const result = [...list];
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
+  }
+
+  /* =====================================================
      ĐỊNH DẠNG GIÁ TIỀN (15000 -> 15.000đ)
   ===================================================== */
 
@@ -101,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         case "name-desc":
           return b.name.localeCompare(a.name);
         default:
-          return a.id - b.id;
+          return 0; // giữ nguyên thứ tự ngẫu nhiên ban đầu
       }
     });
 
@@ -147,20 +160,20 @@ document.addEventListener("DOMContentLoaded", () => {
      ĐỌC DỮ LIỆU VÀ KHỞI CHẠY
   ===================================================== */
 
-  fetch("../data/books.json")
+  fetch("../data/book.json")
     .then((response) => {
-      if (!response.ok) throw new Error("Không đọc được books.json");
+      if (!response.ok) throw new Error("Không đọc được book.json");
       return response.json();
     })
     .then((data) => {
       allBooks = data;
-      visibleBooks = [...allBooks];
+      visibleBooks = shuffleArray([...allBooks]); // random thứ tự 60 cuốn
       renderGrid();
     })
     .catch((error) => {
       console.error(error);
       emptyMessage.hidden = false;
       emptyMessage.textContent =
-        "Không tải được dữ liệu sách. Kiểm tra lại file data/books.json.";
+        "Không tải được dữ liệu sách. Kiểm tra lại file data/book.json.";
     });
 });
