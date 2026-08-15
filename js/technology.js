@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   console.log("PAGE:", window.location.href);
   console.log("=================================");
 
-  /* =================================================
-       ELEMENTS
-    ================================================= */
+  /* =====================================================
+     ELEMENTS
+  ===================================================== */
 
   const productsGrid =
     document.querySelector("#productsGrid") ||
@@ -39,23 +39,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (!productsGrid) {
     console.error("KHÔNG TÌM THẤY #productsGrid hoặc .products-grid");
-
     return;
   }
 
-  /* =================================================
-       CATEGORY
-    ================================================= */
+  /* =====================================================
+     CATEGORY
+  ===================================================== */
 
   const pageCategory = "Kỹ thuật Công nghệ";
 
   let books = [];
-
   let categoryBooks = [];
 
-  /* =================================================
-       NORMALIZE
-    ================================================= */
+  /* =====================================================
+     NORMALIZE
+  ===================================================== */
 
   const normalizeText = (value) => {
     return String(value || "")
@@ -66,9 +64,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       .toLowerCase();
   };
 
-  /* =================================================
-       GET CATEGORY
-    ================================================= */
+  /* =====================================================
+     GET CATEGORY
+  ===================================================== */
 
   const getBookCategory = (book) => {
     if (!book) {
@@ -85,9 +83,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     ).trim();
   };
 
-  /* =================================================
-       GET BOOK ID
-    ================================================= */
+  /* =====================================================
+     GET BOOK ID
+  ===================================================== */
 
   const getBookId = (book) => {
     if (!book || book.id === undefined || book.id === null) {
@@ -97,9 +95,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     return String(book.id);
   };
 
-  /* =================================================
-       LOAD JSON
-    ================================================= */
+  /* =====================================================
+     LOAD JSON
+  ===================================================== */
 
   const loadBookJSON = async () => {
     const candidatePaths = [
@@ -149,9 +147,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
   };
 
-  /* =================================================
-       LOAD BOOK.JSON
-    ================================================= */
+  /* =====================================================
+     LOAD BOOK.JSON
+  ===================================================== */
 
   try {
     books = await loadBookJSON();
@@ -168,15 +166,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     categoryBooks = books.filter((book) => {
       const category = normalizeText(getBookCategory(book));
-
-      /*
-       * Hỗ trợ:
-       * Kỹ thuật - Công nghệ
-       * Kỹ thuật Công nghệ
-       * Công nghệ thông tin
-       * Technology
-       * IT
-       */
 
       return (
         category === targetCategory ||
@@ -205,30 +194,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("=================================");
 
     productsGrid.innerHTML = `
-        <div class="empty-results">
+      <div class="empty-results">
+        <p>
+          Không tải được book.json.
+        </p>
 
-          <p>
-            Không tải được book.json.
-          </p>
-
-          <p
-            style="
-              margin-top:8px;
-              font-size:13px;
-            "
-          >
-            Mở F12 → Console để kiểm tra.
-          </p>
-
-        </div>
-      `;
+        <p
+          style="
+            margin-top:8px;
+            font-size:13px;
+          "
+        >
+          Mở F12 → Console để kiểm tra.
+        </p>
+      </div>
+    `;
 
     return;
   }
 
-  /* =================================================
-       GET CURRENT USER
-    ================================================= */
+  /* =====================================================
+     GET CURRENT USER
+  ===================================================== */
 
   const getCurrentUser = () => {
     const currentUser = localStorage.getItem("currentUser");
@@ -248,9 +235,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   };
 
-  /* =================================================
-       GO TO LOGIN
-    ================================================= */
+  /* =====================================================
+     GO TO LOGIN
+  ===================================================== */
 
   const goToLogin = () => {
     const currentPage =
@@ -265,14 +252,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = loginURL.href;
   };
 
-  /* =================================================
-       LOGIN UI
-    ================================================= */
+  /* =====================================================
+     LOGIN UI
+  ===================================================== */
 
   const updateUserUI = () => {
     const user = getCurrentUser();
 
-    /* CHƯA ĐĂNG NHẬP */
+    /* CHƯA LOGIN */
 
     if (!user) {
       if (signInButton) {
@@ -290,7 +277,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    /* ĐÃ ĐĂNG NHẬP */
+    /* ĐÃ LOGIN */
 
     if (signInButton) {
       signInButton.style.display = "none";
@@ -308,9 +295,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   updateUserUI();
 
-  /* =================================================
-       SIGN IN
-    ================================================= */
+  /* =====================================================
+     SIGN IN
+  ===================================================== */
 
   if (signInButton) {
     signInButton.addEventListener("click", (event) => {
@@ -321,9 +308,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  /* =================================================
-       LOGOUT
-    ================================================= */
+  /* =====================================================
+     LOGOUT
+  ===================================================== */
 
   if (logoutButton) {
     logoutButton.addEventListener("click", (event) => {
@@ -338,6 +325,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       sessionStorage.removeItem("checkoutRedirect");
 
+      /* ĐÓNG CART */
+
       const cartSidebar = document.querySelector(".shoppingCartSidebar");
 
       const cartBackground = document.querySelector(".shoppingCartSidebar-bg");
@@ -350,6 +339,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         cartBackground.classList.remove("active");
       }
 
+      /* RENDER CART */
+
       if (typeof window.renderCart === "function") {
         window.renderCart();
       }
@@ -360,9 +351,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  /* =================================================
-       SEARCH
-    ================================================= */
+  /* =====================================================
+     SEARCH
+  ===================================================== */
 
   const searchBooks = (list, keyword) => {
     const text = normalizeText(keyword);
@@ -380,9 +371,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   };
 
-  /* =================================================
-       SORT
-    ================================================= */
+  /* =====================================================
+     SORT
+  ===================================================== */
 
   const sortBooks = (list, value) => {
     const result = [...list];
@@ -419,18 +410,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     return result;
   };
 
-  /* =================================================
-       PRODUCT DETAIL
-    ================================================= */
+  /* =====================================================
+     PRODUCT DETAIL
+  ===================================================== */
 
   const goToProductDetail = (book) => {
     if (!book) {
       return;
     }
-
-    /*
-     * BẮT ĐĂNG NHẬP
-     */
 
     if (!getCurrentUser()) {
       alert("Bạn cần đăng nhập trước khi xem sản phẩm!");
@@ -455,54 +442,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = productURL.href;
   };
 
-  /* =================================================
-       BOOKMARK
-    ================================================= */
+  /* =====================================================
+     GLOBAL BOOKMARK
+     
+     DÙNG bookMarkButton.js
+  ===================================================== */
 
-  const getBookmarks = () => {
-    try {
-      const data = JSON.parse(localStorage.getItem("bookmarks"));
+  if (
+    typeof window.isBookmarked !== "function" ||
+    typeof window.toggleBookmark !== "function"
+  ) {
+    console.warn("bookMarkButton.js chưa được load trước technology.js");
+  }
 
-      return Array.isArray(data) ? data : [];
-    } catch {
-      return [];
-    }
-  };
-
-  const saveBookmarks = (bookmarks) => {
-    localStorage.setItem(
-      "bookmarks",
-      JSON.stringify(Array.isArray(bookmarks) ? bookmarks : []),
-    );
-  };
-
-  const isBookmarked = (id) => {
-    return getBookmarks().some((item) => String(item) === String(id));
-  };
-
-  const toggleBookmark = (id) => {
-    const bookmarks = getBookmarks();
-
-    const index = bookmarks.findIndex((item) => String(item) === String(id));
-
-    if (index >= 0) {
-      bookmarks.splice(index, 1);
-
-      saveBookmarks(bookmarks);
-
-      return false;
-    }
-
-    bookmarks.push(id);
-
-    saveBookmarks(bookmarks);
-
-    return true;
-  };
-
-  /* =================================================
-       CREATE PRODUCT CARD
-    ================================================= */
+  /* =====================================================
+     CREATE PRODUCT CARD
+  ===================================================== */
 
   const createProductCard = (book) => {
     const card = document.createElement("article");
@@ -517,61 +472,70 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const price = Number(book.price || 0).toLocaleString("vi-VN");
 
-    card.innerHTML = `
-          <div class="category-product-image">
+    const bookmarked =
+      typeof window.isBookmarked === "function"
+        ? window.isBookmarked(book.id)
+        : false;
 
+    card.innerHTML = `
+      <div class="category-product-image">
+
+        <img
+          src="${image}"
+          alt="${name}"
+          draggable="false"
+        />
+
+      </div>
+
+      <div class="category-product-content">
+
+        <h3 title="${name}">
+          ${name}
+        </h3>
+
+        <div class="category-product-bottom">
+
+          <span class="category-product-price">
+            ${price}đ
+          </span>
+
+          <button
+            class="
+              category-bookmark
+              ${bookmarked ? "active" : ""}
+            "
+            type="button"
+            data-bookmark-id="${book.id}"
+            aria-label="Bookmark"
+          >
             <img
-              src="${image}"
-              alt="${name}"
+              src="../images/iconbookmark.png"
+              alt="Bookmark"
               draggable="false"
             />
+          </button>
 
-          </div>
+        </div>
 
-          <div class="category-product-content">
+        <button
+          class="category-cart"
+          type="button"
+          aria-label="Xem chi tiết"
+        >
+          <img
+            src="../images/iconcart.png"
+            alt="Xem chi tiết"
+            draggable="false"
+          />
+        </button>
 
-            <h3 title="${name}">
-              ${name}
-            </h3>
+      </div>
+    `;
 
-            <div class="category-product-bottom">
-
-              <span class="category-product-price">
-                ${price}đ
-              </span>
-
-              <button
-                class="category-bookmark ${
-                  isBookmarked(book.id) ? "active" : ""
-                }"
-                type="button"
-                aria-label="Bookmark"
-              >
-                <img
-                  src="../images/iconbookmark.png"
-                  alt="Bookmark"
-                  draggable="false"
-                />
-              </button>
-
-            </div>
-
-            <button
-              class="category-cart"
-              type="button"
-              aria-label="Xem chi tiết"
-            >
-              <img
-                src="../images/iconcart.png"
-                alt="Xem chi tiết"
-                draggable="false"
-              />
-            </button>
-
-          </div>
-        `;
-
-    /* BOOKMARK */
+    /* =================================================
+       BOOKMARK
+    ================================================= */
 
     const bookmark = card.querySelector(".category-bookmark");
 
@@ -580,13 +544,33 @@ document.addEventListener("DOMContentLoaded", async () => {
         event.preventDefault();
         event.stopPropagation();
 
-        const active = toggleBookmark(book.id);
+        if (!getCurrentUser()) {
+          alert("Bạn cần đăng nhập trước khi lưu sách yêu thích!");
+
+          goToLogin();
+
+          return;
+        }
+
+        if (typeof window.toggleBookmark !== "function") {
+          console.error("Không tìm thấy window.toggleBookmark()");
+
+          return;
+        }
+
+        const active = window.toggleBookmark(book.id);
 
         bookmark.classList.toggle("active", active);
+
+        if (typeof window.updateBookmarkButtons === "function") {
+          window.updateBookmarkButtons();
+        }
       });
     }
 
-    /* CART / DETAIL */
+    /* =================================================
+       CART / DETAIL
+    ================================================= */
 
     const cartButton = card.querySelector(".category-cart");
 
@@ -599,7 +583,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
 
-    /* CARD */
+    /* =================================================
+       CARD
+    ================================================= */
 
     card.addEventListener("click", (event) => {
       if (event.target.closest(".category-bookmark")) {
@@ -613,7 +599,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       goToProductDetail(book);
     });
 
-    /* IMAGE DRAG */
+    /* =================================================
+       IMAGE DRAG
+    ================================================= */
 
     const imageElement = card.querySelector(".category-product-image img");
 
@@ -626,29 +614,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     return card;
   };
 
-  /* =================================================
-       RENDER
-    ================================================= */
+  /* =====================================================
+     RENDER
+  ===================================================== */
 
   const renderResults = (list) => {
     productsGrid.innerHTML = "";
 
     if (!list || list.length === 0) {
       productsGrid.innerHTML = `
-            <div class="empty-results">
+        <div class="empty-results">
 
-              <div class="empty-book">
-                <div class="book-left"></div>
-                <div class="book-right"></div>
-                <div class="book-center"></div>
-              </div>
+          <div class="empty-book">
+            <div class="book-left"></div>
+            <div class="book-right"></div>
+            <div class="book-center"></div>
+          </div>
 
-              <p>
-                Nothing was found :(
-              </p>
+          <p>
+            Nothing was found :(
+          </p>
 
-            </div>
-          `;
+        </div>
+      `;
 
       return;
     }
@@ -658,9 +646,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   };
 
-  /* =================================================
-       UPDATE
-    ================================================= */
+  /* =====================================================
+     UPDATE RESULTS
+  ===================================================== */
 
   const updateResults = () => {
     const keyword = searchInput?.value || "";
@@ -676,9 +664,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("RESULT:", result);
   };
 
-  /* =================================================
-       SEARCH → CATALOG
-    ================================================= */
+  /* =====================================================
+     SEARCH → CATALOG
+  ===================================================== */
 
   const goToCatalog = () => {
     const keyword = searchInput?.value.trim() || "";
@@ -692,9 +680,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = url.href;
   };
 
-  /* =================================================
-       SEARCH INPUT
-    ================================================= */
+  /* =====================================================
+     SEARCH INPUT
+  ===================================================== */
 
   if (searchInput) {
     searchInput.addEventListener("input", updateResults);
@@ -710,31 +698,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  /* =================================================
-       SEARCH BUTTON
-    ================================================= */
+  /* =====================================================
+     SEARCH BUTTON
+  ===================================================== */
 
   if (searchButton) {
     searchButton.addEventListener("click", goToCatalog);
   }
 
-  /* =================================================
-       SORT
-    ================================================= */
+  /* =====================================================
+     SORT
+  ===================================================== */
 
   if (sortSelect) {
     sortSelect.addEventListener("change", updateResults);
   }
 
-  /* =================================================
-       INITIAL
-    ================================================= */
+  /* =====================================================
+     INITIAL
+  ===================================================== */
 
   updateResults();
 
-  /* =================================================
-       FINAL
-    ================================================= */
+  /* =====================================================
+     FINAL
+  ===================================================== */
 
   console.log("=================================");
 
@@ -745,6 +733,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   console.log("CATEGORY BOOKS:", categoryBooks.length);
 
   console.log("CURRENT USER:", getCurrentUser());
+
+  console.log(
+    "BOOKMARK COUNT:",
+    typeof window.getBookmarks === "function"
+      ? window.getBookmarks().length
+      : "N/A",
+  );
 
   console.log("=================================");
 });

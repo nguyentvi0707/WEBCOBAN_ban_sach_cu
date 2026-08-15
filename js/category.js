@@ -56,11 +56,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const pageCategory = "Đại cương";
 
   let books = [];
-
   let categoryBooks = [];
 
   /* =====================================================
-     NORMALIZE TEXT
+     NORMALIZE
   ===================================================== */
 
   const normalizeText = (value) => {
@@ -73,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   /* =====================================================
-     GET BOOK CATEGORY
+     GET CATEGORY
   ===================================================== */
 
   const getBookCategory = (book) => {
@@ -108,7 +107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   /* =====================================================
-     LOAD BOOK.JSON
+     LOAD JSON
   ===================================================== */
 
   const loadBookJSON = async () => {
@@ -157,7 +156,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (!Array.isArray(data)) {
           console.error(
-            "JSON tải được nhưng không phải mảng:",
+            "JSON không phải mảng:",
             url.href,
           );
 
@@ -210,10 +209,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       allCategories,
     );
 
-    /* =================================================
-       LỌC ĐẠI CƯƠNG
-    ================================================= */
-
     const targetCategory =
       normalizeText(pageCategory);
 
@@ -230,9 +225,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             targetCategory,
           ) ||
           category === "general" ||
-          category.includes(
-            "general",
-          )
+          category.includes("general")
         );
       });
 
@@ -276,11 +269,13 @@ document.addEventListener("DOMContentLoaded", async () => {
           Không tải được book.json.
         </p>
 
-        <p style="
-          margin-top: 8px;
-          font-size: 13px;
-        ">
-          Mở F12 → Console để xem URL JSON đang được thử.
+        <p
+          style="
+            margin-top: 8px;
+            font-size: 13px;
+          "
+        >
+          Mở F12 → Console để kiểm tra.
         </p>
       </div>
     `;
@@ -289,23 +284,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   /* =====================================================
-     GET CURRENT USER
+     CURRENT USER
   ===================================================== */
 
   const getCurrentUser = () => {
     const currentUser =
-      localStorage.getItem(
-        "currentUser",
-      );
+      localStorage.getItem("currentUser");
 
     if (!currentUser) {
       return null;
     }
 
     try {
-      return JSON.parse(
-        currentUser,
-      );
+      return JSON.parse(currentUser);
     } catch (error) {
       console.error(
         "LỖI ĐỌC currentUser:",
@@ -321,7 +312,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   /* =====================================================
-     GO TO LOGIN
+     GO LOGIN
   ===================================================== */
 
   const goToLogin = () => {
@@ -358,8 +349,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const user =
       getCurrentUser();
 
-    /* CHƯA ĐĂNG NHẬP */
-
     if (!user) {
       if (signInButton) {
         signInButton.style.display =
@@ -378,8 +367,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       return;
     }
-
-    /* ĐÃ ĐĂNG NHẬP */
 
     if (signInButton) {
       signInButton.style.display =
@@ -589,7 +576,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   /* =====================================================
-     GO PRODUCT DETAIL
+     PRODUCT DETAIL
   ===================================================== */
 
   const goToProductDetail = (
@@ -599,9 +586,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    /*
-     * BẮT ĐĂNG NHẬP
-     */
     if (!getCurrentUser()) {
       alert(
         "Bạn cần đăng nhập trước khi xem sản phẩm!",
@@ -640,88 +624,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   /* =====================================================
-     BOOKMARK
-  ===================================================== */
-
-  const getBookmarks = () => {
-    try {
-      const data =
-        JSON.parse(
-          localStorage.getItem(
-            "bookmarks",
-          ),
-        );
-
-      return Array.isArray(data)
-        ? data
-        : [];
-    } catch {
-      return [];
-    }
-  };
-
-  const saveBookmarks = (
-    bookmarks,
-  ) => {
-    localStorage.setItem(
-      "bookmarks",
-      JSON.stringify(
-        Array.isArray(
-          bookmarks,
-        )
-          ? bookmarks
-          : [],
-      ),
-    );
-  };
-
-  const isBookmarked = (
-    id,
-  ) => {
-    return getBookmarks().some(
-      (item) =>
-        String(item) ===
-        String(id),
-    );
-  };
-
-  const toggleBookmark = (
-    id,
-  ) => {
-    const bookmarks =
-      getBookmarks();
-
-    const index =
-      bookmarks.findIndex(
-        (item) =>
-          String(item) ===
-          String(id),
-      );
-
-    if (index >= 0) {
-      bookmarks.splice(
-        index,
-        1,
-      );
-
-      saveBookmarks(
-        bookmarks,
-      );
-
-      return false;
-    }
-
-    bookmarks.push(id);
-
-    saveBookmarks(
-      bookmarks,
-    );
-
-    return true;
-  };
-
-  /* =====================================================
      CREATE PRODUCT CARD
+     
+     BOOKMARK DÙNG CHUNG
+     → data-bookmark-id
   ===================================================== */
 
   const createProductCard = (
@@ -753,6 +659,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         "vi-VN",
       );
 
+    /*
+     * Lấy trạng thái bookmark từ
+     * bookMarkButton.js nếu có.
+     */
+
+    const bookmarked =
+      typeof window.isBookmarked ===
+      "function"
+        ? window.isBookmarked(
+            book.id,
+          )
+        : false;
+
     card.innerHTML = `
       <div class="category-product-image">
 
@@ -777,14 +696,12 @@ document.addEventListener("DOMContentLoaded", async () => {
           </span>
 
           <button
-            class="category-bookmark ${
-              isBookmarked(
-                book.id,
-              )
-                ? "active"
-                : ""
-            }"
+            class="
+              category-bookmark
+              ${bookmarked ? "active" : ""}
+            "
             type="button"
+            data-bookmark-id="${book.id}"
             aria-label="Bookmark"
           >
             <img
@@ -813,6 +730,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     /* =================================================
        BOOKMARK
+       
+       Dùng global bookMarkButton.js
     ================================================= */
 
     const bookmark =
@@ -827,8 +746,29 @@ document.addEventListener("DOMContentLoaded", async () => {
           event.preventDefault();
           event.stopPropagation();
 
+          if (!getCurrentUser()) {
+            alert(
+              "Bạn cần đăng nhập trước khi lưu sách yêu thích!",
+            );
+
+            goToLogin();
+
+            return;
+          }
+
+          if (
+            typeof window.toggleBookmark !==
+            "function"
+          ) {
+            console.error(
+              "Không tìm thấy toggleBookmark()",
+            );
+
+            return;
+          }
+
           const active =
-            toggleBookmark(
+            window.toggleBookmark(
               book.id,
             );
 
@@ -841,7 +781,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     /* =================================================
-       BUY / CART
+       DETAIL
     ================================================= */
 
     const cartButton =
@@ -958,7 +898,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   /* =====================================================
-     UPDATE RESULTS
+     UPDATE
   ===================================================== */
 
   const updateResults =
@@ -983,6 +923,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       renderResults(
         result,
       );
+
+      /*
+       * Cập nhật trạng thái bookmark
+       * sau khi render card động.
+       */
+
+      if (
+        typeof window.updateBookmarkButtons ===
+        "function"
+      ) {
+        window.updateBookmarkButtons();
+      }
 
       console.log(
         "SEARCH:",
@@ -1034,7 +986,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     searchInput.addEventListener(
       "keydown",
       (event) => {
-        if (event.key !== "Enter") {
+        if (
+          event.key !==
+          "Enter"
+        ) {
           return;
         }
 
@@ -1052,7 +1007,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (searchButton) {
     searchButton.addEventListener(
       "click",
-      goToCatalog,
+      (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        goToCatalog();
+      },
     );
   }
 
@@ -1068,7 +1028,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   /* =====================================================
-     INITIAL RENDER
+     INITIAL
   ===================================================== */
 
   updateResults();
