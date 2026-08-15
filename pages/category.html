@@ -2,20 +2,31 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>CATEGORY - IUHSVBOOK</title>
 
-    <!-- FONT -->
+    <!-- =====================================================
+         GOOGLE FONTS
+    ====================================================== -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@400&family=Unica+One&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Unica+One&display=swap"
       rel="stylesheet"
     />
 
+    <!-- =====================================================
+         CSS
+    ====================================================== -->
+
     <link rel="stylesheet" href="../css/category.css" />
+
+    <link rel="stylesheet" href="../css/shoppingCartSideBar.css" />
   </head>
 
   <body>
@@ -23,162 +34,232 @@
          HEADER
     ====================================================== -->
 
-    <header class="header">
-      <!-- LOGO -->
-      <a href="index.html" class="logo">
-        <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
+    <header class="site-header">
+      <div class="site-header-left">
+        <a href="../index.html" class="site-logo">
+          <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
+          <span>IUHSVBOOK</span>
+        </a>
+      </div>
 
-        <span>IUHSVBOOK</span>
-      </a>
-
-      <!-- MENU -->
-      <nav class="header-menu">
-        <!-- SIGN IN + CREATE ACCOUNT -->
-        <a href="#" class="sign-in">
-          <img src="../images/iconlogin.png" alt="Sign In" />
+      <div class="site-header-right">
+        <!-- CHƯA ĐĂNG NHẬP -->
+        <div id="signInButton" class="header-auth">
+          <img src="../images/iconlogin.png" alt="User" />
 
           <span>SIGN IN</span>
 
-          <small>Create account</small>
-        </a>
+          <button id="createAccountButton" type="button">Create account</button>
+        </div>
+
+        <!-- ĐÃ ĐĂNG NHẬP -->
+        <div id="userInfo" class="header-user" style="display: none">
+          <img src="../images/iconlogin.png" alt="User" />
+
+          <span id="usernameDisplay">duy</span>
+
+          <button id="logoutButton" type="button">Đăng xuất</button>
+        </div>
 
         <!-- HOME -->
-        <a href="../index.html" class="home">
+        <a href="../index.html" class="header-icon" aria-label="Home">
           <img src="../images/iconhome.png" alt="Home" />
         </a>
 
         <!-- BOOKMARK -->
-        <a href="#" class="bookmark">
+        <a href="#" class="header-icon" aria-label="Bookmark">
           <img src="../images/iconbookmark.png" alt="Bookmark" />
         </a>
 
         <!-- CART -->
-        <a href="#" class="cart">
+        <a href="#" class="header-icon cart" id="cartIcon" aria-label="Cart">
           <img src="../images/iconcart.png" alt="Cart" />
         </a>
-      </nav>
+      </div>
     </header>
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
     <main class="category-page">
-      <!-- ================= SEARCH ================= -->
+      <!-- ===================================================
+           SEARCH
+      ==================================================== -->
 
       <div class="category-search">
-        <input type="text" placeholder="Type the name of book or author..." />
+        <input
+          id="categorySearchInput"
+          type="text"
+          placeholder="Type the name of book or author..."
+          autocomplete="off"
+        />
 
-        <button type="button">
+        <button id="categorySearchButton" type="button" aria-label="Search">
           <img src="../images/iconkinhlup.png" alt="Search" />
         </button>
       </div>
 
-      <!-- ================= DANH MỤC ================= -->
+      <!-- ===================================================
+           CATEGORY
+      ==================================================== -->
 
       <section class="category-section">
         <h2 class="category-title">
           <img src="../images/iconthumuc.png" alt="Danh mục" />
+
           <span>Danh mục</span>
         </h2>
 
         <div class="category-list">
-          <!-- SÁCH ĐẠI CƯƠNG -->
-          <a href="category.html" class="category-item">
-            <span>Sách đại cương</span>
+          <!-- ĐẠI CƯƠNG -->
+
+          <a href="./category.html" class="category-item active">
+            <span> Sách đại cương </span>
           </a>
 
-          <!-- SÁCH NGOẠI NGỮ -->
-          <a href="language.html" class="category-item">
-            <span>Sách ngoại ngữ</span>
+          <!-- NGOẠI NGỮ -->
+
+          <a href="./language.html" class="category-item">
+            <span> Sách ngoại ngữ </span>
           </a>
 
-          <!-- SÁCH KỸ THUẬT - CÔNG NGHỆ -->
-          <a href="technology.html" class="category-item">
-            <span>Sách khối kỹ thuật - công nghệ</span>
+          <!-- KỸ THUẬT - CÔNG NGHỆ -->
+
+          <a href="./technology.html" class="category-item">
+            <span> Sách khối kỹ thuật - công nghệ </span>
           </a>
 
-          <!-- SÁCH KỸ NĂNG - VĂN HỌC -->
-          <a href="literature.html" class="category-item">
-            <span>Sách kỹ năng - văn học</span>
+          <!-- KỸ NĂNG - VĂN HỌC -->
+
+          <a href="./literature.html" class="category-item">
+            <span> Sách kỹ năng - văn học </span>
           </a>
         </div>
       </section>
 
-      <!-- ================= SÁCH ================= -->
+      <!-- ===================================================
+           PRODUCTS
+      ==================================================== -->
 
       <section class="category-products">
+        <!-- HEADER -->
+
         <div class="category-products-header">
           <h2>
             <img src="../images/icongit.png" alt="" />
+
             SÁCH ĐẠI CƯƠNG
           </h2>
 
-          <select class="category-filter">
+          <select class="category-filter" id="categoryFilter">
             <option value="default">Lọc</option>
+
             <option value="price-asc">Giá thấp - cao</option>
+
             <option value="price-desc">Giá cao - thấp</option>
+
             <option value="name-asc">Tên A - Z</option>
+
             <option value="name-desc">Tên Z - A</option>
           </select>
         </div>
 
-        <!-- ================= GRID SÁCH ================= -->
+        <!-- =================================================
+             PRODUCT GRID
+        ================================================== -->
 
-        <div class="products-grid"></div>
+        <div class="products-grid" id="productsGrid">
+          <!-- category.js render sách tại đây -->
+        </div>
+
+        <!-- =================================================
+             EMPTY RESULT
+        ================================================== -->
+
+        <div class="empty-results" id="emptyResults" style="display: none">
+          <p>Không tìm thấy sách phù hợp.</p>
+        </div>
       </section>
+    </main>
 
-      <footer class="footer">
-        <div class="footer-container">
-          <!-- CỘT 1: HỖ TRỢ KHÁCH HÀNG -->
-          <div class="footer-column footer-support">
-            <h3>HỖ TRỢ KHÁCH HÀNG</h3>
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
-            <p>
-              Hotline: 12345678<br />
-              email: abc@gmail.com<br />
-              SĐT: 012345678<br />
-              Địa chỉ: 12 Nguyễn Văn Bảo, Hạnh Thông,<br />
-              Hồ Chí Minh 700000, Vietnam
-            </p>
+    <footer class="footer">
+      <div class="footer-container">
+        <!-- =================================================
+             COLUMN 1
+        ================================================== -->
+
+        <div class="footer-column footer-support">
+          <h3>HỖ TRỢ KHÁCH HÀNG</h3>
+
+          <p>
+            Hotline: 12345678<br />
+            Email: abc@gmail.com<br />
+            SĐT: 012345678<br />
+            Địa chỉ: 12 Nguyễn Văn Bảo, Hạnh Thông,<br />
+            Hồ Chí Minh 700000, Vietnam
+          </p>
+        </div>
+
+        <!-- =================================================
+             COLUMN 2
+        ================================================== -->
+
+        <div class="footer-column footer-about">
+          <h3>VỀ CHÚNG TÔI</h3>
+
+          <p>
+            IUHSVBOOK – Nền tảng mua bán sách cũ dành cho sinh viên. Chúng tôi
+            mang đến những đầu sách phục vụ học tập với mức giá hợp lý, giúp
+            sinh viên các khóa dễ dàng tìm, mua, bán lại và tái sử dụng sách.
+            IUHSVBOOK không chỉ giúp tiết kiệm chi phí học tập mà còn góp phần
+            xây dựng thói quen học tập bền vững, chia sẻ tài nguyên tri thức
+            giữa các thế hệ sinh viên. Tiết kiệm hơn – tiện lợi hơn – cùng nhau
+            chia sẻ tri thức.
+          </p>
+        </div>
+
+        <!-- =================================================
+             COLUMN 3
+        ================================================== -->
+
+        <div class="footer-column footer-newsletter">
+          <h3>NHẬN THÔNG BÁO TỪ CHÚNG TÔI</h3>
+
+          <div class="newsletter-form">
+            <input type="email" placeholder="you@example.com" />
+
+            <button type="button">Submit</button>
           </div>
 
-          <!-- CỘT 2: VỀ CHÚNG TÔI -->
-          <div class="footer-column footer-about">
-            <h3>VỀ CHÚNG TÔI</h3>
+          <!-- LOGO -->
 
-            <p>
-              IUHSVBOOK – Nền tảng mua bán sách cũ dành cho sinh viên. Chúng tôi
-              mang đến những đầu sách phục vụ học tập với mức giá hợp lý, giúp
-              sinh viên các khóa dễ dàng tìm, mua, bán lại và tái sử dụng sách.
-              IUHSVBOOK không chỉ giúp tiết kiệm chi phí học tập mà còn góp phần
-              xây dựng thói quen học tập bền vững, chia sẻ tài nguyên tri thức
-              giữa các thế hệ sinh viên. Tiết kiệm hơn – tiện lợi hơn – cùng
-              nhau chia sẻ tri thức.
-            </p>
-          </div>
+          <div class="footer-brand">
+            <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
 
-          <!-- CỘT 3: ĐĂNG KÝ NHẬN THÔNG BÁO -->
-          <div class="footer-column footer-newsletter">
-            <h3>NHẬN THÔNG BÁO TỪ CHÚNG TÔI</h3>
+            <div class="footer-brand-text">
+              <h4>IUHSVBOOK</h4>
 
-            <div class="newsletter-form">
-              <input type="email" placeholder="you@example.com" />
-
-              <button type="button">Submit</button>
-            </div>
-
-            <!-- LOGO + SLOGAN -->
-            <div class="footer-brand">
-              <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
-
-              <div class="footer-brand-text">
-                <h4>IUHSVBOOK</h4>
-                <p>Sách cũ, giá trị mới.</p>
-              </div>
+              <p>Sách cũ, giá trị mới.</p>
             </div>
           </div>
         </div>
-      </footer>
-    </main>
+      </div>
+    </footer>
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <!-- SHOPPING CART SIDEBAR -->
 
     <script src="../js/shoppingCartSidebar.js"></script>
+
+    <!-- CATEGORY -->
+
     <script src="../js/category.js"></script>
   </body>
 </html>
