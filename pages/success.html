@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Success | IUHSVBOOK</title>
+
+    <!-- =====================================================
+         GOOGLE FONT
+    ====================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Unica+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- =====================================================
+         CSS
+    ====================================================== -->
+
+    <link rel="stylesheet" href="../css/success.css" />
+
+    <!-- CART SIDEBAR CSS -->
+
+    <link
+      rel="stylesheet"
+      href="../css/shoppingCartSideBar.css"
+    />
+  </head>
+
+  <body>
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+      <!-- =================================================
+           LOGO
+      ================================================== -->
+
+      <a href="../index.html" class="logo">
+        <img
+          src="../images/logo.jpg"
+          alt="IUHSVBOOK"
+        />
+
+        <span>IUHSVBOOK</span>
+      </a>
+
+      <!-- =================================================
+           HEADER MENU
+      ================================================== -->
+
+      <nav class="header-menu">
+        <!-- ===============================================
+             USER AREA
+        ================================================ -->
+
+        <div class="user-area" id="userArea">
+          <!-- ---------------------------------------------
+               CHƯA ĐĂNG NHẬP
+          ---------------------------------------------- -->
+
+          <a
+            href="./login.html"
+            class="sign-in"
+            id="signInButton"
+          >
+            <img
+              src="../images/user 1.png"
+              alt="User"
+            />
+
+            <span>SIGN IN</span>
+
+            <small>Create account</small>
+          </a>
+
+          <!-- ---------------------------------------------
+               ĐÃ ĐĂNG NHẬP
+          ---------------------------------------------- -->
+
+          <div
+            class="user-info"
+            id="userInfo"
+            style="display: none"
+          >
+            <img
+              src="../images/user 1.png"
+              alt="User"
+            />
+
+            <span
+              id="usernameDisplay"
+            ></span>
+
+            <button
+              type="button"
+              id="logoutButton"
+            >
+              Đăng xuất
+            </button>
+          </div>
+        </div>
+
+        <!-- =================================================
+             HOME
+        ================================================== -->
+
+        <a
+          href="../index.html"
+          class="header-icon"
+          aria-label="Home"
+        >
+          <img
+            src="../images/HOME_SIMPLE.png"
+            alt="Home"
+          />
+        </a>
+
+        <!-- =================================================
+             BOOKMARK
+        ================================================== -->
+
+        <a
+          href="#"
+          class="header-icon"
+          id="bookmarkIcon"
+          aria-label="Bookmark"
+        >
+          <img
+            src="../images/BOOKMARK_SIMPLE.png"
+            alt="Bookmark"
+          />
+        </a>
+
+        <!-- =================================================
+             CART
+        ================================================== -->
+
+        <a
+          href="#"
+          class="header-icon"
+          id="cartIcon"
+          aria-label="Shopping Cart"
+        >
+          <img
+            src="../images/SHOPPING_CART.png"
+            alt="Cart"
+          />
+        </a>
+      </nav>
+    </header>
+
+    <!-- =====================================================
+         SUCCESS PAGE
+    ====================================================== -->
+
+    <main class="success-page">
+      <section class="success-box">
+        <!-- =================================================
+             SUCCESS IMAGE
+        ================================================== -->
+
+        <img
+          class="success-image"
+          src="../images/iconcongratulations.png"
+          alt="Success"
+        />
+
+        <!-- =================================================
+             TITLE
+        ================================================== -->
+
+        <h1>
+          Thank you for your order!
+        </h1>
+
+        <!-- =================================================
+             DESCRIPTION
+        ================================================== -->
+
+        <p>
+          Check your e-mail inbox for the receipt
+        </p>
+
+        <!-- =================================================
+             CONTINUE SHOPPING
+        ================================================== -->
+
+        <button
+          type="button"
+          class="continue-shopping"
+          id="continueShopping"
+        >
+          <img
+            src="../images/SHOPPING_CART.png"
+            alt="Shopping Cart"
+          />
+
+          <span>
+            Continue Shopping
+          </span>
+        </button>
+      </section>
+    </main>
+
+    <!-- =====================================================
+         SHOPPING CART SIDEBAR
+    ====================================================== -->
+
+    <script src="../js/shoppingCartSidebar.js"></script>
+
+    <!-- =====================================================
+         SUCCESS
+    ====================================================== -->
+
+    <script src="../js/success.js"></script>
+  </body>
+</html>

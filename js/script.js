@@ -692,8 +692,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (title.includes("đại cương") || title.includes("general")) {
       categoryBooks = getCategoryBooks(["Đại cương", "General"]);
     } else if (
-
-    /* CÔNG NGHỆ */
+      /* CÔNG NGHỆ */
       title.includes("công nghệ") ||
       title.includes("technology") ||
       title.includes("it")
@@ -946,6 +945,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const logoutButton = document.querySelector("#logoutButton");
 
+  if (logoutButton) {
+    logoutButton.addEventListener("click", () => {
+      localStorage.removeItem("currentUser");
+      localStorage.removeItem("shoppingCart");
+
+      sessionStorage.removeItem("lastOrder");
+      sessionStorage.removeItem("checkoutRedirect");
+
+      alert("Đã đăng xuất!");
+
+      window.location.reload();
+    });
+  }
+
   const updateUserUI = () => {
     const currentUser = getCurrentUser();
 
@@ -982,18 +995,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 ===================================================== */
 
   if (logoutButton) {
-    logoutButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
+    logoutButton.addEventListener("click", () => {
+      /* XÓA TÀI KHOẢN */
       localStorage.removeItem("currentUser");
 
-      updateUserUI();
+      /* XÓA GIỎ HÀNG */
+      localStorage.removeItem("shoppingCart");
+
+      /* XÓA ĐƠN HÀNG TẠM */
+      sessionStorage.removeItem("lastOrder");
+
+      /* XÓA REDIRECT */
+      sessionStorage.removeItem("checkoutRedirect");
 
       alert("Đã đăng xuất!");
+
+      window.location.reload();
     });
   }
-
   /* =====================================================
      FINISH
 ===================================================== */
@@ -1006,3 +1025,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   console.log("=================================");
 });
+const goToLogin = () => {
+  const currentPage =
+    window.location.pathname + window.location.search + window.location.hash;
+
+  const loginURL = new URL("./login.html", window.location.href);
+
+  loginURL.searchParams.set("redirect", currentPage);
+
+  window.location.href = loginURL.href;
+};

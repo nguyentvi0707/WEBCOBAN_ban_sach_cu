@@ -1,157 +1,313 @@
-/* =====================================================
-   RESET
-===================================================== */
 
 * {
   box-sizing: border-box;
-}
-
-html,
-body {
   margin: 0;
   padding: 0;
+}
+
+html {
   width: 100%;
-  background: #fff;
+  min-width: 0;
+  min-height: 100%;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  scroll-behavior: smooth;
 }
 
 body {
-  color: #222;
-  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 100vh;
+
+  background: #ffffff;
+  color: #333333;
+
+  font-family: "Syne", Arial, sans-serif;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
 
 /* =====================================================
-   HEADER
+   HEADER - DÙNG CHUNG WEBSITE
 ===================================================== */
 
-.header {
-  width: 100%;
-  height: 105px;
+.site-header {
+  position: fixed;
 
-  padding: 10px 38px;
+  top: 0;
+  left: 0;
+
+  z-index: 2000;
+
+  width: 100%;
+  height: 80px;
+
+  padding: 10px 40px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 48px;
+  background: #ffffff;
 
-  border-top: 1px solid #222;
-  background: #fff;
+  border-bottom: 1px solid rgba(61, 60, 60, 0.08);
 
-  position: fixed;
-  top: 0;
-
-  z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.category-page {
-  padding-top: 90px;
-}
-
-/* LOGO */
-
-.logo {
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  text-decoration: none;
-  color: #222;
-}
-
-.logo img {
-  width: 52px;
-  height: 52px;
-
-  object-fit: contain;
-
-  border-radius: 50%;
-}
-
-.logo span {
-  font-family: "Unica One", Arial, sans-serif;
-  font-size: 16px;
-}
-
-/* HEADER MENU */
-
-.header-menu {
-  display: flex;
-  align-items: center;
 
   gap: 20px;
 }
 
-.header-menu > a {
-  text-decoration: none;
-  color: #222;
+/* =====================================================
+   CATEGORY PAGE
+===================================================== */
+
+.category-page {
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+
+  /*
+    Header = 80px
+    Khoảng cách bên dưới header = 30px
+  */
+  padding-top: 110px;
 }
 
-/* ICON HEADER */
+/* =====================================================
+   LOGO
+===================================================== */
 
-.header-menu img {
-  display: block;
-
-  width: 22px;
-  height: 22px;
-
-  object-fit: contain;
-}
-
-/* SIGN IN */
-
-.sign-in {
+.site-logo {
   display: flex;
-
   align-items: center;
 
-  gap: 5px;
+  gap: 9px;
+
+  min-width: 0;
+
+  color: #3d3c3c;
+
+  text-decoration: none;
+
+  flex-shrink: 0;
 }
 
-.sign-in img {
-  width: 22px;
-  height: 22px;
+.site-logo img {
+  width: 56px;
+  height: 56px;
+
+  object-fit: contain;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
 }
 
-.sign-in span {
+.site-logo span {
+  font-family: "Unica One", Arial, sans-serif;
+
+  font-size: 20px;
+
+  color: #3d3c3c;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   HEADER RIGHT
+===================================================== */
+
+.site-header-right {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+.header-auth,
+.header-user {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  flex-shrink: 0;
+}
+
+.header-auth > img,
+.header-user > img {
+  width: 25px;
+  height: 25px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   SIGN IN
+===================================================== */
+
+.header-auth > span {
+  color: #333333;
+
   font-family: Arial, Helvetica, sans-serif;
 
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
+
+  white-space: nowrap;
 }
 
-.sign-in small {
-  height: 27px;
+/* =====================================================
+   CREATE ACCOUNT
+===================================================== */
 
-  padding: 0 10px;
+#createAccountButton {
+  height: 30px;
+
+  padding: 0 12px;
+
+  border: 1.5px solid #333333;
+  border-radius: 16px;
+
+  background: #f9784b;
+
+  color: #222222;
+
+  font-size: 10px;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+#createAccountButton:hover {
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   USER
+===================================================== */
+
+.header-user {
+  display: none;
+}
+
+.header-user > span {
+  max-width: 100px;
+
+  color: #333333;
+
+  font-family: "Syne", Arial, sans-serif;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#logoutButton {
+  height: 30px;
+
+  padding: 0 12px;
+
+  border: 1.5px solid #333333;
+  border-radius: 16px;
+
+  background: #f9784b;
+
+  color: #222222;
+
+  font-size: 10px;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+#logoutButton:hover {
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   LOGIN / LOGOUT STATE
+===================================================== */
+
+#signInButton[style*="display: none"] {
+  display: none !important;
+}
+
+#userInfo[style*="display: flex"] {
+  display: flex !important;
+}
+
+/* =====================================================
+   HEADER ICONS
+===================================================== */
+
+.header-icon {
+  width: 30px;
+  height: 30px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: #ff7048;
+  flex-shrink: 0;
 
-  border-radius: 15px;
+  color: #333333;
 
-  font-family: Arial, Helvetica, sans-serif;
-
-  font-size: 10px;
-  font-weight: 400;
-
-  color: #222;
-
-  white-space: nowrap;
+  text-decoration: none;
 }
 
-/* HOME / BOOKMARK / CART */
+.header-icon img {
+  width: 25px;
+  height: 25px;
 
-.home img,
-.bookmark img,
-.cart img {
-  width: 22px;
-  height: 22px;
+  object-fit: contain;
+
+  transition: transform 0.2s ease;
+}
+
+.header-icon:hover img {
+  transform: scale(1.06);
 }
 
 /* =====================================================
@@ -159,56 +315,60 @@ body {
 ===================================================== */
 
 .category-search {
-  width: min(470px, calc(100% - 40px));
-  height: 39px;
+  position: relative;
 
-  margin: 28px auto 45px;
+  z-index: 1;
+
+  width: min(520px, calc(100% - 40px));
+  height: 46px;
+
+  margin: 0 auto 48px;
 
   display: flex;
   align-items: center;
 
-  position: relative;
+  background: #ffffff;
 
-  background: #fff;
+  border: 2px solid #333333;
+  border-radius: 24px;
 
-  border: 2px solid #333;
-  border-radius: 22px;
-
-  box-shadow: 5px 6px 0 #ffbd12;
+  box-shadow: 6px 7px 0 #ffbd12;
 }
-
-/* INPUT */
 
 .category-search input {
   width: 100%;
   height: 100%;
 
-  padding: 0 48px 0 16px;
+  padding: 0 52px 0 18px;
 
   border: 0;
   outline: none;
 
   background: transparent;
 
-  font-family: Arial, Helvetica, sans-serif;
+  color: #222222;
 
-  font-size: 11px;
+  font-family: "Syne", Arial, sans-serif;
 
-  color: #222;
+  font-size: 13px;
 }
 
-/* BUTTON */
+.category-search input::placeholder {
+  color: #777777;
+}
+
+/* =====================================================
+   SEARCH BUTTON
+===================================================== */
 
 .category-search button {
   position: absolute;
 
-  right: 3px;
   top: 50%;
+  right: 4px;
 
-  transform: translateY(-50%);
-
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
 
   padding: 0;
 
@@ -216,64 +376,69 @@ body {
   align-items: center;
   justify-content: center;
 
-  border: 0;
+  transform: translateY(-50%);
+
+  border: none;
 
   background: transparent;
 
   cursor: pointer;
 }
 
-/* KÍNH LÚP */
-
 .category-search button img {
-  display: block;
-
-  width: 19px;
-  height: 19px;
+  width: 20px;
+  height: 20px;
 
   object-fit: contain;
+
+  pointer-events: none;
+}
+
+.category-search button:hover {
+  opacity: 0.75;
 }
 
 /* =====================================================
-   CATEGORY
+   CATEGORY SECTION
 ===================================================== */
 
 .category-section {
   width: 100%;
-  padding: 0 24px;
+
+  padding: 0 30px;
 }
 
 /* =====================================================
-   TIÊU ĐỀ
+   CATEGORY TITLE
 ===================================================== */
 
 .category-title {
   display: flex;
   align-items: center;
 
-  margin: 0 0 28px;
-
-  font-family: "Unica One", Arial, sans-serif;
-  font-size: 36px;
-  font-weight: 400;
-  line-height: 1;
+  margin: 0 0 30px;
 
   color: #3d3c3c;
+
+  font-family: "Unica One", Arial, sans-serif;
+
+  font-size: 38px;
+  font-weight: 400;
+
+  line-height: 1;
 }
 
 .category-title img {
-  display: block;
+  width: 30px;
+  height: 23px;
 
-  width: 28px;
-  height: 21px;
-
-  margin-right: 5px;
+  margin-right: 7px;
 
   object-fit: contain;
 }
 
 /* =====================================================
-   DANH SÁCH
+   CATEGORY LIST
 ===================================================== */
 
 .category-list {
@@ -283,8 +448,8 @@ body {
 
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  column-gap: 38px;
-  row-gap: 18px;
+  column-gap: 40px;
+  row-gap: 20px;
 }
 
 /* =====================================================
@@ -293,140 +458,91 @@ body {
 
 .category-item {
   width: 100%;
-  height: 55px;
+  min-height: 58px;
 
-  position: relative;
+  padding: 0 18px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: #fff;
+  background: #ffffff;
 
-  border: 1px solid #333;
-  border-radius: 5px;
+  border: 1px solid #333333;
+  border-radius: 6px;
+
+  color: #3d3c3c;
 
   text-decoration: none;
 
-  color: #3d3c3c;
-
-  font-family: "Syne", Arial, sans-serif;
-  font-size: 24px;
-  font-weight: 400;
-
-  line-height: 1;
-
-  /* BÓNG CAM */
   box-shadow: 8px 10px 0 #ff7048;
 
-  transition: none;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
-
-/* =====================================================
-   CHỮ TRONG CATEGORY
-===================================================== */
-
-.category-item span {
-  display: block;
-
-  position: relative;
-  z-index: 2;
-
-  color: #3d3c3c;
-
-  font-family: "Syne", Arial, sans-serif;
-  font-size: 24px;
-  font-weight: 400;
-
-  line-height: 1;
-
-  text-align: center;
-
-  white-space: nowrap;
-}
-
-/* =====================================================
-   KHÔNG ĐỔI MÀU KHI CLICK / HOVER
-===================================================== */
 
 .category-item:hover {
-  color: #3d3c3c;
-  background: #fff;
-}
+  transform: translate(2px, 2px);
 
-.category-item:hover span {
-  color: #3d3c3c;
-}
-
-.category-item:active {
-  color: #3d3c3c;
-  background: #fff;
+  box-shadow: 5px 7px 0 #ff7048;
 }
 
 .category-item:visited {
   color: #3d3c3c;
 }
 
-/* =====================================================
-   RESPONSIVE
-===================================================== */
+.category-item span {
+  display: block;
 
-@media (max-width: 900px) {
-  .category-section {
-    padding: 0 20px;
-  }
+  width: 100%;
 
-  .category-list {
-    column-gap: 20px;
-  }
+  color: #3d3c3c;
 
-  .category-item span {
-    font-size: 20px;
-  }
-}
+  font-family: "Syne", Arial, sans-serif;
 
-@media (max-width: 650px) {
-  .category-section {
-    padding: 0 16px;
-  }
+  font-size: 22px;
+  font-weight: 400;
 
-  .category-list {
-    column-gap: 15px;
-    row-gap: 18px;
-  }
+  line-height: 1.2;
 
-  .category-item {
-    height: 50px;
-  }
+  text-align: center;
 
-  .category-item span {
-    font-size: 9px;
-  }
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* =====================================================
-   PRODUCTS
+   PRODUCTS SECTION
 ===================================================== */
 
 .category-products {
   width: 100%;
 
-  padding: 42px 24px 50px;
+  padding: 52px 30px 20px;
 }
 
-/* HEADER PRODUCT */
+/* =====================================================
+   PRODUCTS HEADER
+===================================================== */
 
 .category-products-header {
   width: 100%;
 
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  gap: 20px;
 }
 
-/* TITLE */
+/* =====================================================
+   PRODUCTS TITLE
+===================================================== */
 
 .category-products-header h2 {
   margin: 0;
@@ -434,23 +550,21 @@ body {
   display: flex;
   align-items: center;
 
+  color: #3d3c3c;
+
   font-family: "Unica One", Arial, sans-serif;
 
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 400;
+
+  line-height: 1;
 }
 
-/*
-   Nếu sau này h2 có icon
-*/
-
 .category-products-header h2 img {
-  display: block;
+  width: 28px;
+  height: 28px;
 
-  width: 26px;
-  height: 26px;
-
-  margin-right: 5px;
+  margin-right: 7px;
 
   object-fit: contain;
 }
@@ -460,47 +574,25 @@ body {
 ===================================================== */
 
 .category-filter {
-  width: 68px;
-  height: 26px;
+  width: 166px;
+  height: 48px;
 
-  padding: 0 7px;
+  padding: 0 14px;
 
-  border: 1px solid #333;
-
+  border: 1px solid #333333;
   border-radius: 14px;
-
-  background: #fff;
 
   outline: none;
 
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
 
-  font-size: 9px;
+  color: #222222;
 
-  color: #222;
+  font-family: "Syne", Arial, sans-serif;
+
+  font-size: 13px;
 
   cursor: pointer;
-}
-
-/*
-   Nếu select nằm trực tiếp trong header
-*/
-
-.category-products-header > select {
-  width: 166px;
-  height: 57px;
-
-  padding: 0 7px;
-
-  border: 1px solid #333;
-
-  border-radius: 14px;
-
-  background: #fff;
-
-  outline: none;
-
-  font-size: 16px;
 
   box-shadow: 5px 5px 0 #ff7048;
 }
@@ -514,14 +606,12 @@ body {
 
   display: grid;
 
-  /*
-     5 CARD / HÀNG
-  */
-
   grid-template-columns: repeat(5, minmax(0, 1fr));
 
-  column-gap: 28px;
-  row-gap: 28px;
+  column-gap: 26px;
+  row-gap: 34px;
+
+  align-items: start;
 }
 
 /* =====================================================
@@ -530,7 +620,47 @@ body {
 
 .category-product-card {
   width: 100%;
+  min-width: 0;
 
+  display: flex;
+  flex-direction: column;
+
+  cursor: pointer;
+}
+
+/* =====================================================
+   PRODUCT IMAGE
+===================================================== */
+
+.category-product-image {
+  width: 100%;
+  height: 300px;
+
+  background: #eeeeee;
+
+  border-radius: 6px;
+
+  overflow: hidden;
+}
+
+.category-product-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+/* =====================================================
+   PRODUCT CONTENT
+===================================================== */
+
+.category-product-content {
+  width: 100%;
   min-width: 0;
 
   display: flex;
@@ -538,64 +668,32 @@ body {
 }
 
 /* =====================================================
-   BOOK IMAGE
+   PRODUCT NAME
 ===================================================== */
-
-.category-product-image {
-  width: 200;
-  height: 300px;
-
-  background: #ddd;
-
-  border-radius: 5px;
-
-  overflow: hidden;
-}
-
-.category-product-image img {
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  object-position: center;
-
-  border-radius: 5px;
-}
-
-/* =====================================================
-   BOOK CONTENT
-===================================================== */
-
-.category-product-content {
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-}
-
-/* NAME */
 
 .category-product-content h3 {
   width: 100%;
+  min-height: 40px;
 
-  margin: 7px 0 9px;
+  margin: 9px 0 10px;
+
+  color: #333333;
+
+  font-family: "Syne", Arial, sans-serif;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  line-height: 20px;
 
   text-align: center;
 
-  font-family: Arial, Helvetica, sans-serif;
+  display: -webkit-box;
 
-  font-size: 16px;
-
-  font-weight: 400;
-
-  white-space: nowrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 
   overflow: hidden;
-
-  text-overflow: ellipsis;
 }
 
 /* =====================================================
@@ -608,38 +706,51 @@ body {
   display: flex;
   align-items: center;
 
-  gap: 5px;
+  gap: 7px;
 }
 
-/* PRICE */
+/* =====================================================
+   PRICE
+===================================================== */
 
 .category-product-price {
+  min-width: 0;
+
   flex: 1;
 
-  height: 46px;
+  height: 44px;
+
+  padding: 0 8px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border: 1px solid #333;
-
+  border: 1px solid #333333;
   border-radius: 13px;
 
-  font-family: Arial, Helvetica, sans-serif;
+  color: #333333;
 
-  font-size: 24px;
+  font-family: "Syne", Arial, sans-serif;
+
+  font-size: 17px;
+  font-weight: 600;
 
   white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* BOOKMARK */
+/* =====================================================
+   BOOKMARK
+===================================================== */
 
 .category-bookmark {
-  width: 57px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
 
-  flex: 0 0 46;
+  flex: 0 0 44px;
 
   padding: 0;
 
@@ -647,33 +758,37 @@ body {
   align-items: center;
   justify-content: center;
 
-  background: #fff;
-
-  border: 1px solid #333;
-
+  border: 1px solid #333333;
   border-radius: 50%;
+
+  background: #ffffff;
 
   cursor: pointer;
 }
 
-.category-bookmark img {
-  display: block;
+.category-bookmark:hover,
+.category-bookmark.active {
+  background: #fdbf0f;
+}
 
-  width: 12.5px;
-  height: 18px;
+.category-bookmark img {
+  width: 14px;
+  height: 19px;
 
   object-fit: contain;
+
+  pointer-events: none;
 }
 
 /* =====================================================
-   CART
+   CART / DETAIL
 ===================================================== */
 
 .category-cart {
   width: 100%;
-  height: 46px;
+  height: 44px;
 
-  margin-top: 6px;
+  margin-top: 7px;
 
   padding: 0;
 
@@ -681,158 +796,135 @@ body {
   align-items: center;
   justify-content: center;
 
-  background: #ffbd12;
-
-  border: 1px solid #333;
-
+  border: 1px solid #333333;
   border-radius: 13px;
+
+  background: #ffbd12;
 
   cursor: pointer;
 }
 
-.category-cart img {
-  display: block;
+.category-cart:hover {
+  background: #ffc933;
+}
 
-  width: 27px;
-  height: 25px;
+.category-cart img {
+  width: 25px;
+  height: 24px;
 
   object-fit: contain;
+
+  pointer-events: none;
 }
 
 /* =====================================================
-   RESPONSIVE
+   EMPTY RESULTS
 ===================================================== */
 
-@media (max-width: 900px) {
-  .header {
-    padding: 10px 20px;
-  }
+.empty-results {
+  grid-column: 1 / -1;
 
-  .header-menu {
-    gap: 13px;
-  }
+  min-height: 260px;
 
-  .products-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    column-gap: 14px;
-  }
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  text-align: center;
 }
 
-@media (max-width: 650px) {
-  .header {
-    height: 70px;
+.empty-results p {
+  margin: 0;
 
-    padding: 8px 14px;
-  }
+  color: #555555;
 
-  .logo img {
-    width: 42px;
-    height: 42px;
-  }
+  font-family: "Syne", Arial, sans-serif;
 
-  .logo span {
-    font-size: 13px;
-  }
-
-  .header-menu {
-    gap: 8px;
-  }
-
-  .header-menu img {
-    width: 18px;
-    height: 18px;
-  }
-
-  .sign-in img {
-    width: 18px;
-    height: 18px;
-  }
-
-  .sign-in span {
-    font-size: 8px;
-  }
-
-  .sign-in small {
-    height: 23px;
-
-    padding: 0 7px;
-
-    font-size: 8px;
-  }
-
-  .category-search {
-    width: calc(100% - 32px);
-
-    margin-top: 20px;
-    margin-bottom: 35px;
-  }
-
-  .category-section {
-    padding: 0 16px;
-  }
-
-  .category-list {
-    column-gap: 15px;
-  }
-
-  .category-item {
-    height: 50px;
-
-    font-size: 9px;
-  }
-
-  .category-products {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    column-gap: 14px;
-    row-gap: 24px;
-  }
+  font-size: 17px;
 }
 
-@media (max-width: 420px) {
-  .logo span {
-    display: none;
-  }
+/* =====================================================
+   EMPTY BOOK
+===================================================== */
 
-  .home,
-  .bookmark,
-  .cart {
-    display: none;
-  }
+.empty-book {
+  position: relative;
 
-  .products-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 110px;
+  height: 80px;
 
-    column-gap: 14px;
-  }
+  display: flex;
+
+  transform: perspective(300px) rotateY(-3deg);
 }
+
+.book-left,
+.book-right {
+  width: 50%;
+  height: 100%;
+
+  background: #ffffff;
+
+  border: 2px solid #333333;
+}
+
+.book-left {
+  border-right: 1px solid #333333;
+
+  transform: skewY(-5deg);
+
+  box-shadow:
+    inset 5px 0 0 #5fc4e8,
+    -5px 5px 0 #ff7048;
+}
+
+.book-right {
+  border-left: 1px solid #333333;
+
+  transform: skewY(5deg);
+
+  box-shadow:
+    inset -5px 0 0 #5fc4e8,
+    5px 5px 0 #ff7048;
+}
+
+.book-center {
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 3px;
+  height: 100%;
+
+  transform: translateX(-50%);
+
+  background: #333333;
+}
+
 /* =====================================================
    FOOTER
 ===================================================== */
 
 .footer {
   width: 100%;
-  padding: 50px 5% 0;
-  margin-top: 100px;
+
+  margin-top: 90px;
+
+  padding: 40px 5% 0;
+
   background: #ffffff;
 }
-
-/* =====================================================
-   KHUNG XANH
-===================================================== */
 
 .footer-container {
   width: 100%;
   min-height: 410px;
 
-  background: #3aabeb;
-
-  border-radius: 12px 12px 0 0;
+  padding: 75px 8% 45px;
 
   display: grid;
 
@@ -843,247 +935,312 @@ body {
 
   column-gap: 55px;
 
-  padding: 95px 9% 55px;
+  background: #3aabeb;
 
-  box-sizing: border-box;
+  border-radius: 12px 12px 0 0;
 }
-
-/* =====================================================
-   CỘT FOOTER
-===================================================== */
 
 .footer-column {
-  color: #333;
+  min-width: 0;
 }
 
-/* =====================================================
-   TIÊU ĐỀ
-===================================================== */
-
 .footer-column h3 {
-  margin: 0 0 22px;
+  margin: 0 0 20px;
+
+  color: #333333;
 
   font-family: "Unica One", sans-serif;
 
-  font-size: 25px;
-
+  font-size: 23px;
   font-weight: 400;
 
-  line-height: 1.1;
-
-  color: #333;
+  line-height: 1.15;
 }
-
-/* =====================================================
-   TEXT
-===================================================== */
 
 .footer-column p {
   margin: 0;
 
+  color: #333333;
+
   font-family: "Syne", sans-serif;
 
-  font-size: 16px;
+  font-size: 14px;
 
-  line-height: 1.4;
-
-  color: #333;
+  line-height: 1.55;
 }
-
-/* =====================================================
-   HỖ TRỢ KHÁCH HÀNG
-===================================================== */
 
 .footer-support {
-  max-width: 280px;
+  max-width: 300px;
 }
 
-/* =====================================================
-   VỀ CHÚNG TÔI
-===================================================== */
-
 .footer-about {
-  text-align: center;
-
-  max-width: 570px;
+  max-width: 520px;
 
   margin: 0 auto;
+
+  text-align: center;
 }
 
 .footer-about p {
   text-align: center;
 }
 
-/* =====================================================
-   NEWSLETTER
-===================================================== */
-
 .footer-newsletter {
-  max-width: 420px;
+  width: 100%;
+  max-width: 430px;
 }
-
-/* =====================================================
-   FORM
-===================================================== */
 
 .newsletter-form {
   width: 100%;
 
   display: flex;
-
   align-items: center;
 
-  gap: 14px;
+  gap: 10px;
 
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
-
-/* INPUT */
 
 .newsletter-form input {
   flex: 1;
 
   min-width: 0;
 
-  height: 50px;
+  height: 46px;
 
-  padding: 0 18px;
+  padding: 0 15px;
 
-  border: 1px solid #aaa;
-
+  border: 1px solid #999999;
   border-radius: 10px;
 
-  background: #fff;
+  background: #ffffff;
 
   outline: none;
 
   font-family: "Syne", sans-serif;
 
-  font-size: 16px;
-
-  color: #333;
-
-  box-sizing: border-box;
+  font-size: 13px;
 }
-
-.newsletter-form input::placeholder {
-  color: #333;
-}
-
-/* BUTTON */
 
 .newsletter-form button {
-  height: 50px;
+  height: 46px;
 
   padding: 0 18px;
 
   border: none;
-
   border-radius: 10px;
 
-  background: #333;
+  background: #333333;
 
-  color: #fff;
+  color: #ffffff;
 
   font-family: "Syne", sans-serif;
 
-  font-size: 16px;
+  font-size: 13px;
+
+  white-space: nowrap;
 
   cursor: pointer;
-
-  transition: 0.2s ease;
 }
-
-.newsletter-form button:hover {
-  background: #222;
-
-  transform: translateY(-1px);
-}
-
-/* =====================================================
-   LOGO FOOTER
-===================================================== */
 
 .footer-brand {
   display: flex;
-
   align-items: center;
 
-  gap: 22px;
+  gap: 18px;
 
   margin-top: 10px;
 }
 
-/* LOGO */
-
 .footer-brand img {
-  width: 165px;
-
-  height: 165px;
+  width: 110px;
+  height: 110px;
 
   object-fit: contain;
 
   border-radius: 50%;
-}
 
-/* =====================================================
-   TÊN WEBSITE
-===================================================== */
+  flex-shrink: 0;
+}
 
 .footer-brand-text {
   display: flex;
-
   flex-direction: column;
 
-  justify-content: center;
+  gap: 5px;
 }
 
 .footer-brand-text h4 {
-  margin: 0 0 8px;
+  margin: 0;
 
-  font-family: Arial, Helvetica, sans-serif;
+  color: #333333;
 
-  font-size: 29px;
+  font-family: "Syne", sans-serif;
 
+  font-size: 24px;
   font-weight: 400;
-
-  color: #333;
 }
 
 .footer-brand-text p {
   margin: 0;
 
-  font-family: "Syne", sans-serif;
-
-  font-size: 16px;
-
-  white-space: nowrap;
+  font-size: 13px;
 }
 
 /* =====================================================
-   FOOTER RESPONSIVE - TABLET
+   TABLET 1100
 ===================================================== */
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
+  .site-header {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .category-section,
+  .category-products {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    column-gap: 22px;
+  }
+
+  .category-product-image {
+    height: 280px;
+  }
+
+  .category-product-price {
+    font-size: 16px;
+  }
+}
+
+/* =====================================================
+   TABLET 900
+===================================================== */
+
+@media (max-width: 900px) {
+  .site-header {
+    height: 78px;
+
+    padding: 9px 20px;
+  }
+
+  .category-page {
+    padding-top: 108px;
+  }
+
+  .site-logo img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .site-logo span {
+    font-size: 18px;
+  }
+
+  .site-header-right {
+    gap: 10px;
+  }
+
+  .header-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .header-icon img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .header-auth > img,
+  .header-user > img {
+    width: 23px;
+    height: 23px;
+  }
+
+  .header-auth > span {
+    font-size: 9px;
+  }
+
+  #createAccountButton,
+  #logoutButton {
+    height: 27px;
+
+    padding: 0 9px;
+
+    font-size: 9px;
+  }
+
+  .header-user > span {
+    max-width: 80px;
+
+    font-size: 10px;
+  }
+
+  .category-title,
+  .category-products-header h2 {
+    font-size: 32px;
+  }
+
+  .category-item span {
+    font-size: 19px;
+  }
+
+  .category-products-header > select {
+    width: 145px;
+    height: 44px;
+
+    font-size: 12px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    column-gap: 16px;
+    row-gap: 28px;
+  }
+
+  .category-product-image {
+    height: 240px;
+  }
+
+  .category-product-content h3 {
+    font-size: 13px;
+  }
+
+  .category-product-price {
+    height: 42px;
+
+    font-size: 14px;
+  }
+
+  .category-bookmark {
+    width: 42px;
+    height: 42px;
+
+    flex-basis: 42px;
+  }
+
+  .category-cart {
+    height: 42px;
+  }
+
   .footer {
-    padding: 60px 30px 0;
     margin-top: 70px;
+
+    padding: 30px 3% 0;
   }
 
   .footer-container {
     grid-template-columns: 1fr 1fr;
 
-    row-gap: 60px;
+    row-gap: 45px;
 
-    padding: 70px 50px 50px;
-  }
-
-  .footer-support {
-    max-width: 100%;
-  }
-
-  .footer-about {
-    max-width: 100%;
+    padding: 60px 6% 45px;
   }
 
   .footer-newsletter {
@@ -1092,98 +1249,289 @@ body {
     max-width: 100%;
   }
 
-  .footer-brand {
-    justify-content: center;
+  .footer-support {
+    max-width: 100%;
+  }
+
+  .footer-about {
+    max-width: 100%;
+
+    margin: 0;
+
+    text-align: left;
+  }
+
+  .footer-about p {
+    text-align: left;
   }
 }
 
 /* =====================================================
-   FOOTER RESPONSIVE - MOBILE
+   MOBILE 700
 ===================================================== */
 
 @media (max-width: 700px) {
-  .footer {
-    padding: 40px 15px 0;
+  .site-header {
+    height: 70px;
 
-    margin-top: 60px;
+    padding: 8px 14px;
+
+    gap: 8px;
+  }
+
+  .category-page {
+    padding-top: 95px;
+  }
+
+  .site-logo img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .site-logo span {
+    font-size: 14px;
+  }
+
+  .site-header-right {
+    gap: 7px;
+  }
+
+  .header-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .header-icon img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .header-auth > img,
+  .header-user > img {
+    width: 21px;
+    height: 21px;
+  }
+
+  .header-auth > span {
+    display: none;
+  }
+
+  #createAccountButton,
+  #logoutButton {
+    height: 25px;
+
+    padding: 0 8px;
+
+    font-size: 8px;
+  }
+
+  .header-user > span {
+    display: none;
+  }
+
+  /* SEARCH */
+
+  .category-search {
+    width: calc(100% - 30px);
+
+    height: 44px;
+
+    margin: 0 auto 40px;
+  }
+
+  .category-search input {
+    font-size: 11px;
+  }
+
+  /* CATEGORY */
+
+  .category-section {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .category-title,
+  .category-products-header h2 {
+    font-size: 27px;
+  }
+
+  .category-title img {
+    width: 24px;
+    height: 19px;
+  }
+
+  .category-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 13px;
+    row-gap: 16px;
+  }
+
+  .category-item {
+    min-height: 50px;
+
+    padding: 0 8px;
+
+    box-shadow: 6px 8px 0 #ff7048;
+  }
+
+  .category-item span {
+    font-size: 12px;
+
+    white-space: normal;
+  }
+
+  /* PRODUCTS */
+
+  .category-products {
+    padding: 42px 15px 10px;
+  }
+
+  .category-products-header {
+    align-items: center;
+
+    gap: 12px;
+  }
+
+  .category-products-header h2 {
+    font-size: 25px;
+  }
+
+  .category-products-header h2 img {
+    width: 21px;
+    height: 21px;
+  }
+
+  .category-products-header > select {
+    width: 120px;
+    height: 38px;
+
+    font-size: 10px;
+
+    box-shadow: 4px 4px 0 #ff7048;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    column-gap: 12px;
+    row-gap: 26px;
+  }
+
+  .category-product-image {
+    height: 210px;
+  }
+
+  .category-product-content h3 {
+    min-height: 36px;
+
+    margin: 8px 0;
+
+    font-size: 11px;
+    line-height: 18px;
+  }
+
+  .category-product-price {
+    height: 36px;
+
+    font-size: 12px;
+
+    border-radius: 11px;
+  }
+
+  .category-bookmark {
+    width: 36px;
+    height: 36px;
+
+    flex-basis: 36px;
+  }
+
+  .category-bookmark img {
+    width: 11px;
+    height: 16px;
+  }
+
+  .category-cart {
+    height: 36px;
+
+    margin-top: 6px;
+
+    border-radius: 11px;
+  }
+
+  .category-cart img {
+    width: 21px;
+    height: 20px;
+  }
+
+  /* FOOTER */
+
+  .footer {
+    margin-top: 55px;
+
+    padding: 25px 12px 0;
   }
 
   .footer-container {
     grid-template-columns: 1fr;
 
-    row-gap: 45px;
+    row-gap: 32px;
 
-    padding: 55px 25px 40px;
+    padding: 48px 20px 35px;
 
     border-radius: 10px 10px 0 0;
   }
 
-  /* =========================
-     SUPPORT
-  ========================= */
-
-  .footer-support {
+  .footer-support,
+  .footer-about,
+  .footer-newsletter {
+    width: 100%;
     max-width: 100%;
 
     text-align: center;
   }
 
-  /* =========================
-     ABOUT
-  ========================= */
-
   .footer-about {
-    max-width: 100%;
-
-    text-align: center;
+    margin: 0;
   }
 
   .footer-about p {
     text-align: center;
   }
 
-  /* =========================
-     NEWSLETTER
-  ========================= */
+  .footer-column h3 {
+    font-size: 20px;
+  }
 
-  .footer-newsletter {
-    max-width: 100%;
-
-    text-align: center;
+  .footer-column p {
+    font-size: 12px;
+    line-height: 1.55;
   }
 
   .newsletter-form {
     flex-direction: column;
 
-    gap: 10px;
+    align-items: stretch;
+
+    gap: 8px;
   }
 
-  .newsletter-form input {
-    width: 100%;
-
-    flex: none;
-  }
-
+  .newsletter-form input,
   .newsletter-form button {
     width: 100%;
   }
-
-  /* =========================
-     LOGO
-  ========================= */
 
   .footer-brand {
     flex-direction: column;
 
     justify-content: center;
 
-    gap: 12px;
+    gap: 10px;
   }
 
   .footer-brand img {
-    width: 130px;
-
-    height: 130px;
+    width: 85px;
+    height: 85px;
   }
 
   .footer-brand-text {
@@ -1191,389 +1539,163 @@ body {
   }
 
   .footer-brand-text h4 {
-    font-size: 25px;
+    font-size: 22px;
   }
 
   .footer-brand-text p {
-    font-size: 14px;
-  }
-
-  /* =========================
-     TEXT
-  ========================= */
-
-  .footer-column h3 {
-    font-size: 23px;
-  }
-
-  .footer-column p {
-    font-size: 14px;
-
-    line-height: 1.5;
-  }
-}
-
-@media (max-width: 700px) {
-  .auth-menu {
-    gap: 5px;
-  }
-
-  .sign-in span {
-    display: none;
-  }
-
-  .sign-in img {
-    width: 21px;
-    height: 21px;
-  }
-
-  .create-account {
-    height: 28px;
-    padding: 0 9px;
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 
 /* =====================================================
-   HERO RESPONSIVE
+   MOBILE 450
 ===================================================== */
 
-/* =========================
-   TABLET
-   1200px trở xuống
-========================= */
-
-@media (max-width: 1200px) {
-  .hero {
-    padding: 30px 40px 50px;
-
-    gap: 30px;
+@media (max-width: 450px) {
+  .site-logo span {
+    display: none;
   }
 
-  .hero-content {
-    width: 55%;
-
-    flex-shrink: 0;
+  .site-header {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
-  .hero-image {
-    width: 45%;
-
-    height: 400px;
-
-    min-width: 0;
+  .site-header-right {
+    gap: 5px;
   }
 
-  .hero-title h1 {
-    font-size: clamp(42px, 5vw, 60px);
+  .header-icon {
+    width: 24px;
+    height: 24px;
   }
 
-  .book-icon {
-    width: 110px;
-    height: 110px;
+  .header-icon img {
+    width: 19px;
+    height: 19px;
   }
 
-  .search-box {
-    width: 100%;
-    max-width: 550px;
-  }
-
-  .blue-background {
-    width: 100%;
-    height: 350px;
-
-    right: 20px;
-  }
-
-  .library-image {
-    width: 100%;
-    height: 420px;
-
-    right: 0;
-    top: 25px;
-  }
-
-  .dotted-line {
-    width: 250px;
-  }
-}
-
-/* =========================
-   TABLET NHỎ
-   900px trở xuống
-========================= */
-
-@media (max-width: 900px) {
-  .hero {
-    padding: 30px 30px 50px;
-
-    gap: 20px;
-  }
-
-  .hero-content {
-    width: 55%;
-  }
-
-  .hero-image {
-    width: 45%;
-    height: 340px;
-  }
-
-  .hero-title h1 {
-    font-size: 40px;
-
-    line-height: 1.2;
-  }
-
-  .book-icon {
-    width: 85px;
-    height: 85px;
-
-    margin-top: 25px;
-  }
-
-  .hero-description {
-    font-size: 14px;
-
-    margin-top: 18px;
-    margin-bottom: 25px;
-  }
-
-  .search-box {
-    height: 42px;
-  }
-
-  .hero-bottom {
-    margin-top: 28px;
-  }
-
-  .explore-btn {
-    width: 135px;
-    height: 48px;
-
-    font-size: 14px;
-  }
-
-  .dotted-line {
-    width: 150px;
-  }
-
-  .blue-background {
-    height: 300px;
-  }
-
-  .library-image {
-    height: 350px;
-
-    top: 20px;
-  }
-}
-
-/* =========================
-   MOBILE
-   700px trở xuống
-========================= */
-
-@media (max-width: 700px) {
-  .hero {
-    width: 100%;
-
-    min-height: auto;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: stretch;
-
-    padding: 35px 20px 50px;
-
-    gap: 45px;
-  }
-
-  /* =========================
-     LEFT
-  ========================= */
-
-  .hero-content {
-    width: 100%;
-
-    padding-top: 0;
-  }
-
-  .hero-title {
-    width: 100%;
-
-    justify-content: flex-start;
-
-    align-items: center;
-  }
-
-  .hero-title h1 {
-    font-size: clamp(34px, 9vw, 46px);
-
-    line-height: 1.15;
-  }
-
-  .book-icon {
-    width: 75px;
-    height: 75px;
-
-    margin-top: 25px;
-
-    flex-shrink: 0;
-  }
-
-  .hero-description {
-    margin-top: 20px;
-    margin-bottom: 25px;
-
-    font-size: 14px;
-
-    line-height: 1.5;
-  }
-
-  /* =========================
-     SEARCH
-  ========================= */
-
-  .search-box {
-    width: 100%;
-
-    max-width: none;
-
-    height: 45px;
-  }
-
-  .search-box input {
-    font-size: 12px;
-
-    padding: 0 15px;
-  }
-
-  .search-box img {
-    width: 21px;
-    height: 21px;
-
-    margin-right: 15px;
-  }
-
-  /* =========================
-     BUTTON
-  ========================= */
-
-  .hero-bottom {
-    width: 100%;
-
-    margin-top: 28px;
-  }
-
-  .explore-btn {
-    width: 140px;
-
-    height: 48px;
-
-    flex-shrink: 0;
-  }
-
-  .dotted-line {
-    flex: 1;
-
-    width: auto;
-
-    margin-left: 15px;
-  }
-
-  /* =========================
-     RIGHT IMAGE
-  ========================= */
-
-  .hero-image {
-    width: 100%;
-
-    height: 350px;
-
-    min-height: 350px;
-  }
-
-  .blue-background {
-    width: calc(100% - 20px);
-
-    height: 300px;
-
-    right: 20px;
-
-    top: 0;
-  }
-
-  .library-image {
-    width: calc(100% - 5px);
-
-    height: 330px;
-
-    right: 0;
-
-    top: 20px;
-
-    object-fit: cover;
-  }
-  .header {
-    height: 75px;
-    padding: 10px 15px;
+  #createAccountButton,
+  #logoutButton {
+    padding: 0 7px;
+
+    font-size: 7px;
   }
 
   .category-page {
-    padding-top: 75px;
+    padding-top: 92px;
+  }
+
+  .category-title,
+  .category-products-header h2 {
+    font-size: 23px;
+  }
+
+  .category-list {
+    column-gap: 10px;
+  }
+
+  .category-item {
+    min-height: 47px;
+  }
+
+  .category-item span {
+    font-size: 10px;
+  }
+
+  .category-products-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .category-products-header > select {
+    width: 130px;
+
+    align-self: flex-end;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 13px;
+
+    row-gap: 25px;
+  }
+
+  .category-product-image {
+    height: 220px;
+  }
+
+  .category-product-content h3 {
+    font-size: 12px;
+  }
+
+  .category-product-price {
+    font-size: 13px;
   }
 }
 
-/* =========================
-   MOBILE NHỎ
-   450px trở xuống
-========================= */
+/* =====================================================
+   VERY SMALL 350
+===================================================== */
 
-@media (max-width: 450px) {
-  .hero {
-    padding: 30px 15px 40px;
-
-    gap: 35px;
+@media (max-width: 350px) {
+  .category-search {
+    width: calc(100% - 20px);
   }
 
-  .hero-title h1 {
-    font-size: 32px;
+  .category-title,
+  .category-products-header h2 {
+    font-size: 21px;
   }
 
-  .book-icon {
-    width: 62px;
-    height: 62px;
+  .category-item span {
+    font-size: 9px;
   }
 
-  .hero-description {
-    font-size: 13px;
+  .category-product-image {
+    height: 190px;
   }
 
-  .explore-btn {
-    width: 125px;
-
-    font-size: 13px;
+  .category-product-price {
+    font-size: 11px;
   }
 
-  .explore-btn img {
-    width: 23px;
-    height: 23px;
+  .category-bookmark {
+    width: 32px;
+    height: 32px;
+
+    flex-basis: 32px;
   }
 
-  .hero-image {
-    height: 290px;
-
-    min-height: 290px;
+  .category-cart {
+    height: 32px;
   }
 
-  .blue-background {
-    height: 250px;
+  .category-cart img {
+    width: 19px;
+    height: 18px;
   }
+}
 
-  .library-image {
-    height: 270px;
-  }
+/* =====================================================
+   GLOBAL OVERFLOW
+===================================================== */
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.category-page,
+.category-section,
+.category-products,
+.products-grid,
+.footer {
+  max-width: 100%;
 }
