@@ -8,7 +8,7 @@
     <title>FAVORITE - IUHSVBOOK</title>
 
     <!-- =====================================================
-         FONT
+         GOOGLE FONTS
     ====================================================== -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -84,10 +84,27 @@
 
         <!-- ===============================================
              BOOKMARK
+             
+             QUAN TRỌNG:
+             aria-label phải là "Bookmark"
+             để bookMarkButton.js nhận diện.
         ================================================ -->
 
-        <a href="#" class="bookmark" id="bookmarkIcon" aria-label="Favorite">
-          <img src="../images/iconbookmark.png" alt="Favorite" />
+        <a href="#" class="bookmark" id="bookmarkIcon" aria-label="Bookmark">
+          <img src="../images/iconbookmark.png" alt="Bookmark" />
+        </a>
+
+        <!-- ===============================================
+             PRODUCT / CATALOG
+        ================================================ -->
+
+        <a
+          href="./catalog.html"
+          class="product"
+          id="productIcon"
+          aria-label="Products"
+        >
+          <img src="../images/iconproduct.png" alt="Products" />
         </a>
 
         <!-- ===============================================
@@ -137,7 +154,7 @@
           ================================================ -->
 
           <div class="results-title">
-            <span> FAVORITE </span>
+            <span>FAVORITE</span>
 
             <span class="results-keyword" id="resultsKeyword">
               “YOUR FAVORITE BOOKS”
@@ -150,7 +167,7 @@
 
           <div class="results-filters">
             <!-- =============================================
-                 CATEGORIES
+                 CATEGORY
             ============================================== -->
 
             <div class="favorite-dropdown" id="favoriteCategoryDropdown">
@@ -196,7 +213,7 @@
             </div>
 
             <!-- =============================================
-                 FILTER BY
+                 FILTER
             ============================================== -->
 
             <div class="favorite-dropdown" id="favoriteFilterDropdown">
@@ -285,13 +302,9 @@
 
             <p>
               Hotline: 12345678<br />
-
               Email: abc@gmail.com<br />
-
               SĐT: 012345678<br />
-
               Địa chỉ: 12 Nguyễn Văn Bảo, Hạnh Thông,<br />
-
               Hồ Chí Minh 700000, Vietnam
             </p>
           </div>
@@ -343,16 +356,18 @@
 
     <!-- =====================================================
          JAVASCRIPT
+         
+         QUAN TRỌNG:
+         bookMarkButton.js PHẢI LOAD TRƯỚC favorite.js
     ====================================================== -->
 
-    <!-- CART SIDEBAR -->
     <script src="../js/shoppingCartSidebar.js"></script>
 
-    <!-- FAVORITE -->
-    <script src="../js/favorite.js"></script>
-
-    <!-- GLOBAL BOOKMARK -->
+    <!-- GLOBAL BOOKMARK - LOAD TRƯỚC -->
     <script src="../js/bookMarkButton.js"></script>
+
+    <!-- FAVORITE - LOAD SAU -->
+    <script src="../js/favorite.js"></script>
 
     <!-- CART BUTTON -->
     <script src="../js/shoppingCartButton.js"></script>

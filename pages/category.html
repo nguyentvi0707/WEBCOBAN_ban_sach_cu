@@ -2,17 +2,15 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>CATEGORY - IUHSVBOOK</title>
+    <title>Sách đại cương - IUHSVBOOK</title>
 
     <!-- =====================================================
          GOOGLE FONTS
     ====================================================== -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
@@ -25,7 +23,6 @@
     ====================================================== -->
 
     <link rel="stylesheet" href="../css/category.css" />
-
     <link rel="stylesheet" href="../css/shoppingCartSideBar.css" />
   </head>
 
@@ -35,48 +32,95 @@
     ====================================================== -->
 
     <header class="site-header">
+      <!-- LOGO -->
       <div class="site-header-left">
-        <a href="../index.html" class="site-logo">
+        <a href="../index.html" class="site-logo" aria-label="IUHSVBOOK Home">
           <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
+
           <span>IUHSVBOOK</span>
         </a>
       </div>
 
+      <!-- HEADER RIGHT -->
       <div class="site-header-right">
-        <!-- CHƯA ĐĂNG NHẬP -->
+        <!-- ================================================
+             CHƯA ĐĂNG NHẬP
+        ================================================= -->
+
         <div id="signInButton" class="header-auth">
-          <img src="../images/iconlogin.png" alt="User" />
+          <img src="../images/iconlogin.png" alt="Đăng nhập" />
 
           <span>SIGN IN</span>
 
           <button id="createAccountButton" type="button">Create account</button>
         </div>
 
-        <!-- ĐÃ ĐĂNG NHẬP -->
-        <div id="userInfo" class="header-user" style="display: none">
-          <img src="../images/iconlogin.png" alt="User" />
+        <!-- ================================================
+             ĐÃ ĐĂNG NHẬP
+        ================================================= -->
 
-          <span id="usernameDisplay">duy</span>
+        <div id="userInfo" class="header-user" style="display: none">
+          <img src="../images/iconlogin.png" alt="Tài khoản" />
+
+          <span id="usernameDisplay"></span>
 
           <button id="logoutButton" type="button">Đăng xuất</button>
         </div>
 
-        <!-- HOME -->
-        <a href="../index.html" class="header-icon" aria-label="Home">
+        <!-- ================================================
+             HOME
+        ================================================= -->
+
+        <a
+          href="../index.html"
+          class="header-icon home"
+          id="homeIcon"
+          aria-label="Trang chủ"
+        >
           <img src="../images/iconhome.png" alt="Home" />
         </a>
 
-        <!-- BOOKMARK -->
-        <a href="#" class="header-icon" aria-label="Bookmark">
+        <!-- ================================================
+             BOOKMARK
+        ================================================= -->
+
+        <a
+          href="#"
+          class="header-icon bookmark"
+          id="bookmarkIcon"
+          aria-label="Sách yêu thích"
+        >
           <img src="../images/iconbookmark.png" alt="Bookmark" />
         </a>
 
-        <!-- CART -->
-        <a href="#" class="header-icon cart" id="cartIcon" aria-label="Cart">
+        <!-- ================================================
+             PRODUCT / CATALOG
+        ================================================= -->
+
+        <a
+          href="./catalog.html"
+          class="header-icon product"
+          id="productIcon"
+          aria-label="Danh sách sách"
+        >
+          <img src="../images/iconproduct.png" alt="Products" />
+        </a>
+
+        <!-- ================================================
+             CART
+        ================================================= -->
+
+        <a
+          href="#"
+          class="header-icon cart"
+          id="cartIcon"
+          aria-label="Giỏ hàng"
+        >
           <img src="../images/iconcart.png" alt="Cart" />
         </a>
       </div>
     </header>
+
     <!-- =====================================================
          MAIN
     ====================================================== -->
@@ -94,7 +138,7 @@
           autocomplete="off"
         />
 
-        <button id="categorySearchButton" type="button" aria-label="Search">
+        <button id="categorySearchButton" type="button" aria-label="Tìm kiếm">
           <img src="../images/iconkinhlup.png" alt="Search" />
         </button>
       </div>
@@ -112,27 +156,27 @@
 
         <div class="category-list">
           <!-- ĐẠI CƯƠNG -->
-
-          <a href="./category.html" class="category-item active">
-            <span> Sách đại cương </span>
+          <a
+            href="./category.html"
+            class="category-item active"
+            aria-current="page"
+          >
+            <span>Sách đại cương</span>
           </a>
 
           <!-- NGOẠI NGỮ -->
-
           <a href="./language.html" class="category-item">
-            <span> Sách ngoại ngữ </span>
+            <span>Sách ngoại ngữ</span>
           </a>
 
           <!-- KỸ THUẬT - CÔNG NGHỆ -->
-
           <a href="./technology.html" class="category-item">
-            <span> Sách khối kỹ thuật - công nghệ </span>
+            <span>Sách khối kỹ thuật - công nghệ</span>
           </a>
 
           <!-- KỸ NĂNG - VĂN HỌC -->
-
           <a href="./literature.html" class="category-item">
-            <span> Sách kỹ năng - văn học </span>
+            <span>Sách kỹ năng - văn học</span>
           </a>
         </div>
       </section>
@@ -143,15 +187,18 @@
 
       <section class="category-products">
         <!-- HEADER -->
-
         <div class="category-products-header">
           <h2>
             <img src="../images/icongit.png" alt="" />
 
-            SÁCH ĐẠI CƯƠNG
+            <span>SÁCH ĐẠI CƯƠNG</span>
           </h2>
 
-          <select class="category-filter" id="categoryFilter">
+          <select
+            class="category-filter"
+            id="categoryFilter"
+            aria-label="Lọc sách"
+          >
             <option value="default">Lọc</option>
 
             <option value="price-asc">Giá thấp - cao</option>
@@ -169,7 +216,7 @@
         ================================================== -->
 
         <div class="products-grid" id="productsGrid">
-          <!-- category.js render sách tại đây -->
+          <!-- category.js render sách -->
         </div>
 
         <!-- =================================================
@@ -177,6 +224,12 @@
         ================================================== -->
 
         <div class="empty-results" id="emptyResults" style="display: none">
+          <div class="empty-book">
+            <div class="book-left"></div>
+            <div class="book-right"></div>
+            <div class="book-center"></div>
+          </div>
+
           <p>Không tìm thấy sách phù hợp.</p>
         </div>
       </section>
@@ -188,10 +241,7 @@
 
     <footer class="footer">
       <div class="footer-container">
-        <!-- =================================================
-             COLUMN 1
-        ================================================== -->
-
+        <!-- COLUMN 1 -->
         <div class="footer-column footer-support">
           <h3>HỖ TRỢ KHÁCH HÀNG</h3>
 
@@ -204,10 +254,7 @@
           </p>
         </div>
 
-        <!-- =================================================
-             COLUMN 2
-        ================================================== -->
-
+        <!-- COLUMN 2 -->
         <div class="footer-column footer-about">
           <h3>VỀ CHÚNG TÔI</h3>
 
@@ -222,10 +269,7 @@
           </p>
         </div>
 
-        <!-- =================================================
-             COLUMN 3
-        ================================================== -->
-
+        <!-- COLUMN 3 -->
         <div class="footer-column footer-newsletter">
           <h3>NHẬN THÔNG BÁO TỪ CHÚNG TÔI</h3>
 
@@ -234,8 +278,6 @@
 
             <button type="button">Submit</button>
           </div>
-
-          <!-- LOGO -->
 
           <div class="footer-brand">
             <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
@@ -252,14 +294,15 @@
 
     <!-- =====================================================
          JAVASCRIPT
+         THỨ TỰ LOAD RẤT QUAN TRỌNG
     ====================================================== -->
 
-   
-
     <script src="../js/shoppingCartSidebar.js"></script>
-    <script src="../js/bookMarkButton.js"></script>
-    <!-- CATEGORY -->
 
+    <!-- GLOBAL BOOKMARK PHẢI LOAD TRƯỚC CATEGORY -->
+    <script src="../js/bookMarkButton.js"></script>
+
+    <!-- CATEGORY -->
     <script src="../js/category.js"></script>
   </body>
 </html>

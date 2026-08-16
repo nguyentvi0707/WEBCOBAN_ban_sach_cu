@@ -1,6 +1,3 @@
-/* =====================================================
-   IUHSVBOOK - PRODUCT DETAIL
-===================================================== */
 
 * {
   box-sizing: border-box;
@@ -12,9 +9,6 @@ html {
   width: 100%;
   min-width: 0;
   min-height: 100%;
-
-  margin: 0;
-  padding: 0;
 
   scroll-behavior: smooth;
 
@@ -28,12 +22,6 @@ body {
   min-width: 0;
   min-height: 100vh;
 
-  margin: 0;
-
-  /*
-    HEADER DESKTOP = 80px
-    + khoảng cách 20px
-  */
   padding: 100px 40px 0;
 
   background: #ffffff;
@@ -60,7 +48,7 @@ img {
 }
 
 /* =====================================================
-   HEADER - FIXED
+   HEADER
 ===================================================== */
 
 header {
@@ -85,8 +73,14 @@ header {
 
   border-bottom: 1px solid rgba(61, 60, 60, 0.08);
 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
   gap: 20px;
 }
+
+/* =====================================================
+   LOGO
+===================================================== */
 
 .logo {
   display: flex;
@@ -96,6 +90,9 @@ header {
 
   min-width: 0;
   flex-shrink: 0;
+
+  text-decoration: none;
+  color: #3d3c3c;
 }
 
 .logo img {
@@ -109,13 +106,23 @@ header {
   flex-shrink: 0;
 }
 
-.logo p {
+.logo p,
+.logo span {
   margin: 0;
+
+  color: #3d3c3c;
+
+  font-family: "Unica One", sans-serif;
 
   font-size: 20px;
 
   white-space: nowrap;
 }
+
+/* =====================================================
+   HEADER BUTTONS
+   PRODUCT / HOME / BOOKMARK / CART
+===================================================== */
 
 .headerButtons {
   display: flex;
@@ -124,38 +131,207 @@ header {
 
   gap: 12px;
 
-  flex-wrap: nowrap;
+  flex-shrink: 0;
+
+  white-space: nowrap;
+}
+
+.headerButtons > img,
+.headerButtons > a,
+.headerButtons .header-icon,
+.headerButtons .product-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
 
   flex-shrink: 0;
+
+  text-decoration: none;
+
+  cursor: pointer;
 }
 
 .headerButtons > img {
-  width: 26px;
-  height: 26px;
+  object-fit: contain;
+}
+
+.headerButtons > a img,
+.headerButtons .header-icon img,
+.headerButtons .product-icon img {
+  width: 24px;
+  height: 24px;
 
   object-fit: contain;
 
-  cursor: pointer;
-
-  flex-shrink: 0;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
+.headerButtons > a:hover img,
+.headerButtons .header-icon:hover img,
+.headerButtons .product-icon:hover img {
+  transform: scale(1.07);
+}
+
+.headerButtons > a:active img,
+.headerButtons .header-icon:active img,
+.headerButtons .product-icon:active img {
+  transform: scale(0.94);
+}
+
+/* =====================================================
+   PRODUCT ICON
+===================================================== */
+
+.product-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.product-icon img {
+  width: 25px;
+  height: 25px;
+
+  object-fit: contain;
+}
+
+/* =====================================================
+   HOME
+===================================================== */
+
+.home-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+}
+
+.home-icon img {
+  width: 24px;
+  height: 24px;
+
+  object-fit: contain;
+}
+
+/* =====================================================
+   BOOKMARK
+===================================================== */
+
+.bookmark-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+}
+
+.bookmark-icon img {
+  width: 24px;
+  height: 24px;
+
+  object-fit: contain;
+}
+
+/* =====================================================
+   CART ICON
+===================================================== */
+
+.cart-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+}
+
+.cart-icon img {
+  width: 24px;
+  height: 24px;
+
+  object-fit: contain;
+}
+
+/* =====================================================
+   SIGN IN
+===================================================== */
+
+.sign-in,
 #signInButton {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  gap: 4px;
+  gap: 5px;
+
+  color: #3d3c3c;
+
+  text-decoration: none;
+
+  font-family: "Syne", sans-serif;
+
+  white-space: nowrap;
 
   flex-shrink: 0;
 }
 
-#signInButton button {
-  border: none;
-  background: transparent;
+.sign-in img,
+#signInButton img {
+  width: 24px;
+  height: 24px;
 
-  font-size: 11px;
+  object-fit: contain;
+
+  flex-shrink: 0;
 }
+
+.sign-in span,
+#signInButton span {
+  color: #3d3c3c;
+
+  font-size: 10px;
+
+  white-space: nowrap;
+}
+
+.sign-in small {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  height: 24px;
+
+  padding: 0 9px;
+
+  background: #f9784b;
+
+  border: 1px solid #3d3c3c;
+
+  border-radius: 12px;
+
+  color: #222222;
+
+  font-size: 8px;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   CREATE ACCOUNT
+===================================================== */
 
 #createAccountButton {
   width: 100px;
@@ -166,11 +342,139 @@ header {
   background: #f9784b;
 
   border: 2px solid #3d3c3c;
+
   border-radius: 15px;
+
+  color: #ffffff;
+
+  font-family: "Syne", sans-serif;
 
   font-size: 11px;
 
   flex-shrink: 0;
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+#createAccountButton:hover {
+  background: #ed6337;
+
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   USER AREA
+===================================================== */
+
+.user-area {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   USER INFO
+===================================================== */
+
+.user-info {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  min-width: 0;
+
+  white-space: nowrap;
+
+  flex-shrink: 0;
+}
+
+.user-info img {
+  width: 24px;
+  height: 24px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+}
+
+.user-info span {
+  display: block;
+
+  max-width: 110px;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  color: #3d3c3c;
+
+  font-family: "Syne", sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 500;
+}
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.user-info #logoutButton {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 66px;
+  height: 26px;
+
+  padding: 0 10px;
+
+  margin: 0;
+
+  border: 1px solid #3d3c3c;
+
+  border-radius: 13px;
+
+  background: #f9784b;
+
+  color: #ffffff;
+
+  font-family: "Syne", sans-serif;
+
+  font-size: 9px;
+  font-weight: 500;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.user-info #logoutButton:hover {
+  background: #ed6337;
+
+  transform: translateY(-1px);
+}
+
+.user-info #logoutButton:active {
+  transform: translateY(0);
 }
 
 /* =====================================================
@@ -216,6 +520,7 @@ main {
 
 .searchBar {
   position: relative;
+
   z-index: 1;
 
   display: flex;
@@ -229,6 +534,7 @@ main {
   background: #ffffff;
 
   border: 2px solid #3d3c3c;
+
   border-radius: 24px;
 }
 
@@ -242,6 +548,7 @@ main {
   background: transparent;
 
   font-family: "Syne", sans-serif;
+
   font-size: 14px;
 }
 
@@ -284,6 +591,10 @@ main {
   flex-shrink: 0;
 }
 
+/* =====================================================
+   PRODUCT IMAGE
+===================================================== */
+
 .productImage {
   display: flex;
   align-items: flex-start;
@@ -303,8 +614,13 @@ main {
   border-radius: 4px;
 }
 
+/* =====================================================
+   PRODUCT INFO
+===================================================== */
+
 .productInfo {
   width: 100%;
+
   min-width: 0;
 }
 
@@ -326,6 +642,8 @@ main {
 .productTitle p {
   min-width: 0;
 
+  color: #3d3c3c;
+
   font-family: "Unica One", sans-serif;
 
   font-size: clamp(26px, 4vw, 38px);
@@ -335,8 +653,13 @@ main {
   word-break: break-word;
 }
 
+/* =====================================================
+   BOOKMARK DETAIL
+===================================================== */
+
 .bookMarkBlock {
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -348,23 +671,25 @@ main {
   flex-shrink: 0;
 
   border: 2px solid #3d3c3c;
+
   border-radius: 18px;
 
   background: #ffffff;
+
+  cursor: pointer;
 
   transition:
     background-color 0.2s ease,
     transform 0.2s ease;
 }
 
-.bookMarkBlock:hover {
-  background: #fdbf0f;
-
-  transform: translateY(-2px);
-}
-
+.bookMarkBlock:hover,
 .bookMarkBlock.active {
   background: #fdbf0f;
+}
+
+.bookMarkBlock:hover {
+  transform: translateY(-2px);
 }
 
 .bookMarkBlock img {
@@ -372,6 +697,8 @@ main {
   height: 22px;
 
   object-fit: contain;
+
+  pointer-events: none;
 }
 
 /* =====================================================
@@ -387,7 +714,9 @@ main {
   margin-top: 20px;
 
   font-family: "Syne", sans-serif;
+
   font-size: 16px;
+
   font-weight: 500;
 }
 
@@ -409,6 +738,7 @@ main {
 
 .author {
   position: relative;
+
   z-index: 1;
 
   display: flex;
@@ -422,6 +752,7 @@ main {
   background: #ffffff;
 
   border: 2px dashed #3d3c3c;
+
   border-radius: 20px;
 
   overflow: hidden;
@@ -450,12 +781,15 @@ main {
   margin-top: 20px;
 
   font-family: "Syne", sans-serif;
+
   font-size: 15px;
+
   font-weight: 500;
 }
 
 .description {
   position: relative;
+
   z-index: 1;
 
   width: 100%;
@@ -466,6 +800,7 @@ main {
   background: #ffffff;
 
   border: 2px dashed #3d3c3c;
+
   border-radius: 20px;
 
   overflow-x: hidden;
@@ -509,6 +844,7 @@ main {
   font-family: "Syne", sans-serif;
 
   font-size: clamp(25px, 4vw, 36px);
+
   font-weight: 600;
 
   white-space: nowrap;
@@ -551,6 +887,8 @@ main {
   transition:
     transform 0.15s ease,
     opacity 0.15s ease;
+
+  cursor: pointer;
 }
 
 .amount img:hover {
@@ -572,7 +910,9 @@ main {
   background: transparent;
 
   font-family: "Syne", sans-serif;
+
   font-size: 18px;
+
   font-weight: 600;
 }
 
@@ -604,7 +944,10 @@ main {
   padding: 0;
 
   border: 2px solid #3d3c3c;
+
   border-radius: 20px;
+
+  cursor: pointer;
 
   transition:
     transform 0.2s ease,
@@ -636,6 +979,8 @@ main {
   height: 25px;
 
   object-fit: contain;
+
+  pointer-events: none;
 }
 
 /* =====================================================
@@ -647,12 +992,17 @@ main {
   max-width: 100%;
 
   margin-top: 100px;
+
   padding: 0 0 80px;
 
   overflow: hidden;
 
   flex-shrink: 0;
 }
+
+/* =====================================================
+   RECOMMEND TITLE
+===================================================== */
 
 .recommendTitle {
   display: flex;
@@ -679,10 +1029,11 @@ main {
 .recommendTitle p {
   margin: 0;
 
-  font-family: "Unica One", sans-serif;
-  font-size: clamp(24px, 3vw, 36px);
-
   color: #3d3c3c;
+
+  font-family: "Unica One", sans-serif;
+
+  font-size: clamp(24px, 3vw, 36px);
 }
 
 /* =====================================================
@@ -703,11 +1054,13 @@ main {
 .recommendCategoryTitle h3 {
   margin: 0;
 
-  font-family: "Syne", sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-
   color: #3d3c3c;
+
+  font-family: "Syne", sans-serif;
+
+  font-size: 18px;
+
+  font-weight: 600;
 }
 
 /* =====================================================
@@ -801,16 +1154,18 @@ main {
   display: -webkit-box;
 
   width: 170px;
-
   height: 42px;
 
   margin: 10px 0 8px;
 
   flex: 0 0 42px;
 
+  color: #333333;
+
   font-family: "Syne", sans-serif;
 
   font-size: 14px;
+
   line-height: 21px;
 
   text-align: center;
@@ -818,6 +1173,7 @@ main {
   overflow: hidden;
 
   -webkit-box-orient: vertical;
+
   -webkit-line-clamp: 2;
 }
 
@@ -841,16 +1197,18 @@ main {
   flex: 1 1 auto;
 
   min-width: 0;
-  width: auto;
 
+  width: auto;
   height: 40px;
 
   padding: 0 8px;
 
-  border: 2px solid #333;
+  border: 2px solid #333333;
+
   border-radius: 22px;
 
   font-family: "Syne", sans-serif;
+
   font-size: 13px;
 
   white-space: nowrap;
@@ -871,10 +1229,13 @@ main {
 
   flex: 0 0 42px;
 
-  border: 2px solid #333;
+  border: 2px solid #333333;
+
   border-radius: 22px;
 
   background: #ffffff;
+
+  cursor: pointer;
 }
 
 .recommendBookMark.active {
@@ -899,14 +1260,18 @@ main {
   height: 38px;
 
   margin-top: 8px;
+
   padding: 0;
 
   flex: 0 0 38px;
 
-  border: 2px solid #333;
+  border: 2px solid #333333;
+
   border-radius: 20px;
 
   background: #ffbf00;
+
+  cursor: pointer;
 }
 
 .recommendShoppingCart img {
@@ -926,6 +1291,7 @@ main {
   position: absolute;
 
   top: 50%;
+
   z-index: 20;
 
   display: flex;
@@ -938,11 +1304,14 @@ main {
   padding: 0;
 
   border: 2px solid #3d3c3c;
+
   border-radius: 50%;
 
   background: #5fc4e8;
 
   transform: translateY(-50%);
+
+  cursor: pointer;
 
   transition:
     transform 0.2s ease,
@@ -988,66 +1357,76 @@ main {
 ===================================================== */
 
 .shoppingCartSidebar-bg {
-  position: fixed;
+  position: fixed !important;
 
-  inset: 0;
+  inset: 0 !important;
 
-  width: 100%;
-  height: 100%;
+  z-index: 2999 !important;
 
-  z-index: 2999;
+  width: 100vw !important;
+  height: 100vh !important;
 
-  background: #676767;
+  background: #676767 !important;
 
-  opacity: 0;
+  opacity: 0 !important;
 
-  pointer-events: none;
+  visibility: hidden !important;
 
-  transform: translateX(100%);
+  pointer-events: none !important;
+
+  transform: translateX(100%) !important;
 
   transition:
     transform 0.3s ease,
-    opacity 0.3s ease;
+    opacity 0.3s ease,
+    visibility 0.3s ease !important;
 }
 
 .shoppingCartSidebar-bg.active {
-  opacity: 0.5;
+  opacity: 0.5 !important;
 
-  pointer-events: auto;
+  visibility: visible !important;
 
-  transform: translateX(0);
+  pointer-events: auto !important;
+
+  transform: translateX(0) !important;
 }
 
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
 .shoppingCartSidebar {
-  position: fixed;
+  position: fixed !important;
 
-  top: 0;
-  right: 0;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
 
-  z-index: 3000;
+  z-index: 3000 !important;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
 
-  width: min(480px, 100%);
-  height: 100vh;
+  width: min(480px, 100vw) !important;
+  height: 100vh !important;
 
-  gap: 16px;
+  gap: 16px !important;
 
-  padding: 20px;
+  padding: 20px !important;
 
-  background: #ffffff;
+  background: #ffffff !important;
 
-  overflow: hidden;
+  overflow: hidden !important;
 
-  transform: translateX(100%);
+  transform: translateX(100%) !important;
 
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease !important;
 }
 
 .shoppingCartSidebar.active {
-  transform: translateX(0);
+  transform: translateX(0) !important;
 }
 
 /* =====================================================
@@ -1056,6 +1435,7 @@ main {
 
 .cartHeader {
   display: flex;
+
   align-items: center;
 
   width: 100%;
@@ -1064,15 +1444,9 @@ main {
   flex-shrink: 0;
 }
 
-#backArrow {
-  width: 28px;
-  height: 28px;
-
-  object-fit: contain;
-}
-
 .cartBack {
   display: flex;
+
   align-items: center;
 
   width: 100%;
@@ -1080,8 +1454,20 @@ main {
 
   gap: 15px;
 
+  color: #3d3c3c;
+
   font-family: "Syne", sans-serif;
+
   font-size: 18px;
+}
+
+#backArrow {
+  width: 28px;
+  height: 28px;
+
+  object-fit: contain;
+
+  cursor: pointer;
 }
 
 .cartCount {
@@ -1096,12 +1482,15 @@ main {
 
 .cartItems {
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
 
   width: 100%;
 
   flex: 1;
+
   min-height: 0;
 
   gap: 14px;
@@ -1109,6 +1498,7 @@ main {
   padding: 4px 0 10px;
 
   overflow-x: hidden;
+
   overflow-y: auto;
 }
 
@@ -1126,12 +1516,31 @@ main {
   border-radius: 10px;
 }
 
+.emptyCart {
+  margin: auto;
+
+  color: #666666;
+
+  font-family: "Syne", sans-serif;
+
+  font-size: 15px;
+
+  text-align: center;
+}
+
+/* =====================================================
+   CART ITEM
+===================================================== */
+
 .cartItem {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 
   width: 100%;
+
   min-height: 170px;
 
   gap: 14px;
@@ -1139,7 +1548,10 @@ main {
   padding: 14px;
 
   border: 2px dashed #676767;
+
   border-radius: 20px;
+
+  background: #ffffff;
 
   flex-shrink: 0;
 }
@@ -1157,14 +1569,17 @@ main {
 
 .cartItemInfo {
   display: flex;
+
   flex-direction: column;
 
   justify-content: space-between;
+
   align-items: flex-start;
 
   height: 105px;
 
   flex: 1;
+
   min-width: 0;
 }
 
@@ -1186,15 +1601,19 @@ main {
 
 .cartItemTitle {
   font-size: 16px;
+
   font-weight: 600;
 }
 
 .cartItemAuthor {
   font-size: 13px;
+
+  color: #555555;
 }
 
 .cartItemQuantity {
   display: flex;
+
   align-items: center;
 
   width: 100%;
@@ -1207,27 +1626,36 @@ main {
   height: 24px;
 
   object-fit: contain;
+
+  cursor: pointer;
 }
 
 .cartItemQuantity div {
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   width: 30px;
   height: 30px;
 
+  color: #333333;
+
   font-family: "Syne", sans-serif;
 
   font-size: 16px;
+
   font-weight: 600;
 }
 
 .cartItemRight {
   display: flex;
+
   flex-direction: column;
 
   align-items: flex-end;
+
   justify-content: space-between;
 
   height: 105px;
@@ -1243,12 +1671,17 @@ main {
   font-family: "Syne", sans-serif;
 
   font-size: 18px;
+
   font-weight: 600;
 }
 
 .cartDelete {
   width: 22px;
   height: 22px;
+
+  object-fit: contain;
+
+  cursor: pointer;
 }
 
 /* =====================================================
@@ -1257,16 +1690,19 @@ main {
 
 .cartBottom {
   display: flex;
+
   flex-direction: column;
 
   justify-content: space-between;
 
   width: 100%;
+
   min-height: 175px;
 
   padding: 22px;
 
   border: 2px solid #3d3c3c;
+
   border-radius: 20px 20px 0 0;
 
   background: #ffffff;
@@ -1276,10 +1712,13 @@ main {
 
 .cartTotal {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 
   width: 100%;
+
   min-height: 48px;
 
   gap: 10px;
@@ -1295,7 +1734,9 @@ main {
 
 .cartTotal div {
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   min-width: 120px;
@@ -1306,9 +1747,11 @@ main {
   background: #fdbf0f;
 
   border: 2px solid #3d3c3c;
+
   border-radius: 18px;
 
   font-family: "Syne", sans-serif;
+
   font-size: 17px;
 }
 
@@ -1319,12 +1762,36 @@ main {
   background: #f9784b;
 
   border: 2px solid #3d3c3c;
+
   border-radius: 20px;
+
+  color: #222222;
 
   font-family: "Syne", sans-serif;
 
   font-size: 16px;
+
   font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.checkoutButton:hover {
+  transform: translateY(-2px);
+}
+
+.checkoutButton:active {
+  transform: translateY(0);
+}
+
+.checkoutButton:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
 }
 
 /* =====================================================
@@ -1373,25 +1840,26 @@ main {
 .footer-column h3 {
   margin: 0 0 20px;
 
+  color: #333333;
+
   font-family: "Unica One", sans-serif;
 
   font-size: 20px;
   font-weight: 400;
 
   line-height: 1.2;
-
-  color: #333;
 }
 
 .footer-column p {
   margin: 0;
 
+  color: #333333;
+
   font-family: "Syne", sans-serif;
 
   font-size: 13px;
-  line-height: 1.55;
 
-  color: #333;
+  line-height: 1.55;
 }
 
 .footer-support {
@@ -1412,11 +1880,13 @@ main {
 
 .footer-newsletter {
   width: 100%;
+
   max-width: 420px;
 }
 
 .newsletter-form {
   display: flex;
+
   align-items: center;
 
   width: 100%;
@@ -1430,6 +1900,7 @@ main {
   flex: 1;
 
   min-width: 0;
+
   width: 100%;
 
   height: 42px;
@@ -1437,6 +1908,7 @@ main {
   padding: 0 15px;
 
   border: none;
+
   border-radius: 10px;
 
   outline: none;
@@ -1454,6 +1926,7 @@ main {
   padding: 0 18px;
 
   border: none;
+
   border-radius: 9px;
 
   background: #303030;
@@ -1465,10 +1938,13 @@ main {
   font-size: 13px;
 
   white-space: nowrap;
+
+  cursor: pointer;
 }
 
 .footer-brand {
   display: flex;
+
   align-items: center;
 
   gap: 18px;
@@ -1487,6 +1963,7 @@ main {
 
 .footer-brand-text {
   display: flex;
+
   flex-direction: column;
 
   gap: 4px;
@@ -1495,12 +1972,13 @@ main {
 .footer-brand-text h4 {
   margin: 0;
 
+  color: #333333;
+
   font-family: "Syne", sans-serif;
 
   font-size: 25px;
-  font-weight: 400;
 
-  color: #333;
+  font-weight: 400;
 }
 
 .footer-brand-text p {
@@ -1576,8 +2054,70 @@ main {
 ===================================================== */
 
 @media (max-width: 900px) {
-  .searchBox {
-    width: 70%;
+  header {
+    height: 78px;
+    min-height: 78px;
+
+    padding: 9px 20px;
+  }
+
+  body {
+    padding-top: 98px;
+  }
+
+  .logo img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .logo p,
+  .logo span {
+    font-size: 18px;
+  }
+
+  .headerButtons {
+    gap: 8px;
+  }
+
+  .headerButtons > img,
+  .headerButtons > a,
+  .headerButtons .header-icon,
+  .headerButtons .product-icon {
+    width: 25px;
+    height: 25px;
+  }
+
+  .headerButtons > a img,
+  .headerButtons .header-icon img,
+  .headerButtons .product-icon img {
+    width: 21px;
+    height: 21px;
+  }
+
+  .sign-in img,
+  #signInButton img,
+  .user-info img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .sign-in span,
+  #signInButton span {
+    font-size: 9px;
+  }
+
+  .sign-in small {
+    height: 22px;
+
+    font-size: 7px;
+  }
+
+  #createAccountButton {
+    width: 90px;
+
+    height: 28px;
+
+    font-size: 9px;
   }
 
   .productDetail {
@@ -1663,10 +2203,6 @@ main {
 
 @media (max-width: 700px) {
   body {
-    /*
-      HEADER = 70px
-      + khoảng cách 15px
-    */
     padding: 85px 15px 0;
   }
 
@@ -1688,7 +2224,8 @@ main {
     height: 45px;
   }
 
-  .logo p {
+  .logo p,
+  .logo span {
     max-width: 120px;
 
     font-size: 17px;
@@ -1699,26 +2236,68 @@ main {
   }
 
   .headerButtons {
-    gap: 6px;
+    gap: 5px;
   }
 
-  .headerButtons > img {
+  .headerButtons > img,
+  .headerButtons > a,
+  .headerButtons .header-icon,
+  .headerButtons .product-icon {
     width: 22px;
     height: 22px;
   }
 
-  #signInButton button {
+  .headerButtons > a img,
+  .headerButtons .header-icon img,
+  .headerButtons .product-icon img {
+    width: 19px;
+    height: 19px;
+  }
+
+  .sign-in img,
+  #signInButton img,
+  .user-info img {
+    width: 21px;
+    height: 21px;
+  }
+
+  .sign-in span,
+  #signInButton span,
+  .sign-in small {
     display: none;
+  }
+
+  .user-info {
+    gap: 5px;
+  }
+
+  .user-info span {
+    max-width: 75px;
+
+    font-size: 9px;
+  }
+
+  .user-info #logoutButton {
+    min-width: 58px;
+
+    height: 24px;
+
+    padding: 0 7px;
+
+    font-size: 8px;
   }
 
   #createAccountButton {
     width: 85px;
+
     height: 27px;
 
     padding: 0 7px;
 
     font-size: 9px;
   }
+
+  /* SEARCH */
 
   .searchBox {
     width: 90%;
@@ -1739,7 +2318,9 @@ main {
 
   .productDetail {
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
 
     width: 100%;
@@ -1760,11 +2341,17 @@ main {
 
   .productInfo {
     width: 100%;
+
     max-width: 560px;
   }
 
   .productTitle p {
     font-size: 28px;
+  }
+
+  .bookMarkBlock {
+    width: 48px;
+    height: 44px;
   }
 
   .productAuthor {
@@ -1781,6 +2368,12 @@ main {
 
   .price p {
     font-size: 28px;
+  }
+
+  /* BUYING */
+
+  .buying {
+    gap: 10px;
   }
 
   /* RECOMMEND */
@@ -1854,6 +2447,7 @@ main {
     margin: 9px 0 7px;
 
     font-size: 12px;
+
     line-height: 19px;
 
     flex-basis: 40px;
@@ -1925,11 +2519,11 @@ main {
   /* CART */
 
   .shoppingCartSidebar {
-    width: 100%;
+    width: 100vw !important;
 
-    padding: 15px;
+    padding: 15px !important;
 
-    gap: 12px;
+    gap: 12px !important;
   }
 
   .cartHeader {
@@ -2083,15 +2677,11 @@ main {
 }
 
 /* =====================================================
-   VERY SMALL 400
+   MOBILE 400
 ===================================================== */
 
 @media (max-width: 400px) {
   body {
-    /*
-      HEADER = 65px
-      + 13px khoảng cách
-    */
     padding: 78px 10px 0;
   }
 
@@ -2107,7 +2697,8 @@ main {
     height: 40px;
   }
 
-  .logo p {
+  .logo p,
+  .logo span {
     max-width: 90px;
 
     font-size: 15px;
@@ -2117,16 +2708,43 @@ main {
     gap: 4px;
   }
 
-  .headerButtons > img {
+  .headerButtons > img,
+  .headerButtons > a,
+  .headerButtons .header-icon,
+  .headerButtons .product-icon {
     width: 20px;
     height: 20px;
   }
 
+  .headerButtons > a img,
+  .headerButtons .header-icon img,
+  .headerButtons .product-icon img {
+    width: 18px;
+    height: 18px;
+  }
+
   #createAccountButton {
     width: 75px;
+
     height: 26px;
 
     font-size: 8px;
+  }
+
+  .user-info span {
+    max-width: 55px;
+
+    font-size: 8px;
+  }
+
+  .user-info #logoutButton {
+    min-width: 52px;
+
+    height: 22px;
+
+    padding: 0 6px;
+
+    font-size: 7px;
   }
 
   .searchBox {
@@ -2215,6 +2833,7 @@ main {
     margin: 8px 0 6px;
 
     font-size: 11px;
+
     line-height: 18px;
 
     flex-basis: 38px;
@@ -2279,7 +2898,8 @@ main {
 ===================================================== */
 
 @media (max-width: 340px) {
-  .logo p {
+  .logo p,
+  .logo span {
     max-width: 75px;
 
     font-size: 13px;
@@ -2289,9 +2909,19 @@ main {
     gap: 3px;
   }
 
-  .headerButtons > img {
+  .headerButtons > img,
+  .headerButtons > a,
+  .headerButtons .header-icon,
+  .headerButtons .product-icon {
     width: 18px;
     height: 18px;
+  }
+
+  .headerButtons > a img,
+  .headerButtons .header-icon img,
+  .headerButtons .product-icon img {
+    width: 16px;
+    height: 16px;
   }
 
   #createAccountButton {
@@ -2358,276 +2988,27 @@ body {
   overflow-y: auto;
 }
 
-.footer,
-.footer-container,
+main,
+.productDetail,
 .recommend,
 .recommendSlider,
-.recommendWindow {
+.recommendWindow,
+.footer,
+.footer-container {
   max-width: 100%;
-
-  overflow-x: hidden;
-}
-/* =====================================================
-   USER AREA - PRODUCT DETAIL
-===================================================== */
-
-.user-area {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
 }
 
 /* =====================================================
-   SIGN IN
-===================================================== */
-
-.sign-in,
-#signInButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 5px;
-
-  color: #3d3c3c;
-  text-decoration: none;
-
-  font-family: "Syne", sans-serif;
-
-  white-space: nowrap;
-}
-
-.sign-in img,
-#signInButton img {
-  width: 24px;
-  height: 24px;
-
-  object-fit: contain;
-
-  flex-shrink: 0;
-}
-
-.sign-in span,
-#signInButton span {
-  font-size: 10px;
-}
-
-.sign-in small {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  height: 20px;
-
-  padding: 0 8px;
-
-  background: #f9784b;
-
-  border: 1px solid #3d3c3c;
-  border-radius: 10px;
-
-  font-size: 8px;
-}
-
-/* =====================================================
-   USER ĐÃ ĐĂNG NHẬP
-===================================================== */
-
-.user-info {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 7px;
-
-  min-width: 0;
-
-  white-space: nowrap;
-}
-
-.user-info img {
-  width: 24px;
-  height: 24px;
-
-  object-fit: contain;
-
-  flex-shrink: 0;
-}
-
-.user-info span {
-  display: block;
-
-  max-width: 110px;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  color: #3d3c3c;
-
-  font-family: "Syne", sans-serif;
-
-  font-size: 11px;
-
-  font-weight: 500;
-}
-
-/* =====================================================
-   LOGOUT BUTTON
-===================================================== */
-
-.user-info #logoutButton {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: auto;
-  min-width: 66px;
-  height: 26px;
-
-  padding: 0 10px;
-
-  margin: 0;
-
-  border: 1px solid #3d3c3c;
-  border-radius: 13px;
-
-  background: #f9784b;
-
-  color: #ffffff;
-
-  font-family: "Syne", sans-serif;
-
-  font-size: 9px;
-  font-weight: 500;
-
-  line-height: 1;
-
-  cursor: pointer;
-
-  white-space: nowrap;
-
-  appearance: none;
-  -webkit-appearance: none;
-
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
-}
-
-.user-info #logoutButton:hover {
-  background: #ed6337;
-
-  transform: translateY(-1px);
-}
-
-.user-info #logoutButton:active {
-  transform: translateY(0);
-}
-
-/* =====================================================
-   HEADER BUTTONS
-===================================================== */
-
-.headerButtons {
-  display: flex;
-  align-items: center;
-
-  gap: 12px;
-
-  flex-shrink: 0;
-}
-
-.headerButtons > img {
-  width: 26px;
-  height: 26px;
-
-  object-fit: contain;
-
-  flex-shrink: 0;
-
-  cursor: pointer;
-}
-
-/* =====================================================
-   MOBILE
+   MOBILE CART SAFETY
 ===================================================== */
 
 @media (max-width: 700px) {
-  .headerButtons {
-    gap: 7px;
+  .shoppingCartSidebar,
+  .shoppingCartSidebar-bg {
+    max-width: 100vw !important;
   }
 
-  .sign-in img,
-  #signInButton img,
-  .user-info img {
-    width: 21px;
-    height: 21px;
-  }
-
-  .sign-in span,
-  #signInButton span,
-  .sign-in small {
-    display: none;
-  }
-
-  .user-info {
-    gap: 5px;
-  }
-
-  .user-info span {
-    max-width: 75px;
-
-    font-size: 9px;
-  }
-
-  .user-info #logoutButton {
-    min-width: 58px;
-
-    height: 24px;
-
-    padding: 0 7px;
-
-    font-size: 8px;
-  }
-
-  .headerButtons > img {
-    width: 21px;
-    height: 21px;
-  }
-}
-
-/* =====================================================
-   VERY SMALL MOBILE
-===================================================== */
-
-@media (max-width: 400px) {
-  .headerButtons {
-    gap: 5px;
-  }
-
-  .user-info span {
-    max-width: 55px;
-
-    font-size: 8px;
-  }
-
-  .user-info #logoutButton {
-    min-width: 52px;
-
-    height: 22px;
-
-    padding: 0 6px;
-
-    font-size: 7px;
-  }
-
-  .headerButtons > img {
-    width: 19px;
-    height: 19px;
+  .cartItems {
+    min-width: 0;
   }
 }

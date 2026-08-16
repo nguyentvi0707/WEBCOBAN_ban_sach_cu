@@ -84,10 +84,6 @@ img {
   min-width: 0;
   min-height: 100vh;
 
-  /*
-    Header = 80px
-    Khoảng cách bên dưới header = 30px
-  */
   padding-top: 110px;
 }
 
@@ -279,9 +275,11 @@ img {
 
 /* =====================================================
    HEADER ICONS
+   PRODUCT / HOME / BOOKMARK / CART
 ===================================================== */
 
-.header-icon {
+.header-icon,
+.product-icon {
   width: 30px;
   height: 30px;
 
@@ -294,19 +292,32 @@ img {
   color: #333333;
 
   text-decoration: none;
+
+  cursor: pointer;
 }
 
-.header-icon img {
+.header-icon img,
+.product-icon img {
   width: 25px;
   height: 25px;
 
+  display: block;
+
   object-fit: contain;
 
-  transition: transform 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
-.header-icon:hover img {
+.header-icon:hover img,
+.product-icon:hover img {
   transform: scale(1.06);
+}
+
+.header-icon:active img,
+.product-icon:active img {
+  transform: scale(0.95);
 }
 
 /* =====================================================
@@ -1145,12 +1156,14 @@ img {
     gap: 10px;
   }
 
-  .header-icon {
+  .header-icon,
+  .product-icon {
     width: 28px;
     height: 28px;
   }
 
-  .header-icon img {
+  .header-icon img,
+  .product-icon img {
     width: 22px;
     height: 22px;
   }
@@ -1295,12 +1308,14 @@ img {
     gap: 7px;
   }
 
-  .header-icon {
+  .header-icon,
+  .product-icon {
     width: 26px;
     height: 26px;
   }
 
-  .header-icon img {
+  .header-icon img,
+  .product-icon img {
     width: 20px;
     height: 20px;
   }
@@ -1504,6 +1519,7 @@ img {
 
   .footer-column p {
     font-size: 12px;
+
     line-height: 1.55;
   }
 
@@ -1564,12 +1580,14 @@ img {
     gap: 5px;
   }
 
-  .header-icon {
+  .header-icon,
+  .product-icon {
     width: 24px;
     height: 24px;
   }
 
-  .header-icon img {
+  .header-icon img,
+  .product-icon img {
     width: 19px;
     height: 19px;
   }
@@ -1640,6 +1658,22 @@ img {
 ===================================================== */
 
 @media (max-width: 350px) {
+  .site-header-right {
+    gap: 3px;
+  }
+
+  .header-icon,
+  .product-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .header-icon img,
+  .product-icon img {
+    width: 17px;
+    height: 17px;
+  }
+
   .category-search {
     width: calc(100% - 20px);
   }
