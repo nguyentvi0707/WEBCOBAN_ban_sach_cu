@@ -1,106 +1,169 @@
-/* =====================================================
-   IUHSVBOOK - GLOBAL BOOKMARK SYSTEM
-===================================================== */
 
-/* =====================================================
-   BOOKMARK STORAGE
-   ĐẶT NGOÀI DOMContentLoaded
-   để mọi file JS đều có thể sử dụng ngay.
-===================================================== */
+(() => {
+  "use strict";
 
-const getBookmarks = () => {
-  try {
-    const data = JSON.parse(localStorage.getItem("bookmarks"));
+  /* =====================================================
+     CHỐNG LOAD 2 LẦN
+  ===================================================== */
 
-    return Array.isArray(data) ? data : [];
-  } catch (error) {
-    console.error("LỖI ĐỌC BOOKMARKS:", error);
-
-    return [];
-  }
-};
-
-const saveBookmarks = (bookmarks) => {
-  localStorage.setItem(
-    "bookmarks",
-    JSON.stringify(Array.isArray(bookmarks) ? bookmarks : []),
-  );
-};
-
-const isBookmarked = (id) => {
-  if (id === undefined || id === null || id === "") {
-    return false;
+  if (window.__IUHSVBOOK_BOOKMARK_SYSTEM__) {
+    console.warn("BOOKMARK SYSTEM đã được load trước đó.");
+    return;
   }
 
-  return getBookmarks().some((item) => String(item) === String(id));
-};
+  window.__IUHSVBOOK_BOOKMARK_SYSTEM__ = true;
 
-const toggleBookmark = (id) => {
-  if (id === undefined || id === null || id === "") {
-    return false;
-  }
+  console.log("=================================");
+  console.log("IUHSVBOOK BOOKMARK SYSTEM START");
+  console.log("=================================");
 
-  const bookmarks = getBookmarks();
+  /* =====================================================
+     STORAGE
+  ===================================================== */
 
-  const index = bookmarks.findIndex((item) => String(item) === String(id));
+  const STORAGE_KEY = "bookmarks";
 
-  if (index >= 0) {
-    bookmarks.splice(index, 1);
+  /* =====================================================
+     GET BOOKMARKS
+  ===================================================== */
+
+  const getBookmarks = () => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+
+      if (!raw) {
+        return [];
+      }
+
+      const data = JSON.parse(raw);
+
+      if (!Array.isArray(data)) {
+        return [];
+      }
+
+      const normalized = data
+        .filter(
+          (id) => id !== undefined && id !== null && String(id).trim() !== "",
+        )
+        .map((id) => String(id).trim());
+
+      return [...new Set(normalized)];
+    } catch (error) {
+      console.error("BOOKMARK GET ERROR:", error);
+
+      return [];
+    }
+  };
+
+  /* =====================================================
+     SAVE BOOKMARKS
+  ===================================================== */
+
+  const saveBookmarks = (bookmarks) => {
+    const safeBookmarks = Array.isArray(bookmarks)
+      ? bookmarks
+          .filter(
+            (id) => id !== undefined && id !== null && String(id).trim() !== "",
+          )
+          .map((id) => String(id).trim())
+      : [];
+
+    const uniqueBookmarks = [...new Set(safeBookmarks)];
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(uniqueBookmarks));
+
+    /*
+     * Thông báo cho các trang trong cùng tab.
+     */
+
+    window.dispatchEvent(
+      new CustomEvent("bookmarkchange", {
+        detail: {
+          bookmarks: [...uniqueBookmarks],
+        },
+      }),
+    );
+
+    return uniqueBookmarks;
+  };
+
+  /* =====================================================
+     CHECK BOOKMARK
+  ===================================================== */
+
+  const isBookmarked = (id) => {
+    if (id === undefined || id === null || String(id).trim() === "") {
+      return false;
+    }
+
+    const targetId = String(id).trim();
+
+    return getBookmarks().includes(targetId);
+  };
+
+  /* =====================================================
+     TOGGLE BOOKMARK
+  ===================================================== */
+
+  const toggleBookmark = (id) => {
+    if (id === undefined || id === null || String(id).trim() === "") {
+      return false;
+    }
+
+    const targetId = String(id).trim();
+
+    const bookmarks = getBookmarks();
+
+    const index = bookmarks.indexOf(targetId);
+
+    /* -----------------------------------------------
+       ĐANG CÓ -> XÓA
+    ----------------------------------------------- */
+
+    if (index !== -1) {
+      bookmarks.splice(index, 1);
+
+      saveBookmarks(bookmarks);
+
+      console.log("BOOKMARK REMOVED:", targetId);
+
+      return false;
+    }
+
+    /* -----------------------------------------------
+       CHƯA CÓ -> THÊM
+    ----------------------------------------------- */
+
+    bookmarks.push(targetId);
 
     saveBookmarks(bookmarks);
 
-    return false;
-  }
+    console.log("BOOKMARK ADDED:", targetId);
 
-  bookmarks.push(id);
+    return true;
+  };
 
-  saveBookmarks(bookmarks);
-
-  return true;
-};
-
-/* =====================================================
-   GLOBAL FUNCTIONS
-===================================================== */
-
-window.getBookmarks = getBookmarks;
-
-window.saveBookmarks = saveBookmarks;
-
-window.isBookmarked = isBookmarked;
-
-window.toggleBookmark = toggleBookmark;
-
-/* =====================================================
-   DOM READY
-===================================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("=================================");
-
-  console.log("BOOKMARK SYSTEM START");
-
-  console.log("PAGE:", window.location.href);
-
-  console.log("BOOKMARK COUNT:", getBookmarks().length);
-
-  console.log("=================================");
-
-  /* =================================================
-       CURRENT USER
-    ================================================= */
+  /* =====================================================
+     CURRENT USER
+  ===================================================== */
 
   const getCurrentUser = () => {
-    const currentUser = localStorage.getItem("currentUser");
+    const raw = localStorage.getItem("currentUser");
 
-    if (!currentUser) {
+    if (!raw) {
       return null;
     }
 
     try {
-      return JSON.parse(currentUser);
+      const user = JSON.parse(raw);
+
+      if (!user || typeof user !== "object") {
+        return null;
+      }
+
+      return user;
     } catch (error) {
-      console.error("LỖI ĐỌC currentUser:", error);
+      console.error("CURRENT USER ERROR:", error);
 
       localStorage.removeItem("currentUser");
 
@@ -108,140 +171,313 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  /* =================================================
-       GO TO LOGIN
-    ================================================= */
+  /* =====================================================
+     PAGE HELPER
+  ===================================================== */
 
-  const goToLogin = () => {
+  const isInsidePages = window.location.pathname
+    .toLowerCase()
+    .includes("/pages/");
+
+  const getPagePath = (fileName) => {
+    if (isInsidePages) {
+      return `./${fileName}`;
+    }
+
+    return `./pages/${fileName}`;
+  };
+
+  /* =====================================================
+     LOGIN
+  ===================================================== */
+
+  const goToLoginFromBookmark = () => {
     const currentPage =
       window.location.pathname + window.location.search + window.location.hash;
 
-    const loginURL = new URL(
-      window.location.pathname.includes("/pages/")
-        ? "./login.html"
-        : "./pages/login.html",
-      window.location.href,
-    );
+    const loginURL = new URL(getPagePath("login.html"), window.location.href);
 
     loginURL.searchParams.set("redirect", currentPage);
 
-    console.log("LOGIN REDIRECT:", loginURL.href);
+    console.log("BOOKMARK LOGIN:", loginURL.href);
 
     window.location.href = loginURL.href;
   };
 
-  /* =================================================
-       GO TO FAVORITE
-    ================================================= */
+  /* =====================================================
+     FAVORITE
+  ===================================================== */
 
   const goToFavorite = () => {
+    /*
+     * Chưa login
+     */
+
     if (!getCurrentUser()) {
       alert("Bạn cần đăng nhập trước khi xem sách yêu thích!");
 
-      goToLogin();
+      goToLoginFromBookmark();
 
+      return;
+    }
+
+    /*
+     * Đang ở favorite thì không chuyển lại.
+     */
+
+    const currentPath = window.location.pathname.toLowerCase();
+
+    if (
+      currentPath.endsWith("/favorite.html") ||
+      currentPath.endsWith("favorite.html")
+    ) {
       return;
     }
 
     const favoriteURL = new URL(
-      window.location.pathname.includes("/pages/")
-        ? "./favorite.html"
-        : "./pages/favorite.html",
+      getPagePath("favorite.html"),
       window.location.href,
     );
+
+    console.log("OPEN FAVORITE:", favoriteURL.href);
 
     window.location.href = favoriteURL.href;
   };
 
-  /* =================================================
-       HEADER BOOKMARK
-    ================================================= */
+  /* =====================================================
+     UPDATE 1 BOOKMARK BUTTON
+  ===================================================== */
 
-  const headerBookmarks = document.querySelectorAll(".bookmark, #bookmarkIcon");
-
-  headerBookmarks.forEach((button) => {
-    if (button.dataset.bookmarkConnected === "true") {
+  const updateBookmarkButton = (button) => {
+    if (!button) {
       return;
     }
-
-    button.dataset.bookmarkConnected = "true";
-
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      goToFavorite();
-    });
-  });
-
-  /* =================================================
-       PRODUCT BOOKMARK
-       
-       Hỗ trợ:
-       data-bookmark-id="123"
-    ================================================= */
-
-  const productBookmarks = document.querySelectorAll("[data-bookmark-id]");
-
-  productBookmarks.forEach((button) => {
-    if (button.dataset.bookmarkConnected === "true") {
-      return;
-    }
-
-    button.dataset.bookmarkConnected = "true";
 
     const id = button.dataset.bookmarkId;
 
-    button.classList.toggle("active", isBookmarked(id));
+    if (id === undefined || id === null || String(id).trim() === "") {
+      return;
+    }
 
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+    const active = isBookmarked(id);
 
-      if (!getCurrentUser()) {
-        alert("Bạn cần đăng nhập trước khi lưu sách yêu thích!");
+    button.classList.toggle("active", active);
 
-        goToLogin();
+    button.setAttribute("aria-pressed", String(active));
 
-        return;
-      }
+    button.setAttribute(
+      "aria-label",
+      active ? "Bỏ yêu thích" : "Thêm vào yêu thích",
+    );
+  };
 
-      const active = toggleBookmark(id);
-
-      button.classList.toggle("active", active);
-
-      updateBookmarkButtons();
-    });
-  });
-
-  /* =================================================
-       UPDATE ALL BUTTONS
-    ================================================= */
+  /* =====================================================
+     UPDATE ALL BOOKMARK BUTTONS
+  ===================================================== */
 
   const updateBookmarkButtons = () => {
     document.querySelectorAll("[data-bookmark-id]").forEach((button) => {
-      button.classList.toggle(
-        "active",
-        isBookmarked(button.dataset.bookmarkId),
-      );
+      updateBookmarkButton(button);
     });
   };
 
-  window.updateBookmarkButtons = updateBookmarkButtons;
+  /* =====================================================
+     EXPORT GLOBAL
+  ===================================================== */
 
-  /* =================================================
-       GLOBAL FAVORITE
-    ================================================= */
+  window.getBookmarks = getBookmarks;
+
+  window.saveBookmarks = saveBookmarks;
+
+  window.isBookmarked = isBookmarked;
+
+  window.toggleBookmark = toggleBookmark;
+
+  window.updateBookmarkButton = updateBookmarkButton;
+
+  window.updateBookmarkButtons = updateBookmarkButtons;
 
   window.goToFavorite = goToFavorite;
 
-  window.goToLoginFromBookmark = goToLogin;
+  window.goToLoginFromBookmark = goToLoginFromBookmark;
 
-  /* =================================================
-       READY
-    ================================================= */
+  window.bookmarkGetCurrentUser = getCurrentUser;
 
-  console.log("BOOKMARK SYSTEM READY");
+  /* =====================================================
+     PRODUCT BOOKMARK CLICK
+     
+     DÙNG EVENT DELEGATION
+     
+     Card tạo sau bằng JavaScript vẫn hoạt động.
+  ===================================================== */
 
-  console.log("CURRENT BOOKMARKS:", getBookmarks());
-});
+  const handleProductBookmarkClick = (event) => {
+    const button = event.target.closest("button[data-bookmark-id]");
+
+    if (!button) {
+      return;
+    }
+
+    /*
+     * Chặn card click.
+     */
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    /*
+     * ID
+     */
+
+    const id = button.dataset.bookmarkId;
+
+    if (id === undefined || id === null || String(id).trim() === "") {
+      console.warn("BOOKMARK BUTTON KHÔNG CÓ ID:", button);
+
+      return;
+    }
+
+    /*
+     * Login
+     */
+
+    if (!getCurrentUser()) {
+      alert("Bạn cần đăng nhập trước khi lưu sách yêu thích!");
+
+      goToLoginFromBookmark();
+
+      return;
+    }
+
+    /*
+     * Toggle
+     */
+
+    const active = toggleBookmark(id);
+
+    /*
+     * Cập nhật ngay button hiện tại.
+     */
+
+    updateBookmarkButton(button);
+
+    /*
+     * Cập nhật toàn bộ button.
+     */
+
+    updateBookmarkButtons();
+
+    console.log("BOOKMARK CLICK:", id, active ? "ACTIVE" : "REMOVED");
+  };
+
+  /* =====================================================
+     HEADER BOOKMARK CLICK
+     
+     Header không có data-bookmark-id.
+     Header -> favorite.html
+  ===================================================== */
+
+  const handleHeaderBookmarkClick = (event) => {
+    const headerBookmark = event.target.closest(
+      '#bookmarkIcon, .bookmark, a[aria-label="Bookmark"]',
+    );
+
+    if (!headerBookmark) {
+      return;
+    }
+
+    /*
+     * Nếu là bookmark sản phẩm
+     * thì không xử lý ở đây.
+     */
+
+    if (headerBookmark.hasAttribute("data-bookmark-id")) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    goToFavorite();
+  };
+
+  /* =====================================================
+     INITIALIZE
+  ===================================================== */
+
+  const initialize = () => {
+    /*
+     * Tránh gắn listener lần 2.
+     */
+
+    if (window.__IUHSVBOOK_BOOKMARK_INITIALIZED__) {
+      return;
+    }
+
+    window.__IUHSVBOOK_BOOKMARK_INITIALIZED__ = true;
+
+    console.log("BOOKMARK INITIALIZE");
+
+    /*
+     * Đồng bộ màu ban đầu.
+     */
+
+    updateBookmarkButtons();
+
+    /* -----------------------------------------------
+       PRODUCT BOOKMARK
+    ----------------------------------------------- */
+
+    document.addEventListener("click", handleProductBookmarkClick, true);
+
+    /* -----------------------------------------------
+       HEADER BOOKMARK
+    ----------------------------------------------- */
+
+    document.addEventListener("click", handleHeaderBookmarkClick, true);
+
+    /* -----------------------------------------------
+       STORAGE CHANGE
+       
+       Đồng bộ giữa các tab.
+    ----------------------------------------------- */
+
+    window.addEventListener("storage", (event) => {
+      if (event.key === STORAGE_KEY) {
+        updateBookmarkButtons();
+
+        window.dispatchEvent(
+          new CustomEvent("bookmarkchange", {
+            detail: {
+              bookmarks: getBookmarks(),
+            },
+          }),
+        );
+      }
+
+      if (event.key === "currentUser") {
+        updateBookmarkButtons();
+      }
+    });
+
+    console.log("BOOKMARK SYSTEM READY");
+
+    console.log("CURRENT USER:", getCurrentUser());
+
+    console.log("BOOKMARKS:", getBookmarks());
+
+    console.log("=================================");
+  };
+
+  /* =====================================================
+     DOM READY
+  ===================================================== */
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialize, {
+      once: true,
+    });
+  } else {
+    initialize();
+  }
+})();

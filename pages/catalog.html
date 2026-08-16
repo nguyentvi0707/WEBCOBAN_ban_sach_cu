@@ -2,6 +2,7 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>CATALOG - IUHSVBOOK</title>
@@ -11,6 +12,7 @@
     ====================================================== -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
@@ -18,7 +20,17 @@
       rel="stylesheet"
     />
 
+    <!-- =====================================================
+         CATALOG CSS
+    ====================================================== -->
+
     <link rel="stylesheet" href="../css/catalog.css" />
+
+    <!-- =====================================================
+         SHOPPING CART SIDEBAR CSS
+    ====================================================== -->
+
+    <link rel="stylesheet" href="../css/shoppingCartSideBar.css" />
   </head>
 
   <body>
@@ -27,36 +39,84 @@
     ====================================================== -->
 
     <header class="header">
-      <!-- LOGO -->
-      <a href="../index.html" class="logo">
+      <!-- =================================================
+           LOGO
+      ================================================== -->
+
+      <a
+        href="../index.html"
+        class="logo"
+        id="logoIcon"
+        aria-label="IUHSVBOOK Home"
+      >
         <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
 
         <span>IUHSVBOOK</span>
       </a>
 
-      <!-- MENU -->
+      <!-- =================================================
+           HEADER MENU
+      ================================================== -->
+
       <nav class="header-menu">
-        <!-- SIGN IN + CREATE ACCOUNT -->
-        <a href="#" class="sign-in">
+        <!-- ===============================================
+             CHƯA ĐĂNG NHẬP
+        ================================================ -->
+
+        <div id="signInButton" class="sign-in">
           <img src="../images/iconlogin.png" alt="Sign In" />
 
           <span>SIGN IN</span>
 
-          <small>Create account</small>
-        </a>
+          <button id="createAccountButton" type="button">Create account</button>
+        </div>
 
-        <!-- HOME -->
-        <a href="../index.html" class="home">
+        <!-- ===============================================
+             ĐÃ ĐĂNG NHẬP
+        ================================================ -->
+
+        <div id="userInfo" class="user-info" style="display: none">
+          <img src="../images/iconlogin.png" alt="User" />
+
+          <span id="usernameDisplay"></span>
+
+          <button id="logoutButton" type="button">Đăng xuất</button>
+        </div>
+
+        <!-- ===============================================
+             HOME
+        ================================================ -->
+
+        <a href="../index.html" class="home" id="homeIcon" aria-label="Home">
           <img src="../images/iconhome.png" alt="Home" />
         </a>
 
-        <!-- BOOKMARK -->
-        <a href="#" class="bookmark">
+        <!-- ===============================================
+             BOOKMARK
+        ================================================ -->
+
+        <a href="#" class="bookmark" id="bookmarkIcon" aria-label="Bookmark">
           <img src="../images/iconbookmark.png" alt="Bookmark" />
         </a>
 
-        <!-- CART -->
-        <a href="#" class="cart">
+        <!-- ===============================================
+             PRODUCT / CATALOG
+        ================================================ -->
+
+        <a
+          href="./catalog.html"
+          class="product"
+          id="productIcon"
+          aria-label="Products"
+        >
+          <img src="../images/iconproduct.png" alt="Products" />
+        </a>
+
+        <!-- ===============================================
+             CART
+        ================================================ -->
+
+        <a href="#" class="cart" id="cartIcon" aria-label="Cart">
           <img src="../images/iconcart.png" alt="Cart" />
         </a>
       </nav>
@@ -67,46 +127,53 @@
     ====================================================== -->
 
     <main class="category-page">
-      <!-- =====================================================
+      <!-- =================================================
            SEARCH
-      ====================================================== -->
+      ================================================== -->
 
       <div class="category-search">
-        <input type="text" placeholder="Type the name of book or author..." />
+        <input
+          id="categorySearchInput"
+          type="text"
+          placeholder="Type the name of book or author..."
+          autocomplete="off"
+        />
 
-        <button type="button" aria-label="Search">
+        <button id="categorySearchButton" type="button" aria-label="Search">
           <img src="../images/iconkinhlup.png" alt="Search" />
         </button>
       </div>
 
-      <!-- =====================================================
+      <!-- =================================================
            RESULTS SECTION
-      ====================================================== -->
+      ================================================== -->
 
       <section class="results-section">
-        <!-- ===================================================
+        <!-- =================================================
              RESULTS TOP
-        ==================================================== -->
+        ================================================== -->
 
         <div class="results-top">
-          <!-- RESULTS TITLE -->
+          <!-- ===============================================
+               RESULTS TITLE
+          ================================================ -->
+
           <div class="results-title">
             <span>RESULTS</span>
 
             <span class="results-keyword"> “NAME BOOK OR NAME AUTHOR” </span>
           </div>
 
-          <!-- =================================================
+          <!-- ===============================================
                FILTERS
-          ================================================== -->
+          ================================================ -->
 
           <div class="results-filters">
-            <!-- =================================================
-                 CATEGORIES DROPDOWN
-            ================================================== -->
+            <!-- =============================================
+                 CATEGORIES
+            ============================================== -->
 
             <div class="category-dropdown" id="categoryDropdown">
-              <!-- BUTTON -->
               <button
                 class="category-dropdown-btn"
                 id="categoryDropdownBtn"
@@ -118,9 +185,10 @@
                 <span class="filter-arrow"> ⌄ </span>
               </button>
 
-              <!-- MENU -->
               <div class="category-dropdown-menu" id="categoryDropdownMenu">
-                <button type="button" data-category="all">Tất cả</button>
+                <button type="button" data-category="all" class="active">
+                  Tất cả
+                </button>
 
                 <button type="button" data-category="Đại cương">
                   Đại cương
@@ -140,12 +208,11 @@
               </div>
             </div>
 
-            <!-- =================================================
-                 FILTER BY DROPDOWN
-            ================================================== -->
+            <!-- =============================================
+                 FILTER BY
+            ============================================== -->
 
             <div class="filter-dropdown" id="filterDropdown">
-              <!-- BUTTON -->
               <button
                 class="filter-dropdown-btn"
                 id="filterDropdownBtn"
@@ -157,8 +224,11 @@
                 <span class="filter-arrow"> ⌄ </span>
               </button>
 
-              <!-- MENU -->
               <div class="filter-dropdown-menu" id="filterDropdownMenu">
+                <button type="button" data-filter="default" class="active">
+                  Mặc định
+                </button>
+
                 <button type="button" data-filter="az">A → Z</button>
 
                 <button type="button" data-filter="za">Z → A</button>
@@ -175,23 +245,23 @@
           </div>
         </div>
 
-        <!-- =====================================================
+        <!-- =================================================
              DOTTED LINE
-        ====================================================== -->
+        ================================================== -->
 
         <div class="results-line"></div>
 
-        <!-- =====================================================
-     BOOK RESULTS
-===================================================== -->
+        <!-- =================================================
+             BOOK RESULTS
+        ================================================== -->
 
         <div class="catalog-results" id="catalogResults"></div>
 
-        <!-- =====================================================
-     EMPTY RESULTS
-===================================================== -->
+        <!-- =================================================
+             EMPTY RESULTS
+        ================================================== -->
 
-        <div class="empty-results" id="emptyResults">
+        <div class="empty-results" id="emptyResults" style="display: none">
           <div class="empty-book">
             <div class="book-left"></div>
 
@@ -204,22 +274,32 @@
         </div>
       </section>
 
+      <!-- =====================================================
+           FOOTER
+      ====================================================== -->
+
       <footer class="footer">
         <div class="footer-container">
-          <!-- CỘT 1: HỖ TRỢ KHÁCH HÀNG -->
+          <!-- ===============================================
+               CỘT 1
+          ================================================ -->
+
           <div class="footer-column footer-support">
             <h3>HỖ TRỢ KHÁCH HÀNG</h3>
 
             <p>
               Hotline: 12345678<br />
-              email: abc@gmail.com<br />
+              Email: abc@gmail.com<br />
               SĐT: 012345678<br />
               Địa chỉ: 12 Nguyễn Văn Bảo, Hạnh Thông,<br />
               Hồ Chí Minh 700000, Vietnam
             </p>
           </div>
 
-          <!-- CỘT 2: VỀ CHÚNG TÔI -->
+          <!-- ===============================================
+               CỘT 2
+          ================================================ -->
+
           <div class="footer-column footer-about">
             <h3>VỀ CHÚNG TÔI</h3>
 
@@ -234,7 +314,10 @@
             </p>
           </div>
 
-          <!-- CỘT 3: ĐĂNG KÝ NHẬN THÔNG BÁO -->
+          <!-- ===============================================
+               CỘT 3
+          ================================================ -->
+
           <div class="footer-column footer-newsletter">
             <h3>NHẬN THÔNG BÁO TỪ CHÚNG TÔI</h3>
 
@@ -244,12 +327,12 @@
               <button type="button">Submit</button>
             </div>
 
-            <!-- LOGO + SLOGAN -->
             <div class="footer-brand">
               <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
 
               <div class="footer-brand-text">
                 <h4>IUHSVBOOK</h4>
+
                 <p>Sách cũ, giá trị mới.</p>
               </div>
             </div>
@@ -261,8 +344,14 @@
     <!-- =====================================================
          JAVASCRIPT
     ====================================================== -->
+
+    <!-- SHOPPING CART SIDEBAR -->
     <script src="../js/shoppingCartSidebar.js"></script>
+
+    <!-- GLOBAL BOOKMARK -->
     <script src="../js/bookMarkButton.js"></script>
+
+    <!-- CATALOG -->
     <script src="../js/catalog.js"></script>
   </body>
 </html>

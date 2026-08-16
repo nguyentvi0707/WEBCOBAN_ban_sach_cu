@@ -1,11 +1,3 @@
-/* =====================================================
-   IUHSVBOOK - FAVORITE
-===================================================== */
-
-/* =====================================================
-   RESET
-===================================================== */
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -93,6 +85,8 @@ img {
 
   gap: 9px;
 
+  min-width: 0;
+
   color: #3d3c3c;
 
   text-decoration: none;
@@ -107,12 +101,16 @@ img {
   object-fit: contain;
 
   border-radius: 50%;
+
+  flex-shrink: 0;
 }
 
 .logo span {
   font-family: "Unica One", sans-serif;
 
   font-size: 20px;
+
+  color: #3d3c3c;
 
   white-space: nowrap;
 }
@@ -125,9 +123,13 @@ img {
   display: flex;
   align-items: center;
 
-  gap: 12px;
+  gap: 10px;
+
+  min-width: 0;
 
   flex-shrink: 0;
+
+  white-space: nowrap;
 }
 
 /* =====================================================
@@ -141,6 +143,8 @@ img {
   gap: 6px;
 
   flex-shrink: 0;
+
+  white-space: nowrap;
 }
 
 .sign-in > img {
@@ -148,6 +152,8 @@ img {
   height: 25px;
 
   object-fit: contain;
+
+  flex-shrink: 0;
 }
 
 .sign-in span {
@@ -159,6 +165,10 @@ img {
 
   white-space: nowrap;
 }
+
+/* =====================================================
+   CREATE ACCOUNT
+===================================================== */
 
 #createAccountButton {
   height: 30px;
@@ -177,6 +187,8 @@ img {
 
   white-space: nowrap;
 
+  cursor: pointer;
+
   transition:
     background-color 0.2s ease,
     transform 0.2s ease;
@@ -193,12 +205,14 @@ img {
 ===================================================== */
 
 .user-info {
-  display: flex;
+  display: none;
   align-items: center;
 
   gap: 6px;
 
   flex-shrink: 0;
+
+  white-space: nowrap;
 }
 
 .user-info > img {
@@ -206,6 +220,8 @@ img {
   height: 25px;
 
   object-fit: contain;
+
+  flex-shrink: 0;
 }
 
 #usernameDisplay {
@@ -239,6 +255,8 @@ img {
 
   white-space: nowrap;
 
+  cursor: pointer;
+
   transition:
     background-color 0.2s ease,
     transform 0.2s ease;
@@ -252,9 +270,11 @@ img {
 
 /* =====================================================
    HEADER ICONS
+   PRODUCT / HOME / FAVORITE / CART
 ===================================================== */
 
 .home,
+.product,
 .bookmark,
 .cart {
   width: 30px;
@@ -264,12 +284,17 @@ img {
   align-items: center;
   justify-content: center;
 
-  flex-shrink: 0;
+  flex: 0 0 30px;
+
+  color: #333333;
 
   text-decoration: none;
+
+  cursor: pointer;
 }
 
 .home img,
+.product img,
 .bookmark img,
 .cart img {
   width: 25px;
@@ -277,13 +302,23 @@ img {
 
   object-fit: contain;
 
-  transition: transform 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .home:hover img,
+.product:hover img,
 .bookmark:hover img,
 .cart:hover img {
   transform: scale(1.06);
+}
+
+.home:active img,
+.product:active img,
+.bookmark:active img,
+.cart:active img {
+  transform: scale(0.94);
 }
 
 /* =====================================================
@@ -296,6 +331,8 @@ main {
   align-items: center;
 
   width: 100%;
+
+  min-width: 0;
 
   padding: 105px 40px 0;
 }
@@ -366,6 +403,8 @@ main {
   border: 0;
 
   background: transparent;
+
+  cursor: pointer;
 }
 
 .category-search button:hover {
@@ -377,6 +416,8 @@ main {
   height: 20px;
 
   object-fit: contain;
+
+  pointer-events: none;
 }
 
 /* =====================================================
@@ -415,6 +456,8 @@ main {
 
   gap: 6px;
 
+  min-width: 0;
+
   color: #222222;
 
   font-family: "Unica One", sans-serif;
@@ -426,6 +469,9 @@ main {
 
 .results-keyword {
   color: #2daeea;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* =====================================================
@@ -439,6 +485,8 @@ main {
   gap: 12px;
 
   flex-shrink: 0;
+
+  min-width: 0;
 }
 
 /* =====================================================
@@ -492,6 +540,20 @@ main {
 
 .favorite-dropdown-btn:hover {
   background: #fffdf8;
+}
+
+/* =====================================================
+   DROPDOWN SELECTED TEXT
+===================================================== */
+
+.favorite-selected {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
 }
 
 /* =====================================================
@@ -1095,6 +1157,8 @@ main {
   font-size: 13px;
 
   white-space: nowrap;
+
+  cursor: pointer;
 }
 
 .newsletter-form button:hover {
@@ -1155,6 +1219,8 @@ main {
   .header {
     padding-left: 28px;
     padding-right: 28px;
+
+    gap: 14px;
   }
 
   main {
@@ -1191,60 +1257,105 @@ main {
   .header {
     height: 78px;
 
-    padding: 9px 20px;
-  }
+    padding: 8px 20px;
 
-  main {
-    padding-top: 98px;
-  }
-
-  .logo img {
-    width: 50px;
-    height: 50px;
-  }
-
-  .logo span {
-    font-size: 18px;
-  }
-
-  .header-menu {
     gap: 10px;
   }
 
-  .sign-in > img,
-  .user-info > img {
-    width: 22px;
-    height: 22px;
+  main {
+    padding-top: 96px;
+
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* LOGO */
+
+  .logo {
+    gap: 7px;
+  }
+
+  .logo img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .logo span {
+    font-size: 16px;
+  }
+
+  /* HEADER MENU */
+
+  .header-menu {
+    gap: 6px;
+
+    display: flex;
+    align-items: center;
+
+    flex-wrap: nowrap;
+  }
+
+  /* SIGN IN */
+
+  .sign-in {
+    gap: 4px;
+  }
+
+  .sign-in > img {
+    width: 21px;
+    height: 21px;
+  }
+
+  .sign-in span {
+    font-size: 9px;
   }
 
   #createAccountButton,
   #logoutButton {
-    height: 27px;
+    height: 26px;
 
-    padding: 0 9px;
+    padding: 0 8px;
 
-    font-size: 9px;
+    font-size: 8px;
+  }
+
+  /* USER */
+
+  .user-info {
+    gap: 4px;
+  }
+
+  .user-info > img {
+    width: 21px;
+    height: 21px;
   }
 
   #usernameDisplay {
-    max-width: 90px;
-
-    font-size: 11px;
+    max-width: 70px;
+    font-size: 10px;
   }
 
+  /* ALL ICONS */
+
   .home,
+  .product,
   .bookmark,
   .cart {
-    width: 26px;
-    height: 26px;
+    width: 27px;
+    height: 27px;
+
+    flex: 0 0 27px;
   }
 
   .home img,
+  .product img,
   .bookmark img,
   .cart img {
-    width: 22px;
-    height: 22px;
+    width: 21px;
+    height: 21px;
   }
+
+  /* RESULTS */
 
   .results-top {
     gap: 14px;
@@ -1296,6 +1407,8 @@ main {
     height: 40px;
   }
 
+  /* FOOTER */
+
   .footer {
     margin-top: 70px;
 
@@ -1303,7 +1416,9 @@ main {
   }
 
   .footer-container {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+      1fr
+      1fr;
 
     row-gap: 45px;
 
@@ -1333,39 +1448,41 @@ main {
 }
 
 /* =====================================================
-   MOBILE 700
+   HEADER FIX 760
 ===================================================== */
 
-@media (max-width: 700px) {
+@media (max-width: 760px) {
   .header {
-    height: 70px;
+    height: 74px;
 
-    padding: 8px 14px;
+    padding: 7px 14px;
 
-    gap: 8px;
-  }
-
-  main {
-    padding: 90px 15px 0;
+    gap: 6px;
   }
 
   .logo img {
-    width: 44px;
-    height: 44px;
+    width: 43px;
+    height: 43px;
   }
 
   .logo span {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .header-menu {
-    gap: 7px;
+    gap: 4px;
+
+    flex: 0 0 auto;
+  }
+
+  .sign-in {
+    gap: 3px;
   }
 
   .sign-in > img,
   .user-info > img {
-    width: 21px;
-    height: 21px;
+    width: 19px;
+    height: 19px;
   }
 
   .sign-in span {
@@ -1376,37 +1493,117 @@ main {
   #logoutButton {
     height: 24px;
 
-    padding: 0 8px;
+    padding: 0 6px;
 
-    font-size: 8px;
+    font-size: 7px;
   }
 
   #usernameDisplay {
     display: none;
   }
 
+  /* KHÔNG ẨN ICON */
+
   .home,
+  .product,
   .bookmark,
   .cart {
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
+
+    flex: 0 0 24px;
   }
 
   .home img,
+  .product img,
   .bookmark img,
   .cart img {
-    width: 20px;
-    height: 20px;
+    width: 19px;
+    height: 19px;
+  }
+
+  main {
+    padding-top: 88px;
+  }
+
+  .category-search {
+    margin-top: 16px;
+  }
+}
+
+/* =====================================================
+   MOBILE 700
+===================================================== */
+
+@media (max-width: 700px) {
+  .header {
+    height: 70px;
+
+    padding: 7px 12px;
+
+    gap: 6px;
+  }
+
+  main {
+    padding: 84px 15px 0;
+  }
+
+  .logo img {
+    width: 41px;
+    height: 41px;
+  }
+
+  .logo span {
+    display: none;
+  }
+
+  .header-menu {
+    gap: 3px;
+  }
+
+  .sign-in > img,
+  .user-info > img {
+    width: 18px;
+    height: 18px;
+  }
+
+  #createAccountButton,
+  #logoutButton {
+    height: 23px;
+
+    padding: 0 5px;
+
+    font-size: 6.5px;
+  }
+
+  /* GIỮ ĐỦ 4 ICON */
+
+  .home,
+  .product,
+  .bookmark,
+  .cart {
+    width: 23px;
+    height: 23px;
+
+    flex: 0 0 23px;
+  }
+
+  .home img,
+  .product img,
+  .bookmark img,
+  .cart img {
+    width: 18px;
+    height: 18px;
   }
 
   /* SEARCH */
 
   .category-search {
-    width: calc(100% - 20px);
+    width: calc(100% - 18px);
 
     height: 44px;
 
-    margin: 18px auto 30px;
+    margin: 14px auto 30px;
   }
 
   .category-search input {
@@ -1433,9 +1630,9 @@ main {
     white-space: normal;
   }
 
-  /* =================================================
-     FILTERS MOBILE
-  ================================================= */
+  .results-keyword {
+    max-width: 55vw;
+  }
 
   .results-filters {
     width: 100%;
@@ -1659,13 +1856,87 @@ main {
 }
 
 /* =====================================================
+   MOBILE 600
+   VẪN GIỮ ĐỦ HEADER ICON
+===================================================== */
+
+@media (max-width: 600px) {
+  .header {
+    height: 68px;
+
+    padding: 6px 10px;
+
+    gap: 5px;
+  }
+
+  .logo img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header-menu {
+    gap: 2px;
+  }
+
+  .sign-in > img,
+  .user-info > img {
+    width: 17px;
+    height: 17px;
+  }
+
+  #createAccountButton,
+  #logoutButton {
+    height: 22px;
+
+    padding: 0 4px;
+
+    font-size: 6px;
+  }
+
+  .home,
+  .product,
+  .bookmark,
+  .cart {
+    width: 21px;
+    height: 21px;
+
+    flex: 0 0 21px;
+  }
+
+  .home img,
+  .product img,
+  .bookmark img,
+  .cart img {
+    width: 16px;
+    height: 16px;
+  }
+
+  main {
+    padding-top: 81px;
+  }
+
+  .category-search {
+    margin-top: 12px;
+  }
+}
+
+/* =====================================================
    SMALL MOBILE 480
+   KHÔNG ẨN HOME / PRODUCT / BOOKMARK
 ===================================================== */
 
 @media (max-width: 480px) {
   .header {
-    padding-left: 10px;
-    padding-right: 10px;
+    height: 66px;
+
+    padding: 6px 8px;
+
+    gap: 3px;
+  }
+
+  .logo img {
+    width: 38px;
+    height: 38px;
   }
 
   .logo span {
@@ -1673,27 +1944,57 @@ main {
   }
 
   .header-menu {
-    gap: 5px;
+    gap: 1px;
   }
 
-  .home,
-  .bookmark {
-    display: none;
+  .sign-in {
+    gap: 2px;
   }
 
-  .cart img {
-    width: 21px;
-    height: 21px;
+  .sign-in > img,
+  .user-info > img {
+    width: 16px;
+    height: 16px;
   }
 
   #createAccountButton,
   #logoutButton {
-    padding: 0 7px;
+    height: 21px;
 
-    font-size: 7px;
+    padding: 0 3px;
+
+    font-size: 5.5px;
+  }
+
+  /*
+   * QUAN TRỌNG:
+   * Không display:none các icon.
+   * Giữ đủ HOME / PRODUCT / BOOKMARK / CART.
+   */
+
+  .home,
+  .product,
+  .bookmark,
+  .cart {
+    display: flex;
+
+    width: 20px;
+    height: 20px;
+
+    flex: 0 0 20px;
+  }
+
+  .home img,
+  .product img,
+  .bookmark img,
+  .cart img {
+    width: 15px;
+    height: 15px;
   }
 
   main {
+    padding-top: 78px;
+
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -1702,10 +2003,16 @@ main {
     width: calc(100% - 8px);
 
     height: 40px;
+
+    margin: 12px auto 28px;
   }
 
   .results-title {
     font-size: 12px;
+  }
+
+  .results-keyword {
+    max-width: 60vw;
   }
 
   .results-filters {
@@ -1829,11 +2136,57 @@ main {
 
 /* =====================================================
    VERY SMALL 350
+   VẪN GIỮ ĐỦ 4 ICON
 ===================================================== */
 
 @media (max-width: 350px) {
+  .header {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
   .header-menu {
-    gap: 3px;
+    gap: 1px;
+  }
+
+  .logo img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .sign-in > img,
+  .user-info > img {
+    width: 15px;
+    height: 15px;
+  }
+
+  #createAccountButton,
+  #logoutButton {
+    padding: 0 2px;
+
+    font-size: 5px;
+  }
+
+  .home,
+  .product,
+  .bookmark,
+  .cart {
+    width: 19px;
+    height: 19px;
+
+    flex: 0 0 19px;
+  }
+
+  .home img,
+  .product img,
+  .bookmark img,
+  .cart img {
+    width: 14px;
+    height: 14px;
+  }
+
+  main {
+    padding-top: 76px;
   }
 
   .category-search {
