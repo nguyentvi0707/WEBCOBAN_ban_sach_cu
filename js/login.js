@@ -1,102 +1,81 @@
-/* =====================================================
-   IUHSVBOOK - LOGIN
-===================================================== */
-
 document.addEventListener("DOMContentLoaded", () => {
-  /* =====================================================
-     LẤY ELEMENT
-  ===================================================== */
-
   const form = document.querySelector("#loginForm");
-
   const createButton = document.querySelector("#createAccount");
+  const homeButton = document.querySelector(".home-link");
 
-  const homeButton = document.querySelector("#homeButton");
-
-  const usernameInput = document.querySelector("#username");
-
+  const emailInput = document.querySelector("#email");
   const passwordInput = document.querySelector("#password");
-
   const rememberMe = document.querySelector("#rememberMe");
 
   const passwordToggle = document.querySelector(".password-toggle");
 
-  /* =====================================================
-     KIỂM TRA ELEMENT
-  ===================================================== */
+  const emailError = document.querySelector("#emailError");
+  const passwordError = document.querySelector("#passwordError");
+  const loginMessage = document.querySelector("#loginMessage");
 
-  if (!form || !usernameInput || !passwordInput) {
+  if (!form || !emailInput || !passwordInput) {
     console.error("Không tìm thấy form login hoặc input!");
-
     return;
   }
 
-  /* =====================================================
-     LẤY REDIRECT
-  ===================================================== */
-
   const params = new URLSearchParams(window.location.search);
-
   const redirectURL = params.get("redirect") || "";
-
-  console.log("LOGIN REDIRECT:", redirectURL);
-
-  /* =====================================================
-     LƯU REDIRECT
-     
-     Phòng trường hợp người dùng chuyển
-     sang Create Account rồi quay lại Login.
-  ===================================================== */
 
   if (redirectURL) {
     sessionStorage.setItem("loginRedirect", redirectURL);
   }
 
-  /* =====================================================
-     LẤY REDIRECT CUỐI CÙNG
-  ===================================================== */
-
   const getRedirectURL = () => {
-    const urlRedirect = new URLSearchParams(window.location.search).get(
+    const currentRedirect = new URLSearchParams(window.location.search).get(
       "redirect",
     );
 
-    if (urlRedirect) {
-      return urlRedirect;
+    if (currentRedirect) {
+      return currentRedirect;
     }
 
-    const savedRedirect = sessionStorage.getItem("loginRedirect");
-
-    return savedRedirect || "";
+    return sessionStorage.getItem("loginRedirect") || "";
   };
 
-  /* =====================================================
-     QUAY LẠI TRANG TRƯỚC
-  ===================================================== */
+  const showMessage = (message, type = "") => {
+    if (!loginMessage) {
+      return;
+    }
+
+    loginMessage.textContent = message;
+    loginMessage.className = "login-message";
+
+    if (type) {
+      loginMessage.classList.add(type);
+    }
+  };
+
+  const clearMessage = () => {
+    if (emailError) {
+      emailError.textContent = "";
+    }
+
+    if (passwordError) {
+      passwordError.textContent = "";
+    }
+
+    showMessage("");
+  };
+
+  const isValidEmail = (email) => {
+    return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email);
+  };
 
   const goBackAfterLogin = () => {
     const redirect = getRedirectURL();
 
-    console.log("FINAL REDIRECT:", redirect);
-
-    /*
-     * Có redirect
-     */
     if (redirect) {
       try {
         const targetURL = new URL(redirect, window.location.origin);
 
-        /*
-         * Chỉ cho phép trang nội bộ
-         */
         if (targetURL.origin === window.location.origin) {
-          /*
-           * Xóa redirect đã lưu
-           */
           sessionStorage.removeItem("loginRedirect");
-
           window.location.href = targetURL.href;
-
           return;
         }
       } catch (error) {
@@ -104,180 +83,171 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    /*
-     * Không có redirect
-     */
     sessionStorage.removeItem("loginRedirect");
-
     window.location.href = "../index.html";
   };
 
-  /* =====================================================
-     HOME
-  ===================================================== */
+  homeButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-  if (homeButton) {
-    homeButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+    sessionStorage.removeItem("loginRedirect");
 
-      sessionStorage.removeItem("loginRedirect");
+    window.location.href = "../index.html";
+  });
 
-      window.location.href = "../index.html";
-    });
-  }
+  createButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-  /* =====================================================
-     CREATE ACCOUNT
-  ===================================================== */
+    const redirect = getRedirectURL();
 
-  if (createButton) {
-    createButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+    const createURL = new URL("./create.html", window.location.href);
 
-      const redirect = getRedirectURL();
+    if (redirect) {
+      createURL.searchParams.set("redirect", redirect);
+    }
 
-      /*
-       * login.html và create.html
-       * đều nằm trong /pages
-       */
-      const createURL = new URL("./create.html", window.location.href);
+    window.location.href = createURL.href;
+  });
 
-      if (redirect) {
-        createURL.searchParams.set("redirect", redirect);
-      }
+  passwordToggle?.addEventListener("click", () => {
+    const isPassword = passwordInput.type === "password";
 
-      console.log("GO CREATE:", createURL.href);
+    passwordInput.type = isPassword ? "text" : "password";
 
-      window.location.href = createURL.href;
-    });
-  }
+    passwordToggle.setAttribute(
+      "aria-label",
+      isPassword ? "Hide password" : "Show password",
+    );
 
-  /* =====================================================
-     SHOW / HIDE PASSWORD
-  ===================================================== */
+    const icon = passwordToggle.querySelector("img");
 
-  if (passwordToggle) {
-    passwordToggle.addEventListener("click", () => {
-      const isPassword = passwordInput.type === "password";
-
-      passwordInput.type = isPassword ? "text" : "password";
-
-      passwordToggle.setAttribute(
-        "aria-label",
-        isPassword ? "Hide password" : "Show password",
-      );
-
-      const icon = passwordToggle.querySelector("img");
-
-      if (icon) {
-        icon.alt = isPassword ? "Hide Password" : "Show Password";
-      }
-    });
-  }
-
-  /* =====================================================
-     LOGIN
-  ===================================================== */
+    if (icon) {
+      icon.alt = isPassword ? "Hide Password" : "Show Password";
+    }
+  });
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    /* =================================================
-         LẤY DỮ LIỆU
-      ================================================= */
+    clearMessage();
 
-    const username = usernameInput.value.trim();
-
+    const email = emailInput.value.trim().toLowerCase();
     const password = passwordInput.value;
 
-    /* =================================================
-         KIỂM TRA RỖNG
-      ================================================= */
+    if (!email) {
+      if (emailError) {
+        emailError.textContent = "Vui lòng nhập email.";
+      }
 
-    if (username === "" || password === "") {
-      alert("Vui lòng nhập đầy đủ thông tin!");
-
+      emailInput.focus();
       return;
     }
 
-    /* =================================================
-         KIỂM TRA getUsers()
-      ================================================= */
+    if (!isValidEmail(email)) {
+      if (emailError) {
+        emailError.textContent = "Vui lòng nhập đúng định dạng email.";
+      }
+
+      emailInput.focus();
+      return;
+    }
+
+    if (!password) {
+      if (passwordError) {
+        passwordError.textContent = "Vui lòng nhập mật khẩu.";
+      }
+
+      passwordInput.focus();
+      return;
+    }
 
     if (typeof getUsers !== "function") {
-      console.error("Không tìm thấy hàm getUsers()!");
+      console.error("Không tìm thấy getUsers(). Hãy kiểm tra localStore.js.");
 
-      alert("Không thể lấy dữ liệu tài khoản!");
+      showMessage("Không thể lấy dữ liệu tài khoản.", "error");
 
       return;
     }
 
-    /* =================================================
-         LẤY USERS
-      ================================================= */
+    let users;
 
-    const users = getUsers();
+    try {
+      users = getUsers();
+    } catch (error) {
+      console.error("LỖI GET USERS:", error);
+
+      showMessage("Không thể đọc dữ liệu tài khoản.", "error");
+
+      return;
+    }
 
     if (!Array.isArray(users)) {
-      console.error("Dữ liệu users không hợp lệ!");
-
-      alert("Dữ liệu tài khoản không hợp lệ!");
+      showMessage("Dữ liệu tài khoản không hợp lệ.", "error");
 
       return;
     }
-
-    /* =================================================
-         TÌM USER
-      ================================================= */
 
     const user = users.find((item) => {
-      const savedUsername = String(item.username || "").trim();
+      const savedEmail = String(item?.email || "")
+        .trim()
+        .toLowerCase();
 
-      const savedPassword = String(item.password || "");
+      const savedPassword = String(item?.password || "");
 
-      return (
-        savedUsername.toLowerCase() === username.toLowerCase() &&
-        savedPassword === password
-      );
+      return savedEmail === email && savedPassword === password;
     });
 
-    /* =================================================
-         SAI TÀI KHOẢN
-      ================================================= */
-
     if (!user) {
-      alert("Tài khoản hoặc mật khẩu chưa chính xác!");
+      showMessage("Email hoặc mật khẩu chưa chính xác.", "error");
 
+      passwordInput.focus();
       return;
     }
 
-    /* =================================================
-         ĐĂNG NHẬP THÀNH CÔNG
-      ================================================= */
+    const currentUser = {
+      username: String(user.username || user.name || "").trim(),
 
-    localStorage.setItem("currentUser", JSON.stringify(user));
+      email: String(user.email || "").trim(),
+    };
 
-    /* =================================================
-         REMEMBER ME
-      ================================================= */
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
 
-    if (rememberMe) {
-      localStorage.setItem("rememberMe", rememberMe.checked ? "true" : "false");
+    if (rememberMe?.checked) {
+      localStorage.setItem(
+        "rememberLogin",
+        JSON.stringify({
+          email: currentUser.email,
+        }),
+      );
+    } else {
+      localStorage.removeItem("rememberLogin");
     }
 
-    console.log("ĐĂNG NHẬP THÀNH CÔNG:", user);
+    showMessage("Đăng nhập thành công!", "success");
 
-    console.log("QUAY LẠI:", getRedirectURL() || "../index.html");
-
-    alert("Đăng nhập thành công!");
-
-    /* =================================================
-         QUAY LẠI ĐÚNG TRANG
-      ================================================= */
-
-    goBackAfterLogin();
+    setTimeout(() => {
+      goBackAfterLogin();
+    }, 500);
   });
+
+  const savedLogin = localStorage.getItem("rememberLogin");
+
+  if (savedLogin) {
+    try {
+      const data = JSON.parse(savedLogin);
+
+      if (data?.email) {
+        emailInput.value = data.email;
+
+        if (rememberMe) {
+          rememberMe.checked = true;
+        }
+      }
+    } catch (error) {
+      localStorage.removeItem("rememberLogin");
+    }
+  }
 });

@@ -1,59 +1,80 @@
 <!doctype html>
+
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+
+    <title>LOGIN - IUHSVBOOK</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter&family=Unica+One&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unica+One&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="../css/login.css" />
   </head>
+
   <body>
-    <header>
-      <div class="logo">
-        <img src="../images/logo.jpg" alt="Logo" />
-        <p>IUHSVBOOK</p>
-      </div>
+    <header class="header">
+      <a href="../index.html" class="logo" aria-label="IUHSVBOOK Home">
+        <img src="../images/logo.jpg" alt="IUHSVBOOK" />
+
+        <span>IUHSVBOOK</span>
+      </a>
+
       <div class="header-actions">
-        <button id="homeButton" type="button" aria-label="Về trang chủ">
+        <a href="../index.html" class="home-link" aria-label="Trang chủ">
           <img src="../images/HOME_SIMPLE.png" alt="Home" />
-        </button>
+
+          <span>Home</span>
+        </a>
 
         <button id="createAccount" type="button">Create Account</button>
       </div>
     </header>
-    <div class="main">
-      <div class="login-form">
+
+    <main class="main">
+      <section class="login-form">
         <div class="form-header">
           <h1>Login now</h1>
+
           <p>Hi, Welcome back 👋</p>
         </div>
+
         <div class="form-body">
-          <form id="loginForm">
-            <div class="input-group" id="usernameGroup">
-              <label for="username">Username</label>
+          <form id="loginForm" novalidate>
+            <div class="input-group" id="emailGroup">
+              <label for="email"> Email </label>
+
               <input
-                type="text"
-                id="username"
-                name="username"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                autocomplete="email"
                 required
-                placeholder="Enter your username"
               />
+
+              <small class="input-error" id="emailError"></small>
             </div>
+
             <div class="input-group" id="passwordGroup">
-              <label for="password">Password</label>
+              <label for="password"> Password </label>
+
               <div class="passwordBox">
                 <input
                   type="password"
                   id="password"
                   name="password"
-                  required
                   placeholder="Enter your password"
+                  autocomplete="current-password"
+                  required
                 />
+
                 <button
                   type="button"
                   class="password-toggle"
@@ -61,34 +82,46 @@
                 >
                   <img
                     src="../images/eye.png"
-                    alt="Show Password"
+                    alt="Show password"
                     id="togglePassword"
                   />
                 </button>
               </div>
+
+              <small class="input-error" id="passwordError"></small>
             </div>
-            <div class="forgot-password">
-              <div class="remember-me">
+
+            <div class="login-options">
+              <label class="remember-me" for="rememberMe">
                 <input type="checkbox" id="rememberMe" name="rememberMe" />
-                <label for="rememberMe">Remember me</label>
-              </div>
-              <a href="#">Forgot password?</a>
+
+                <span>Remember me</span>
+              </label>
+
+              <a href="#" id="forgotPassword"> Forgot password? </a>
             </div>
-            <button type="submit">Login</button>
+
+            <button type="submit" class="login-submit">Login</button>
+
+            <p class="login-message" id="loginMessage"></p>
           </form>
+
           <div class="register">
             <p>
               Not registered yet?
-              <a href="../pages/create.html">Create an account</a>
+
+              <a href="../pages/create.html"> Create an account </a>
             </p>
           </div>
         </div>
-      </div>
-      <div class="login-image">
+      </section>
+
+      <section class="login-image">
         <div class="img-bg"></div>
-        <img src="../images/loginImage.jpg" alt="Login Image" />
-      </div>
-    </div>
+
+        <img src="../images/loginImage.jpg" alt="IUHSVBOOK Library" />
+      </section>
+    </main>
 
     <script src="../js/localStore.js"></script>
     <script src="../js/login.js"></script>

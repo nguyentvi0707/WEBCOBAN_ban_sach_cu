@@ -1,24 +1,4 @@
-/* =====================================================
-   IUHSVBOOK - CATEGORY
-   CATEGORY: ĐẠI CƯƠNG
-
-   NGUYÊN TẮC:
-   - book.json = nguồn dữ liệu duy nhất
-   - category.js = load + filter + search + sort + render
-   - bookMarkButton.js = xử lý bookmark duy nhất
-   - image = lấy trực tiếp URL trong book.json
-===================================================== */
-
 document.addEventListener("DOMContentLoaded", async () => {
-  console.log("=================================");
-  console.log("IUHSVBOOK CATEGORY START");
-  console.log("PAGE:", window.location.href);
-  console.log("=================================");
-
-  /* =====================================================
-     ELEMENTS
-  ===================================================== */
-
   const productsGrid =
     document.querySelector("#productsGrid") ||
     document.querySelector(".products-grid");
@@ -31,13 +11,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.querySelector("#categorySearchButton") ||
     document.querySelector(".category-search button");
 
-  const sortSelect =
-    document.querySelector("#categoryFilter") ||
-    document.querySelector(".category-filter");
+  const filterDropdown = document.querySelector("#categoryFilterDropdown");
 
-  /* =====================================================
-     HEADER
-  ===================================================== */
+  const filterDropdownButton = document.querySelector(
+    "#categoryFilterDropdownBtn",
+  );
+
+  const filterDropdownMenu = document.querySelector(
+    "#categoryFilterDropdownMenu",
+  );
+
+  const filterSelected = document.querySelector("#categoryFilterSelected");
 
   const signInButton = document.querySelector("#signInButton");
 
@@ -69,10 +53,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.querySelector(".cart") ||
     document.querySelector('a[aria-label="Cart"]');
 
-  /* =====================================================
-     CHECK GRID
-  ===================================================== */
-
   if (!productsGrid) {
     console.error(
       "CATEGORY ERROR: Không tìm thấy #productsGrid hoặc .products-grid",
@@ -81,18 +61,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  /* =====================================================
-     PAGE CATEGORY
-  ===================================================== */
-
   const pageCategory = "Đại cương";
 
   let books = [];
   let categoryBooks = [];
-
-  /* =====================================================
-     PATH
-  ===================================================== */
+  let currentFilter = "default";
 
   const isInsidePages = window.location.pathname
     .toLowerCase()
@@ -113,10 +86,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     return `./pages/${fileName}`;
   };
-
-  /* =====================================================
-     CURRENT USER
-  ===================================================== */
 
   const getCurrentUser = () => {
     const raw = localStorage.getItem("currentUser");
@@ -144,10 +113,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   window.categoryGetCurrentUser = getCurrentUser;
 
-  /* =====================================================
-     LOGIN
-  ===================================================== */
-
   const goToLogin = () => {
     const currentPage =
       window.location.pathname + window.location.search + window.location.hash;
@@ -156,21 +121,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     loginURL.searchParams.set("redirect", currentPage);
 
-    console.log("CATEGORY LOGIN:", loginURL.href);
-
     window.location.href = loginURL.href;
   };
 
-  /* =====================================================
-     USER UI
-  ===================================================== */
-
   const updateUserUI = () => {
     const user = getCurrentUser();
-
-    console.log("CATEGORY CURRENT USER:", user);
-
-    /* CHƯA ĐĂNG NHẬP */
 
     if (!user) {
       if (signInButton) {
@@ -192,8 +147,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    /* ĐÃ ĐĂNG NHẬP */
-
     if (signInButton) {
       signInButton.style.display = "none";
     }
@@ -212,164 +165,104 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   };
 
-  /* =====================================================
-     SIGN IN
-  ===================================================== */
+  signInButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-  if (signInButton) {
-    signInButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+    goToLogin();
+  });
 
-      goToLogin();
-    });
-  }
+  createAccountButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-  /* =====================================================
-     CREATE ACCOUNT
-  ===================================================== */
+    const currentPage =
+      window.location.pathname + window.location.search + window.location.hash;
 
-  if (createAccountButton) {
-    createAccountButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+    const createURL = new URL(getPagePath("create.html"), window.location.href);
 
-      const currentPage =
-        window.location.pathname +
-        window.location.search +
-        window.location.hash;
+    createURL.searchParams.set("redirect", currentPage);
 
-      const createURL = new URL(
-        getPagePath("create.html"),
-        window.location.href,
-      );
+    window.location.href = createURL.href;
+  });
 
-      createURL.searchParams.set("redirect", currentPage);
+  logoutButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-      window.location.href = createURL.href;
-    });
-  }
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("shoppingCart");
 
-  /* =====================================================
-     LOGOUT
-  ===================================================== */
+    sessionStorage.removeItem("lastOrder");
+    sessionStorage.removeItem("checkoutRedirect");
 
-  if (logoutButton) {
-    logoutButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+    const sidebar = document.querySelector(".shoppingCartSidebar");
 
-      localStorage.removeItem("currentUser");
+    const background = document.querySelector(".shoppingCartSidebar-bg");
 
-      localStorage.removeItem("shoppingCart");
+    sidebar?.classList.remove("active");
+    background?.classList.remove("active");
 
-      sessionStorage.removeItem("lastOrder");
+    if (typeof window.renderCart === "function") {
+      window.renderCart();
+    }
 
-      sessionStorage.removeItem("checkoutRedirect");
+    updateUserUI();
 
-      const sidebar = document.querySelector(".shoppingCartSidebar");
+    window.location.reload();
+  });
 
-      const background = document.querySelector(".shoppingCartSidebar-bg");
+  homeIcon?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-      sidebar?.classList.remove("active");
+    window.location.href = getPagePath("index.html");
+  });
 
-      background?.classList.remove("active");
+  productIcon?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-      if (typeof window.renderCart === "function") {
-        window.renderCart();
-      }
+    const currentPath = window.location.pathname.toLowerCase();
 
-      updateUserUI();
-
-      window.location.reload();
-    });
-  }
-
-  /* =====================================================
-     HOME
-  ===================================================== */
-
-  if (homeIcon) {
-    homeIcon.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      window.location.href = getPagePath("index.html");
-    });
-  }
-
-  /* =====================================================
-     PRODUCT / CATALOG
-  ===================================================== */
-
-  if (productIcon) {
-    productIcon.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      const currentPath = window.location.pathname.toLowerCase();
-
-      if (!currentPath.endsWith("catalog.html")) {
-        window.location.href = getPagePath("catalog.html");
-      }
-    });
-  }
-
-  /* =====================================================
-     HEADER BOOKMARK
-
-     bookMarkButton.js xử lý duy nhất.
-  ===================================================== */
+    if (!currentPath.endsWith("catalog.html")) {
+      window.location.href = getPagePath("catalog.html");
+    }
+  });
 
   if (bookmarkIcon) {
     console.log("CATEGORY HEADER BOOKMARK -> GLOBAL SYSTEM");
   }
 
-  /* =====================================================
-     CART
-  ===================================================== */
+  cartIcon?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-  if (cartIcon) {
-    cartIcon.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+    if (!getCurrentUser()) {
+      alert("Bạn cần đăng nhập trước khi xem giỏ hàng!");
 
-      if (!getCurrentUser()) {
-        alert("Bạn cần đăng nhập trước khi xem giỏ hàng!");
+      goToLogin();
 
-        goToLogin();
+      return;
+    }
 
-        return;
-      }
+    if (typeof window.openCartSidebar === "function") {
+      window.openCartSidebar();
 
-      if (typeof window.openCartSidebar === "function") {
-        window.openCartSidebar();
+      return;
+    }
 
-        return;
-      }
+    const sidebar = document.querySelector(".shoppingCartSidebar");
 
-      const sidebar = document.querySelector(".shoppingCartSidebar");
+    const background = document.querySelector(".shoppingCartSidebar-bg");
 
-      const background = document.querySelector(".shoppingCartSidebar-bg");
+    if (typeof window.renderCart === "function") {
+      window.renderCart();
+    }
 
-      if (typeof window.renderCart === "function") {
-        window.renderCart();
-      }
-
-      sidebar?.classList.add("active");
-
-      background?.classList.add("active");
-    });
-  }
-
-  /* =====================================================
-     NORMALIZE
-
-     QUAN TRỌNG:
-     - xử lý cả Đ và đ
-     - bỏ dấu tiếng Việt
-     - chuẩn hóa -, _, khoảng trắng
-  ===================================================== */
+    sidebar?.classList.add("active");
+    background?.classList.add("active");
+  });
 
   const normalizeText = (value) => {
     return String(value ?? "")
@@ -382,10 +275,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       .trim()
       .toLowerCase();
   };
-
-  /* =====================================================
-     GET CATEGORY
-  ===================================================== */
 
   const getBookCategory = (book) => {
     if (!book) {
@@ -400,8 +289,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       book.typeName ??
       "";
 
-    /* ARRAY */
-
     if (Array.isArray(value)) {
       return value
         .map((item) => {
@@ -414,22 +301,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         .join(" ");
     }
 
-    /* OBJECT */
-
     if (value && typeof value === "object") {
       return String(
         value.name ?? value.label ?? value.title ?? value.category ?? "",
       ).trim();
     }
 
-    /* STRING */
-
     return String(value).trim();
   };
-
-  /* =====================================================
-     GET BOOK ID
-  ===================================================== */
 
   const getBookId = (book) => {
     if (
@@ -444,44 +323,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     return String(book.id).trim();
   };
 
-  /* =====================================================
-     CHECK GENERAL CATEGORY
-
-     HỖ TRỢ:
-     - Đại cương
-     - Sách đại cương
-     - General
-     - General Studies
-     - General Education
-     - General Subject
-     - General Subjects
-     - General Studies Books
-     - Dai Cuong
-  ===================================================== */
-
   const isGeneralBook = (book) => {
-    const rawCategory = getBookCategory(book);
-
-    const category = normalizeText(rawCategory);
+    const category = normalizeText(getBookCategory(book));
 
     if (!category) {
       return false;
     }
-
-    /*
-     * DEBUG
-     */
-
-    console.log("CATEGORY CHECK:", {
-      id: book?.id,
-      name: book?.name,
-      rawCategory,
-      normalizedCategory: category,
-    });
-
-    /* =================================================
-       LOẠI CÁC NHÓM KHÁC
-    ================================================= */
 
     const otherCategoryWords = [
       "ky thuat",
@@ -497,10 +344,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       return false;
     }
 
-    /* =================================================
-       ĐẠI CƯƠNG
-    ================================================= */
-
     const generalAliases = [
       "dai cuong",
       "sach dai cuong",
@@ -512,7 +355,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       "general studies books",
     ];
 
-    const matchedGeneral = generalAliases.some((alias) => {
+    return generalAliases.some((alias) => {
       const normalizedAlias = normalizeText(alias);
 
       return (
@@ -521,13 +364,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         normalizedAlias.includes(category)
       );
     });
-
-    return matchedGeneral;
   };
-
-  /* =====================================================
-     LOAD BOOK.JSON
-  ===================================================== */
 
   const loadBookJSON = async () => {
     const candidatePaths = [
@@ -544,13 +381,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         triedURLs.push(url.href);
 
-        console.log("CATEGORY LOAD JSON:", url.href);
-
         const response = await fetch(url.href, {
           cache: "no-store",
         });
-
-        console.log("BOOK.JSON STATUS:", response.status, url.href);
 
         if (!response.ok) {
           continue;
@@ -565,14 +398,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         } catch (error) {
           console.error("BOOK.JSON PARSE ERROR:", error);
 
-          console.error("SERVER TRẢ VỀ:", text.slice(0, 500));
-
           continue;
         }
 
         if (!Array.isArray(data)) {
-          console.warn("BOOK.JSON KHÔNG PHẢI ARRAY:", url.href);
-
           continue;
         }
 
@@ -585,71 +414,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     throw new Error("Không tải được book.json.\n" + triedURLs.join("\n"));
   };
 
-  /* =====================================================
-     LOAD DATA
-  ===================================================== */
-
   try {
     books = await loadBookJSON();
 
-    console.log("=================================");
-
-    console.log("BOOK.JSON LOAD OK");
-
-    console.log("TOTAL BOOKS:", books.length);
-
-    /* =================================================
-       DEBUG CATEGORY
-    ================================================= */
-
-    console.table(
-      books.map((book) => ({
-        id: book.id,
-        name: book.name,
-        category: getBookCategory(book),
-        normalized: normalizeText(getBookCategory(book)),
-        isGeneral: isGeneralBook(book),
-      })),
-    );
-
-    /* =================================================
-       FILTER
-    ================================================= */
-
     categoryBooks = books.filter(isGeneralBook);
-
-    console.log("=================================");
-
-    console.log("GENERAL BOOKS:", categoryBooks);
-
-    console.log("GENERAL COUNT:", categoryBooks.length);
-
-    console.log("=================================");
   } catch (error) {
     console.error("CATEGORY BOOK.JSON ERROR:", error);
 
     productsGrid.innerHTML = `
       <div class="empty-results">
-
         <div class="empty-book">
           <div class="book-left"></div>
           <div class="book-right"></div>
           <div class="book-center"></div>
         </div>
 
-        <p>
-          Không tải được book.json.
-        </p>
-
+        <p>Không tải được book.json.</p>
       </div>
     `;
 
     return;
   }
-
-  /* =====================================================
-     SEARCH
-  ===================================================== */
 
   const searchBooks = (list, keyword) => {
     const text = normalizeText(keyword);
@@ -660,16 +445,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     return list.filter((book) => {
       const name = normalizeText(book.name);
-
       const author = normalizeText(book.author);
 
       return name.includes(text) || author.includes(text);
     });
   };
-
-  /* =====================================================
-     SORT
-  ===================================================== */
 
   const sortBooks = (list, value) => {
     const result = [...list];
@@ -677,12 +457,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     switch (value) {
       case "price-asc":
         result.sort((a, b) => Number(a.price || 0) - Number(b.price || 0));
-
         break;
 
       case "price-desc":
         result.sort((a, b) => Number(b.price || 0) - Number(a.price || 0));
-
         break;
 
       case "name-asc":
@@ -691,7 +469,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             sensitivity: "base",
           }),
         );
-
         break;
 
       case "name-desc":
@@ -700,7 +477,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             sensitivity: "base",
           }),
         );
-
         break;
 
       default:
@@ -709,10 +485,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     return result;
   };
-
-  /* =====================================================
-     UPDATE SEARCH URL
-  ===================================================== */
 
   const updateSearchURL = (keyword) => {
     const url = new URL(window.location.href);
@@ -727,10 +499,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     window.history.replaceState({}, "", url);
   };
-
-  /* =====================================================
-     PRODUCT DETAIL
-  ===================================================== */
 
   const goToProductDetail = (book) => {
     const id = getBookId(book);
@@ -759,33 +527,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = productURL.href;
   };
 
-  /* =====================================================
-     IMAGE URL
-
-     DÙNG NGUYÊN LINK TRONG book.json.
-     KHÔNG nối ../images/.
-  ===================================================== */
-
   const getBookImage = (book) => {
     const image = String(book?.image ?? "").trim();
 
-    if (!image) {
-      return "../images/COVER_BOOK.png";
-    }
-
-    return image;
+    return image || "../images/COVER_BOOK.png";
   };
-
-  /* =====================================================
-     CREATE PRODUCT CARD
-  ===================================================== */
 
   const createProductCard = (book) => {
     const id = getBookId(book);
 
     if (!id) {
-      console.warn("BỎ QUA BOOK KHÔNG CÓ ID:", book);
-
       return null;
     }
 
@@ -808,24 +559,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     card.innerHTML = `
       <div class="category-product-image">
-
         <img
           src="${image}"
           alt="${name}"
           draggable="false"
           loading="lazy"
         />
-
       </div>
 
       <div class="category-product-content">
-
         <h3 title="${name}">
           ${name}
         </h3>
 
         <div class="category-product-bottom">
-
           <span class="category-product-price">
             ${price}đ
           </span>
@@ -843,7 +590,6 @@ document.addEventListener("DOMContentLoaded", async () => {
               draggable="false"
             />
           </button>
-
         </div>
 
         <button
@@ -857,13 +603,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             draggable="false"
           />
         </button>
-
       </div>
     `;
-
-    /* =================================================
-       IMAGE ERROR
-    ================================================= */
 
     const imageElement = card.querySelector(".category-product-image img");
 
@@ -871,12 +612,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       imageElement.addEventListener(
         "error",
         () => {
-          console.warn("ẢNH KHÔNG LOAD:", {
-            name,
-            image: book.image,
-            resolved: imageElement.src,
-          });
-
           if (imageElement.dataset.fallback !== "true") {
             imageElement.dataset.fallback = "true";
 
@@ -893,24 +628,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
 
-    /* =================================================
-       DETAIL BUTTON
-    ================================================= */
-
     const cartButton = card.querySelector(".category-cart");
 
-    if (cartButton) {
-      cartButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopPropagation();
+    cartButton?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-        goToProductDetail(book);
-      });
-    }
-
-    /* =================================================
-       CARD CLICK
-    ================================================= */
+      goToProductDetail(book);
+    });
 
     card.addEventListener("click", (event) => {
       if (event.target.closest("[data-bookmark-id]")) {
@@ -926,10 +651,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     return card;
   };
-
-  /* =====================================================
-     UPDATE BOOKMARK UI
-  ===================================================== */
 
   const updateBookmarkUI = () => {
     if (typeof window.isBookmarked !== "function") {
@@ -958,27 +679,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   window.categoryUpdateBookmarkUI = updateBookmarkUI;
 
-  /* =====================================================
-     RENDER
-  ===================================================== */
-
   const renderResults = (list) => {
     productsGrid.innerHTML = "";
 
     if (!list || list.length === 0) {
       productsGrid.innerHTML = `
         <div class="empty-results">
-
           <div class="empty-book">
             <div class="book-left"></div>
             <div class="book-right"></div>
             <div class="book-center"></div>
           </div>
 
-          <p>
-            Không tìm thấy sách phù hợp.
-          </p>
-
+          <p>Không tìm thấy sách phù hợp.</p>
         </div>
       `;
 
@@ -1002,32 +715,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (typeof window.updateBookmarkButtons === "function") {
       window.updateBookmarkButtons();
     }
-
-    console.log("RENDERED CATEGORY:", list.length);
   };
-
-  /* =====================================================
-     UPDATE RESULTS
-  ===================================================== */
 
   const updateResults = () => {
     const keyword = searchInput?.value.trim() || "";
 
     let result = searchBooks(categoryBooks, keyword);
 
-    result = sortBooks(result, sortSelect?.value || "default");
+    result = sortBooks(result, currentFilter);
 
     renderResults(result);
-
-    console.log("CATEGORY RESULT:", {
-      keyword,
-      count: result.length,
-    });
   };
-
-  /* =====================================================
-     SEARCH -> CATALOG
-  ===================================================== */
 
   const goToCatalog = () => {
     const keyword = searchInput?.value.trim() || "";
@@ -1043,10 +741,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     window.location.href = catalogURL.href;
   };
-
-  /* =====================================================
-     SEARCH INPUT
-  ===================================================== */
 
   if (searchInput) {
     searchInput.addEventListener("input", () => {
@@ -1066,42 +760,68 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  /* =====================================================
-     SEARCH BUTTON
-  ===================================================== */
+  searchButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-  if (searchButton) {
-    searchButton.addEventListener("click", (event) => {
+    updateSearchURL(searchInput?.value || "");
+
+    updateResults();
+  });
+
+  filterDropdownButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const isOpen = filterDropdown?.classList.contains("open");
+
+    document
+      .querySelectorAll(".category-filter-dropdown.open")
+      .forEach((dropdown) => {
+        dropdown.classList.remove("open");
+      });
+
+    if (!isOpen) {
+      filterDropdown?.classList.add("open");
+    }
+
+    filterDropdownButton.setAttribute("aria-expanded", String(!isOpen));
+  });
+
+  filterDropdownMenu?.querySelectorAll("button").forEach((button) => {
+    button.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
 
-      updateSearchURL(searchInput?.value || "");
+      currentFilter = button.dataset.filter || "default";
+
+      if (filterSelected) {
+        filterSelected.textContent = button.textContent.trim();
+      }
+
+      filterDropdownMenu.querySelectorAll("button").forEach((item) => {
+        item.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      filterDropdown?.classList.remove("open");
+
+      filterDropdownButton?.setAttribute("aria-expanded", "false");
 
       updateResults();
     });
-  }
-
-  /* =====================================================
-     SORT
-  ===================================================== */
-
-  if (sortSelect) {
-    sortSelect.addEventListener("change", updateResults);
-  }
-
-  /* =====================================================
-     BOOKMARK CHANGE
-  ===================================================== */
-
-  window.addEventListener("bookmarkchange", () => {
-    console.log("CATEGORY -> BOOKMARK CHANGE");
-
-    updateBookmarkUI();
   });
 
-  /* =====================================================
-     STORAGE
-  ===================================================== */
+  document.addEventListener("click", () => {
+    filterDropdown?.classList.remove("open");
+
+    filterDropdownButton?.setAttribute("aria-expanded", "false");
+  });
+
+  window.addEventListener("bookmarkchange", () => {
+    updateBookmarkUI();
+  });
 
   window.addEventListener("storage", (event) => {
     if (event.key === "currentUser") {
@@ -1113,10 +833,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  /* =====================================================
-     URL SEARCH
-  ===================================================== */
-
   const params = new URLSearchParams(window.location.search);
 
   const keywordFromURL = params.get("search") || "";
@@ -1125,38 +841,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     searchInput.value = keywordFromURL;
   }
 
-  /* =====================================================
-     INITIAL
-  ===================================================== */
-
   updateUserUI();
-
   updateResults();
-
   updateBookmarkUI();
-
-  /* =====================================================
-     FINAL
-  ===================================================== */
-
-  console.log("=================================");
-
-  console.log("IUHSVBOOK CATEGORY READY");
-
-  console.log("CATEGORY:", pageCategory);
-
-  console.log("TOTAL BOOKS:", books.length);
-
-  console.log("CATEGORY BOOKS:", categoryBooks.length);
-
-  console.log("CURRENT USER:", getCurrentUser());
-
-  console.log(
-    "BOOKMARK COUNT:",
-    typeof window.getBookmarks === "function"
-      ? window.getBookmarks().length
-      : "N/A",
-  );
-
-  console.log("=================================");
 });

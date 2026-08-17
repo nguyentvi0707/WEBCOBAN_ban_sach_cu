@@ -1,97 +1,66 @@
-/* =====================================================
-   IUHSVBOOK - CREATE ACCOUNT
-===================================================== */
-
 document.addEventListener("DOMContentLoaded", () => {
-  /* =====================================================
-     ELEMENT
-  ===================================================== */
-
   const form = document.querySelector("#createForm");
-
   const loginButton = document.querySelector("#Login");
 
   const usernameInput = document.querySelector("#username");
-
+  const emailInput = document.querySelector("#email");
   const passwordInput = document.querySelector("#password");
-
   const confirmPasswordInput = document.querySelector("#confirmPassword");
 
   const togglePassword = document.querySelector("#togglePassword");
-
   const toggleConfirmPassword = document.querySelector(
     "#toggleConfirmPassword",
   );
 
-  /* =====================================================
-     CHECK ELEMENT
-  ===================================================== */
-
-  if (!form || !usernameInput || !passwordInput || !confirmPasswordInput) {
+  if (
+    !form ||
+    !usernameInput ||
+    !emailInput ||
+    !passwordInput ||
+    !confirmPasswordInput
+  ) {
     console.error("Không tìm thấy form hoặc input!");
 
     return;
   }
 
-  /* =====================================================
-     GET REDIRECT
-  ===================================================== */
-
   const params = new URLSearchParams(window.location.search);
-
   const redirectURL = params.get("redirect") || "";
-
-  console.log("CREATE REDIRECT:", redirectURL);
-
-  /* =====================================================
-     GO TO LOGIN
-  ===================================================== */
 
   const goToLogin = () => {
     const loginURL = new URL("./login.html", window.location.href);
 
-    /*
-     * Giữ redirect khi chuyển sang login
-     */
     if (redirectURL) {
       loginURL.searchParams.set("redirect", redirectURL);
     }
 
-    console.log("CHUYỂN SANG LOGIN:", loginURL.href);
-
     window.location.href = loginURL.href;
   };
 
-  /* =====================================================
-     CREATE ACCOUNT
-  ===================================================== */
+  const isValidEmail = (email) => {
+    const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+    return emailPattern.test(email);
+  };
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    /* ===============================================
-         LẤY DỮ LIỆU
-      ================================================ */
-
     const username = usernameInput.value.trim();
-
+    const email = emailInput.value.trim().toLowerCase();
     const password = passwordInput.value.trim();
-
     const confirmPassword = confirmPasswordInput.value.trim();
 
-    /* ===============================================
-         KIỂM TRA RỖNG
-      ================================================ */
-
-    if (username === "" || password === "" || confirmPassword === "") {
+    if (
+      username === "" ||
+      email === "" ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
       alert("Vui lòng nhập đầy đủ thông tin!");
 
       return;
     }
-
-    /* ===============================================
-         KIỂM TRA USERNAME
-      ================================================ */
 
     if (username.length < 3) {
       alert("Username phải có ít nhất 3 ký tự!");
@@ -99,9 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    /* ===============================================
-         KIỂM TRA PASSWORD
-      ================================================ */
+    if (!isValidEmail(email)) {
+      alert("Email không hợp lệ! Vui lòng nhập đúng định dạng email.");
+
+      emailInput.focus();
+
+      return;
+    }
 
     if (password.length < 6) {
       alert("Mật khẩu phải có ít nhất 6 ký tự!");
@@ -109,19 +82,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    /* ===============================================
-         KIỂM TRA PASSWORD CONFIRM
-      ================================================ */
-
     if (password !== confirmPassword) {
       alert("Mật khẩu nhập lại không khớp!");
 
+      confirmPasswordInput.focus();
+
       return;
     }
-
-    /* ===============================================
-         LẤY USERS
-      ================================================ */
 
     let users = [];
 
@@ -135,10 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    /* ===============================================
-         KIỂM TRA USERS
-      ================================================ */
-
     if (!Array.isArray(users)) {
       console.error("Dữ liệu users không hợp lệ!");
 
@@ -147,11 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    /* ===============================================
-         USERNAME ĐÃ TỒN TẠI?
-      ================================================ */
-
-    const existingUser = users.find((user) => {
+    const existingUsername = users.find((user) => {
       const savedUsername = String(user.username || "")
         .trim()
         .toLowerCase();
@@ -159,27 +118,37 @@ document.addEventListener("DOMContentLoaded", () => {
       return savedUsername === username.toLowerCase();
     });
 
-    if (existingUser) {
+    if (existingUsername) {
       alert("Username đã tồn tại!");
+
+      usernameInput.focus();
 
       return;
     }
 
-    /* ===============================================
-         TẠO USER
-      ================================================ */
+    const existingEmail = users.find((user) => {
+      const savedEmail = String(user.email || "")
+        .trim()
+        .toLowerCase();
+
+      return savedEmail === email;
+    });
+
+    if (existingEmail) {
+      alert("Email đã được sử dụng!");
+
+      emailInput.focus();
+
+      return;
+    }
 
     const newUser = {
-      username: username,
-
-      password: password,
+      username,
+      email,
+      password,
     };
 
     users.push(newUser);
-
-    /* ===============================================
-         SAVE USERS
-      ================================================ */
 
     if (typeof saveUsers === "function") {
       saveUsers(users);
@@ -191,34 +160,16 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    /* ===============================================
-         THÔNG BÁO
-      ================================================ */
-
     alert("Tạo tài khoản thành công! Vui lòng đăng nhập.");
-
-    /* ===============================================
-         CHUYỂN LOGIN
-      ================================================ */
 
     goToLogin();
   });
 
-  /* =====================================================
-     LOGIN BUTTON
-  ===================================================== */
+  loginButton?.addEventListener("click", (event) => {
+    event.preventDefault();
 
-  if (loginButton) {
-    loginButton.addEventListener("click", (event) => {
-      event.preventDefault();
-
-      goToLogin();
-    });
-  }
-
-  /* =====================================================
-     SHOW / HIDE PASSWORD
-  ===================================================== */
+    goToLogin();
+  });
 
   if (togglePassword) {
     togglePassword.addEventListener("click", () => {
@@ -231,16 +182,10 @@ document.addEventListener("DOMContentLoaded", () => {
         isPassword ? "Hide password" : "Show password",
       );
 
-      /*
-       * Nếu togglePassword là img
-       */
       if (togglePassword.tagName === "IMG") {
         togglePassword.alt = isPassword ? "Hide Password" : "Show Password";
       }
 
-      /*
-       * Nếu bên trong có img
-       */
       const icon = togglePassword.querySelector("img");
 
       if (icon) {
@@ -248,10 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
-  /* =====================================================
-     SHOW / HIDE CONFIRM PASSWORD
-  ===================================================== */
 
   if (toggleConfirmPassword) {
     toggleConfirmPassword.addEventListener("click", () => {
@@ -264,18 +205,12 @@ document.addEventListener("DOMContentLoaded", () => {
         isPassword ? "Hide password" : "Show password",
       );
 
-      /*
-       * Nếu toggleConfirmPassword là img
-       */
       if (toggleConfirmPassword.tagName === "IMG") {
         toggleConfirmPassword.alt = isPassword
           ? "Hide Password"
           : "Show Password";
       }
 
-      /*
-       * Nếu bên trong có img
-       */
       const icon = toggleConfirmPassword.querySelector("img");
 
       if (icon) {
@@ -283,16 +218,4 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
-  /* =====================================================
-     DEBUG
-  ===================================================== */
-
-  console.log("=================================");
-
-  console.log("CREATE.JS READY");
-
-  console.log("REDIRECT:", redirectURL || "NONE");
-
-  console.log("=================================");
 });
