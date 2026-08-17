@@ -2,232 +2,97 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Success | IUHSVBOOK</title>
 
-    <!-- =====================================================
-         GOOGLE FONT
-    ====================================================== -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Unica+One&display=swap"
       rel="stylesheet"
     />
 
-    <!-- =====================================================
-         CSS
-    ====================================================== -->
-
+    <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/success.css" />
-
-    <!-- CART SIDEBAR CSS -->
-
-    <link
-      rel="stylesheet"
-      href="../css/shoppingCartSideBar.css"
-    />
+    <link rel="stylesheet" href="../css/shoppingCartSideBar.css" />
   </head>
 
   <body>
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
     <header class="header">
-      <!-- =================================================
-           LOGO
-      ================================================== -->
-
       <a href="../index.html" class="logo">
-        <img
-          src="../images/logo.jpg"
-          alt="IUHSVBOOK"
-        />
-
+        <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
         <span>IUHSVBOOK</span>
       </a>
 
-      <!-- =================================================
-           HEADER MENU
-      ================================================== -->
-
       <nav class="header-menu">
-        <!-- ===============================================
-             USER AREA
-        ================================================ -->
-
-        <div class="user-area" id="userArea">
-          <!-- ---------------------------------------------
-               CHƯA ĐĂNG NHẬP
-          ---------------------------------------------- -->
-
-          <a
-            href="./login.html"
-            class="sign-in"
-            id="signInButton"
-          >
-            <img
-              src="../images/user 1.png"
-              alt="User"
-            />
-
-            <span>SIGN IN</span>
-
-            <small>Create account</small>
-          </a>
-
-          <!-- ---------------------------------------------
-               ĐÃ ĐĂNG NHẬP
-          ---------------------------------------------- -->
-
-          <div
-            class="user-info"
-            id="userInfo"
-            style="display: none"
-          >
-            <img
-              src="../images/user 1.png"
-              alt="User"
-            />
-
-            <span
-              id="usernameDisplay"
-            ></span>
-
-            <button
-              type="button"
-              id="logoutButton"
-            >
-              Đăng xuất
-            </button>
-          </div>
-        </div>
-
-        <!-- =================================================
-             HOME
-        ================================================== -->
-
-        <a
-          href="../index.html"
-          class="header-icon"
-          aria-label="Home"
-        >
-          <img
-            src="../images/HOME_SIMPLE.png"
-            alt="Home"
-          />
+        <a href="../index.html" class="home">
+          <img src="../images/HOME_SIMPLE.png" alt="Home" />
+          <span>Home</span>
         </a>
 
-        <!-- =================================================
-             BOOKMARK
-        ================================================== -->
-
-        <a
-          href="#"
-          class="header-icon"
-          id="bookmarkIcon"
-          aria-label="Bookmark"
-        >
-          <img
-            src="../images/BOOKMARK_SIMPLE.png"
-            alt="Bookmark"
-          />
+        <a href="../bookmark.html" class="bookmark">
+          <img src="../images/iconbookmark.png" alt="Bookmark" />
+          <span>Bookmark</span>
         </a>
 
-        <!-- =================================================
-             CART
-        ================================================== -->
+        <a href="../product.html" class="product">
+          <img src="../images/iconsach.png" alt="Products" />
+          <span>Tất cả sản phẩm</span>
+        </a>
 
-        <a
-          href="#"
-          class="header-icon"
-          id="cartIcon"
-          aria-label="Shopping Cart"
-        >
-          <img
-            src="../images/SHOPPING_CART.png"
-            alt="Cart"
-          />
+        <a href="#" class="cart" id="cartButton">
+          <img src="../images/iconcart.png" alt="Cart" />
+          <span>Giỏ hàng</span>
         </a>
       </nav>
-    </header>
 
-    <!-- =====================================================
-         SUCCESS PAGE
-    ====================================================== -->
+      <div class="auth-menu">
+        <div class="user-area">
+          <a href="../pages/login.html" class="sign-in" id="signInButton">
+            <img src="../images/iconlogin.png" alt="Login" />
+            <span>LOGIN</span>
+          </a>
+
+          <a
+            href="../pages/create.html"
+            class="create-account"
+            id="createAccountButton"
+          >
+            SIGN UP
+          </a>
+        </div>
+
+        <div class="user-info" id="userInfo">
+          <img src="../images/iconlogin.png" alt="User" />
+          <span id="usernameDisplay"></span>
+          <button type="button" id="logoutButton">LOGOUT</button>
+        </div>
+      </div>
+    </header>
 
     <main class="success-page">
       <section class="success-box">
-        <!-- =================================================
-             SUCCESS IMAGE
-        ================================================== -->
-
         <img
           class="success-image"
           src="../images/iconcongratulations.png"
           alt="Success"
         />
 
-        <!-- =================================================
-             TITLE
-        ================================================== -->
+        <h1>Thank you for your order!</h1>
 
-        <h1>
-          Thank you for your order!
-        </h1>
+        <p>Check your e-mail inbox for the receipt</p>
 
-        <!-- =================================================
-             DESCRIPTION
-        ================================================== -->
+        <button type="button" class="continue-shopping" id="continueShopping">
+          <img src="../images/SHOPPING_CART.png" alt="Shopping Cart" />
 
-        <p>
-          Check your e-mail inbox for the receipt
-        </p>
-
-        <!-- =================================================
-             CONTINUE SHOPPING
-        ================================================== -->
-
-        <button
-          type="button"
-          class="continue-shopping"
-          id="continueShopping"
-        >
-          <img
-            src="../images/SHOPPING_CART.png"
-            alt="Shopping Cart"
-          />
-
-          <span>
-            Continue Shopping
-          </span>
+          <span>Continue Shopping</span>
         </button>
       </section>
     </main>
 
-    <!-- =====================================================
-         SHOPPING CART SIDEBAR
-    ====================================================== -->
-
     <script src="../js/shoppingCartSidebar.js"></script>
-
-    <!-- =====================================================
-         SUCCESS
-    ====================================================== -->
-
     <script src="../js/success.js"></script>
   </body>
 </html>

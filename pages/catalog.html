@@ -2,135 +2,76 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>CATALOG - IUHSVBOOK</title>
 
-    <!-- =====================================================
-         FONT
-    ====================================================== -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@400&family=Unica+One&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Unica+One&display=swap"
       rel="stylesheet"
     />
 
-    <!-- =====================================================
-         CATALOG CSS
-    ====================================================== -->
-
     <link rel="stylesheet" href="../css/catalog.css" />
-
-    <!-- =====================================================
-         SHOPPING CART SIDEBAR CSS
-    ====================================================== -->
-
     <link rel="stylesheet" href="../css/shoppingCartSideBar.css" />
   </head>
 
   <body>
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
     <header class="header">
-      <!-- =================================================
-           LOGO
-      ================================================== -->
-
-      <a
-        href="../index.html"
-        class="logo"
-        id="logoIcon"
-        aria-label="IUHSVBOOK Home"
-      >
+      <a href="../index.html" class="logo">
         <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
-
         <span>IUHSVBOOK</span>
       </a>
 
-      <!-- =================================================
-           HEADER MENU
-      ================================================== -->
-
       <nav class="header-menu">
-        <!-- ===============================================
-             CHƯA ĐĂNG NHẬP
-        ================================================ -->
-
-        <div id="signInButton" class="sign-in">
-          <img src="../images/iconlogin.png" alt="Sign In" />
-
-          <span>SIGN IN</span>
-
-          <button id="createAccountButton" type="button">Create account</button>
-        </div>
-
-        <!-- ===============================================
-             ĐÃ ĐĂNG NHẬP
-        ================================================ -->
-
-        <div id="userInfo" class="user-info" style="display: none">
-          <img src="../images/iconlogin.png" alt="User" />
-
-          <span id="usernameDisplay"></span>
-
-          <button id="logoutButton" type="button">Đăng xuất</button>
-        </div>
-
-        <!-- ===============================================
-             HOME
-        ================================================ -->
-
-        <a href="../index.html" class="home" id="homeIcon" aria-label="Home">
-          <img src="../images/iconhome.png" alt="Home" />
+        <a href="../index.html" class="home">
+          <img src="../images/HOME_SIMPLE.png" alt="Home" />
+          <span>Home</span>
         </a>
 
-        <!-- ===============================================
-             BOOKMARK
-        ================================================ -->
-
-        <a href="#" class="bookmark" id="bookmarkIcon" aria-label="Bookmark">
+        <a href="../bookmark.html" class="bookmark">
           <img src="../images/iconbookmark.png" alt="Bookmark" />
+          <span>Yêu Thích</span>
         </a>
 
-        <!-- ===============================================
-             PRODUCT / CATALOG
-        ================================================ -->
-
-        <a
-          href="./catalog.html"
-          class="product"
-          id="productIcon"
-          aria-label="Products"
-        >
-          <img src="../images/iconproduct.png" alt="Products" />
+        <a href="../catalog.html" class="product">
+          <img src="../images/iconsach.png" alt="Products" />
+          <span>Tất cả sản phẩm</span>
         </a>
 
-        <!-- ===============================================
-             CART
-        ================================================ -->
-
-        <a href="#" class="cart" id="cartIcon" aria-label="Cart">
+        <a href="#" class="cart" id="cartButton">
           <img src="../images/iconcart.png" alt="Cart" />
+          <span>Giỏ hàng</span>
         </a>
       </nav>
+
+      <div class="auth-menu">
+        <div class="user-area">
+          <a href="../login.html" class="sign-in" id="signInButton">
+            <img src="../images/iconlogin.png" alt="Login" />
+            <span>LOGIN</span>
+          </a>
+
+          <a
+            href="../register.html"
+            class="create-account"
+            id="createAccountButton"
+          >
+            SIGN UP
+          </a>
+        </div>
+
+        <div class="user-info" id="userInfo">
+          <img src="../images/iconlogin.png" alt="User" />
+          <span id="usernameDisplay"></span>
+          <button type="button" id="logoutButton">LOGOUT</button>
+        </div>
+      </div>
     </header>
 
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
-
     <main class="category-page">
-      <!-- =================================================
-           SEARCH
-      ================================================== -->
-
       <div class="category-search">
         <input
           id="categorySearchInput"
@@ -144,35 +85,14 @@
         </button>
       </div>
 
-      <!-- =================================================
-           RESULTS SECTION
-      ================================================== -->
-
       <section class="results-section">
-        <!-- =================================================
-             RESULTS TOP
-        ================================================== -->
-
         <div class="results-top">
-          <!-- ===============================================
-               RESULTS TITLE
-          ================================================ -->
-
           <div class="results-title">
             <span>RESULTS</span>
-
             <span class="results-keyword"> “NAME BOOK OR NAME AUTHOR” </span>
           </div>
 
-          <!-- ===============================================
-               FILTERS
-          ================================================ -->
-
           <div class="results-filters">
-            <!-- =============================================
-                 CATEGORIES
-            ============================================== -->
-
             <div class="category-dropdown" id="categoryDropdown">
               <button
                 class="category-dropdown-btn"
@@ -180,9 +100,8 @@
                 type="button"
                 aria-expanded="false"
               >
-                <span class="category-selected"> Categories </span>
-
-                <span class="filter-arrow"> ⌄ </span>
+                <span class="category-selected">Categories</span>
+                <span class="filter-arrow">⌄</span>
               </button>
 
               <div class="category-dropdown-menu" id="categoryDropdownMenu">
@@ -208,10 +127,6 @@
               </div>
             </div>
 
-            <!-- =============================================
-                 FILTER BY
-            ============================================== -->
-
             <div class="filter-dropdown" id="filterDropdown">
               <button
                 class="filter-dropdown-btn"
@@ -219,14 +134,13 @@
                 type="button"
                 aria-expanded="false"
               >
-                <span class="filter-selected"> Filter By </span>
-
-                <span class="filter-arrow"> ⌄ </span>
+                <span class="filter-selected">Filter By</span>
+                <span class="filter-arrow">⌄</span>
               </button>
 
               <div class="filter-dropdown-menu" id="filterDropdownMenu">
                 <button type="button" data-filter="default" class="active">
-                  Mặc định
+                  Lọc
                 </button>
 
                 <button type="button" data-filter="az">A → Z</button>
@@ -245,28 +159,14 @@
           </div>
         </div>
 
-        <!-- =================================================
-             DOTTED LINE
-        ================================================== -->
-
         <div class="results-line"></div>
 
-        <!-- =================================================
-             BOOK RESULTS
-        ================================================== -->
-
         <div class="catalog-results" id="catalogResults"></div>
-
-        <!-- =================================================
-             EMPTY RESULTS
-        ================================================== -->
 
         <div class="empty-results" id="emptyResults" style="display: none">
           <div class="empty-book">
             <div class="book-left"></div>
-
             <div class="book-right"></div>
-
             <div class="book-center"></div>
           </div>
 
@@ -274,16 +174,8 @@
         </div>
       </section>
 
-      <!-- =====================================================
-           FOOTER
-      ====================================================== -->
-
       <footer class="footer">
         <div class="footer-container">
-          <!-- ===============================================
-               CỘT 1
-          ================================================ -->
-
           <div class="footer-column footer-support">
             <h3>HỖ TRỢ KHÁCH HÀNG</h3>
 
@@ -295,10 +187,6 @@
               Hồ Chí Minh 700000, Vietnam
             </p>
           </div>
-
-          <!-- ===============================================
-               CỘT 2
-          ================================================ -->
 
           <div class="footer-column footer-about">
             <h3>VỀ CHÚNG TÔI</h3>
@@ -314,10 +202,6 @@
             </p>
           </div>
 
-          <!-- ===============================================
-               CỘT 3
-          ================================================ -->
-
           <div class="footer-column footer-newsletter">
             <h3>NHẬN THÔNG BÁO TỪ CHÚNG TÔI</h3>
 
@@ -332,7 +216,6 @@
 
               <div class="footer-brand-text">
                 <h4>IUHSVBOOK</h4>
-
                 <p>Sách cũ, giá trị mới.</p>
               </div>
             </div>
@@ -341,17 +224,8 @@
       </footer>
     </main>
 
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
-
-    <!-- SHOPPING CART SIDEBAR -->
     <script src="../js/shoppingCartSidebar.js"></script>
-
-    <!-- GLOBAL BOOKMARK -->
     <script src="../js/bookMarkButton.js"></script>
-
-    <!-- CATALOG -->
     <script src="../js/catalog.js"></script>
   </body>
 </html>

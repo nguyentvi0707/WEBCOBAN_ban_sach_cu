@@ -8,28 +8,19 @@ html {
   width: 100%;
   min-width: 0;
   min-height: 100%;
-
   scroll-behavior: smooth;
-
   overflow-x: hidden;
-  overflow-y: auto;
 }
 
 body {
   width: 100%;
-  max-width: 100%;
   min-width: 0;
   min-height: 100vh;
-
   padding: 100px 40px 0;
-
   background: #ffffff;
   color: #3d3c3c;
-
   font-family: "Unica One", sans-serif;
-
   overflow-x: hidden;
-  overflow-y: auto;
 }
 
 button,
@@ -46,640 +37,334 @@ img {
   max-width: 100%;
 }
 
-/* =====================================================
-   HEADER
-===================================================== */
-
 header {
   position: fixed;
-
   top: 0;
   left: 0;
-
   z-index: 2000;
-
+  width: 100%;
+  height: 80px;
+  padding: 7px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  width: 100%;
-  height: 80px;
-  min-height: 80px;
-
-  padding: 12px 40px;
-
+  gap: 14px;
   background: #ffffff;
-
   border-bottom: 1px solid rgba(61, 60, 60, 0.08);
-
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-
-  gap: 20px;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.05);
+  overflow: visible;
 }
-
-/* =====================================================
-   LOGO
-===================================================== */
 
 .logo {
   display: flex;
   align-items: center;
-
-  gap: 8px;
-
+  gap: 7px;
   min-width: 0;
   flex-shrink: 0;
-
-  text-decoration: none;
   color: #3d3c3c;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .logo img {
-  width: 56px;
-  height: 56px;
-
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  object-fit: contain;
   border-radius: 50%;
-
-  object-fit: cover;
-
-  flex-shrink: 0;
 }
 
-.logo p,
 .logo span {
-  margin: 0;
-
-  color: #3d3c3c;
-
-  font-family: "Unica One", sans-serif;
-
+  font-family: "Unica One", Arial, sans-serif;
   font-size: 20px;
-
+  color: #3d3c3c;
   white-space: nowrap;
 }
 
-/* =====================================================
-   HEADER BUTTONS
-   PRODUCT / HOME / BOOKMARK / CART
-===================================================== */
-
-.headerButtons {
+.header-menu {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  gap: 12px;
-
-  flex-shrink: 0;
-
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
   white-space: nowrap;
 }
 
-.headerButtons > img,
-.headerButtons > a,
-.headerButtons .header-icon,
-.headerButtons .product-icon {
+.header-menu a {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 28px;
-  height: 28px;
-
-  flex-shrink: 0;
-
+  gap: 5px;
+  min-width: 0;
+  height: 30px;
+  color: #333333;
   text-decoration: none;
-
-  cursor: pointer;
+  white-space: nowrap;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  transition: opacity 0.2s ease;
 }
 
-.headerButtons > img {
+.header-menu a img {
+  width: 31px;
+  height: 31px;
   object-fit: contain;
-}
-
-.headerButtons > a img,
-.headerButtons .header-icon img,
-.headerButtons .product-icon img {
-  width: 24px;
-  height: 24px;
-
-  object-fit: contain;
-
+  flex-shrink: 0;
+  pointer-events: none;
   transition:
     transform 0.2s ease,
     opacity 0.2s ease;
 }
 
-.headerButtons > a:hover img,
-.headerButtons .header-icon:hover img,
-.headerButtons .product-icon:hover img {
-  transform: scale(1.07);
+.header-menu a:hover {
+  color: #222222;
 }
 
-.headerButtons > a:active img,
-.headerButtons .header-icon:active img,
-.headerButtons .product-icon:active img {
+.header-menu a:hover img {
+  transform: scale(1.08);
+}
+
+.header-menu a:active img {
   transform: scale(0.94);
 }
 
-/* =====================================================
-   PRODUCT ICON
-===================================================== */
-
-.product-icon {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-}
-
-.product-icon img {
-  width: 25px;
-  height: 25px;
-
-  object-fit: contain;
-}
-
-/* =====================================================
-   HOME
-===================================================== */
-
-.home-icon {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 28px;
-  height: 28px;
-}
-
-.home-icon img {
-  width: 24px;
-  height: 24px;
-
-  object-fit: contain;
-}
-
-/* =====================================================
-   BOOKMARK
-===================================================== */
-
-.bookmark-icon {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 28px;
-  height: 28px;
-}
-
-.bookmark-icon img {
-  width: 24px;
-  height: 24px;
-
-  object-fit: contain;
-}
-
-/* =====================================================
-   CART ICON
-===================================================== */
-
-.cart-icon {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 28px;
-  height: 28px;
-}
-
-.cart-icon img {
-  width: 24px;
-  height: 24px;
-
-  object-fit: contain;
-}
-
-/* =====================================================
-   SIGN IN
-===================================================== */
-
-.sign-in,
-#signInButton {
+.auth-menu {
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  gap: 5px;
-
-  color: #3d3c3c;
-
-  text-decoration: none;
-
-  font-family: "Syne", sans-serif;
-
-  white-space: nowrap;
-
+  justify-content: flex-end;
+  min-width: 0;
   flex-shrink: 0;
 }
-
-.sign-in img,
-#signInButton img {
-  width: 24px;
-  height: 24px;
-
-  object-fit: contain;
-
-  flex-shrink: 0;
-}
-
-.sign-in span,
-#signInButton span {
-  color: #3d3c3c;
-
-  font-size: 10px;
-
-  white-space: nowrap;
-}
-
-.sign-in small {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  height: 24px;
-
-  padding: 0 9px;
-
-  background: #f9784b;
-
-  border: 1px solid #3d3c3c;
-
-  border-radius: 12px;
-
-  color: #222222;
-
-  font-size: 8px;
-
-  white-space: nowrap;
-}
-
-/* =====================================================
-   CREATE ACCOUNT
-===================================================== */
-
-#createAccountButton {
-  width: 100px;
-  height: 30px;
-
-  padding: 0 10px;
-
-  background: #f9784b;
-
-  border: 2px solid #3d3c3c;
-
-  border-radius: 15px;
-
-  color: #ffffff;
-
-  font-family: "Syne", sans-serif;
-
-  font-size: 11px;
-
-  flex-shrink: 0;
-
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
-}
-
-#createAccountButton:hover {
-  background: #ed6337;
-
-  transform: translateY(-1px);
-}
-
-/* =====================================================
-   USER AREA
-===================================================== */
 
 .user-area {
   display: flex;
   align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
 
+.sign-in {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #333333;
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+.sign-in img {
+  width: 21px;
+  height: 21px;
+  object-fit: contain;
   flex-shrink: 0;
 }
 
-/* =====================================================
-   USER INFO
-===================================================== */
+.sign-in span {
+  color: #333333;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.create-account {
+  height: 27px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #333333;
+  border-radius: 15px;
+  background: #f9784b;
+  color: #222222;
+  text-decoration: none;
+  font-size: 9px;
+  white-space: nowrap;
+}
 
 .user-info {
-  display: flex;
-
+  display: none;
   align-items: center;
-  justify-content: center;
-
-  gap: 7px;
-
+  gap: 12px;
   min-width: 0;
-
-  white-space: nowrap;
-
-  flex-shrink: 0;
 }
 
-.user-info img {
-  width: 24px;
-  height: 24px;
-
+.user-info > img {
+  width: 21px;
+  height: 21px;
   object-fit: contain;
-
   flex-shrink: 0;
 }
 
-.user-info span {
+#usernameDisplay {
   display: block;
-
-  max-width: 110px;
-
+  max-width: 100px;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
   overflow: hidden;
-
   text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  color: #3d3c3c;
-
-  font-family: "Syne", sans-serif;
-
-  font-size: 11px;
-
-  font-weight: 500;
 }
 
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-.user-info #logoutButton {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  min-width: 66px;
-  height: 26px;
-
+#logoutButton {
+  height: 27px;
   padding: 0 10px;
-
-  margin: 0;
-
-  border: 1px solid #3d3c3c;
-
-  border-radius: 13px;
-
+  border: 1.5px solid #333333;
+  border-radius: 15px;
   background: #f9784b;
-
-  color: #ffffff;
-
-  font-family: "Syne", sans-serif;
-
+  color: #222222;
   font-size: 9px;
-  font-weight: 500;
-
-  line-height: 1;
-
-  cursor: pointer;
-
   white-space: nowrap;
-
-  appearance: none;
-  -webkit-appearance: none;
-
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+  cursor: pointer;
 }
 
-.user-info #logoutButton:hover {
-  background: #ed6337;
-
-  transform: translateY(-1px);
+#signInButton {
+  display: flex;
+  align-items: center;
 }
 
-.user-info #logoutButton:active {
-  transform: translateY(0);
+#signInButton[style*="display: none"] {
+  display: none !important;
 }
 
-/* =====================================================
-   MAIN
-===================================================== */
+#userInfo[style*="display: flex"] {
+  display: flex !important;
+}
+
+#userInfo[style*="display: none"] {
+  display: none !important;
+}
+
+#createAccountButton[style*="display: none"] {
+  display: none !important;
+}
 
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   width: 100%;
-
-  margin: 0;
-
-  flex-shrink: 0;
 }
-
-/* =====================================================
-   SEARCH
-===================================================== */
 
 .searchBox {
   position: relative;
-
-  width: min(55%, 560px);
-  height: 44px;
+  width: min(55%, 620px);
+  height: 48px;
+  margin-top: 0;
 }
 
 .search-bg {
   position: absolute;
-
   top: 8px;
   left: 8px;
-
   width: 100%;
   height: 100%;
-
   background: #fdbf0f;
-
-  border-radius: 24px;
+  border-radius: 26px;
 }
 
 .searchBar {
   position: relative;
-
   z-index: 1;
-
   display: flex;
   align-items: center;
-
   width: 100%;
   height: 100%;
-
-  padding: 0 45px 0 16px;
-
+  padding: 0 50px 0 18px;
   background: #ffffff;
-
   border: 2px solid #3d3c3c;
-
-  border-radius: 24px;
+  border-radius: 26px;
 }
 
 .searchBar input {
   width: 100%;
   height: 100%;
-
   border: none;
   outline: none;
-
   background: transparent;
-
+  color: #3d3c3c;
   font-family: "Syne", sans-serif;
-
   font-size: 14px;
+}
+
+.searchBar input::placeholder {
+  color: #777777;
 }
 
 .searchBar img {
   position: absolute;
-
   top: 50%;
-  right: 14px;
-
-  width: 20px;
-  height: 20px;
-
+  right: 15px;
+  width: 23px;
+  height: 23px;
   object-fit: contain;
-
   transform: translateY(-50%);
-
   pointer-events: none;
 }
 
-/* =====================================================
-   PRODUCT DETAIL
-===================================================== */
-
 .productDetail {
   display: grid;
-
-  grid-template-columns:
-    minmax(240px, 320px)
-    minmax(0, 520px);
-
+  grid-template-columns: minmax(280px, 360px) minmax(0, 580px);
   justify-content: center;
-
   width: 100%;
   max-width: 1100px;
-
-  gap: clamp(40px, 6vw, 90px);
-
-  margin-top: 50px;
-
-  flex-shrink: 0;
+  gap: clamp(45px, 6vw, 80px);
+  margin-top: 48px;
 }
-
-/* =====================================================
-   PRODUCT IMAGE
-===================================================== */
 
 .productImage {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-
   width: 100%;
 }
 
 .productImage img {
   width: 320px;
-  max-width: 100%;
-
   height: 440px;
-
   object-fit: cover;
-
   border-radius: 4px;
 }
 
-/* =====================================================
-   PRODUCT INFO
-===================================================== */
-
 .productInfo {
+  position: relative;
   width: 100%;
-
   min-width: 0;
 }
-
-/* =====================================================
-   PRODUCT TITLE
-===================================================== */
 
 .productTitle {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   width: 100%;
   min-height: 60px;
-
   gap: 20px;
 }
 
 .productTitle p {
   min-width: 0;
-
   color: #3d3c3c;
-
   font-family: "Unica One", sans-serif;
-
-  font-size: clamp(26px, 4vw, 38px);
-
+  font-size: clamp(28px, 3.5vw, 38px);
   line-height: 1.1;
-
   word-break: break-word;
 }
 
-/* =====================================================
-   BOOKMARK DETAIL
-===================================================== */
-
 .bookMarkBlock {
   display: flex;
-
   align-items: center;
   justify-content: center;
-
-  width: 52px;
-  height: 46px;
-
+  width: 58px;
+  height: 50px;
   padding: 0;
-
   flex-shrink: 0;
-
   border: 2px solid #3d3c3c;
-
   border-radius: 18px;
-
   background: #ffffff;
-
-  cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .bookMarkBlock:hover,
@@ -692,116 +377,109 @@ main {
 }
 
 .bookMarkBlock img {
-  width: 18px;
-  height: 22px;
-
+  width: 20px;
+  height: 24px;
   object-fit: contain;
-
   pointer-events: none;
 }
 
-/* =====================================================
-   AUTHOR
-===================================================== */
-
 .productAuthor {
   position: relative;
-
   width: 100%;
-  height: 60px;
-
+  height: 62px;
   margin-top: 20px;
-
   font-family: "Syne", sans-serif;
-
-  font-size: 16px;
-
+  font-size: 15px;
   font-weight: 500;
 }
 
 .productInfo-bg {
   position: absolute;
-
-  top: 8px;
+  top: 7px;
   left: 6px;
-
   width: 100%;
   height: 100%;
-
   background: #676767;
-
   border-radius: 20px;
-
-  z-index: 0;
 }
 
 .author {
   position: relative;
-
   z-index: 1;
-
   display: flex;
   align-items: center;
-
   width: 100%;
   height: 100%;
-
   padding: 0 20px;
-
   background: #ffffff;
-
   border: 2px dashed #3d3c3c;
-
   border-radius: 20px;
-
   overflow: hidden;
 }
 
 .author p {
   width: 100%;
-
-  white-space: nowrap;
-
   overflow: hidden;
-
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-/* =====================================================
-   DESCRIPTION
-===================================================== */
+.stock {
+  position: absolute;
+  top: 160px;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  height: 48px;
+  margin: 0;
+  padding: 0 20px;
+  background: transparent;
+  font-family: "Syne", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.stock-bg {
+  display: none;
+}
+
+.stockContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.stockContent p {
+  margin: 0;
+  color: #3d3c3c;
+}
+
+.stockContent span {
+  color: #f9784b;
+  font-weight: 600;
+}
 
 .productDescription {
   position: relative;
-
   width: 100%;
-  height: 160px;
-
+  height: 180px;
   margin-top: 20px;
-
   font-family: "Syne", sans-serif;
-
   font-size: 15px;
-
   font-weight: 500;
 }
 
 .description {
   position: relative;
-
   z-index: 1;
-
   width: 100%;
   height: 100%;
-
-  padding: 16px 20px;
-
+  padding: 52px 20px 16px;
   background: #ffffff;
-
   border: 2px dashed #3d3c3c;
-
   border-radius: 20px;
-
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -810,13 +488,13 @@ main {
   margin-bottom: 10px;
 }
 
+.description p:first-child {
+  margin-bottom: 7px;
+}
+
 .description p:last-child {
   margin-bottom: 0;
 }
-
-/* =====================================================
-   SHOPPING
-===================================================== */
 
 .shopping {
   width: 100%;
@@ -826,26 +504,17 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   width: 100%;
   min-height: 50px;
-
   margin-top: 35px;
-
   gap: 20px;
 }
 
 .price p {
-  margin: 0;
-
   color: #f9784b;
-
   font-family: "Syne", sans-serif;
-
-  font-size: clamp(25px, 4vw, 36px);
-
+  font-size: clamp(28px, 4vw, 36px);
   font-weight: 600;
-
   white-space: nowrap;
 }
 
@@ -853,12 +522,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: auto;
-  height: 40px;
-
   gap: 12px;
-
   flex-shrink: 0;
 }
 
@@ -866,28 +530,18 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 28px;
-  height: 28px;
-
+  width: 30px;
+  height: 30px;
   padding: 0;
-
   border: none;
-
   background: transparent;
 }
 
 .amount img {
-  width: 25px;
-  height: 25px;
-
+  width: 27px;
+  height: 27px;
   object-fit: contain;
-
-  transition:
-    transform 0.15s ease,
-    opacity 0.15s ease;
-
-  cursor: pointer;
+  transition: transform 0.15s ease;
 }
 
 .amount img:hover {
@@ -902,33 +556,20 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 32px;
-  height: 32px;
-
-  background: transparent;
-
+  width: 34px;
+  height: 34px;
   font-family: "Syne", sans-serif;
-
-  font-size: 18px;
-
+  font-size: 17px;
   font-weight: 600;
 }
-
-/* =====================================================
-   BUYING
-===================================================== */
 
 .buying {
   display: flex;
   align-items: center;
-
   width: 100%;
-  height: 48px;
-
+  height: 52px;
   margin-top: 20px;
-
-  gap: 14px;
+  gap: 16px;
 }
 
 .shoppingCart,
@@ -936,21 +577,12 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 50%;
   height: 100%;
-
   padding: 0;
-
   border: 2px solid #3d3c3c;
-
-  border-radius: 20px;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
+  border-radius: 22px;
+  transition: transform 0.2s ease;
 }
 
 .shoppingCart {
@@ -959,8 +591,8 @@ main {
 
 .buy {
   background: #f9784b;
-
   font-family: "Syne", sans-serif;
+  font-size: 14px;
 }
 
 .shoppingCart:hover,
@@ -968,81 +600,42 @@ main {
   transform: translateY(-2px);
 }
 
-.shoppingCart:active,
-.buy:active {
-  transform: translateY(0);
-}
-
 .shoppingCart img {
-  width: 25px;
-  height: 25px;
-
+  width: 27px;
+  height: 27px;
   object-fit: contain;
-
-  pointer-events: none;
 }
-
-/* =====================================================
-   RECOMMEND
-===================================================== */
 
 .recommend {
   width: 100%;
-  max-width: 100%;
-
   margin-top: 100px;
-
   padding: 0 0 80px;
-
   overflow: hidden;
-
-  flex-shrink: 0;
 }
-
-/* =====================================================
-   RECOMMEND TITLE
-===================================================== */
 
 .recommendTitle {
   display: flex;
   align-items: center;
-
   width: 100%;
-
   margin-bottom: 45px;
-
   padding: 0 40px;
-
   gap: 12px;
 }
 
 .recommendTitle img {
   width: 30px;
   height: 30px;
-
   object-fit: contain;
-
-  flex-shrink: 0;
 }
 
 .recommendTitle p {
-  margin: 0;
-
   color: #3d3c3c;
-
   font-family: "Unica One", sans-serif;
-
   font-size: clamp(24px, 3vw, 36px);
 }
 
-/* =====================================================
-   CATEGORY
-===================================================== */
-
 .recommendCategory {
   width: 100%;
-  max-width: 100%;
-
   margin-bottom: 60px;
 }
 
@@ -1051,168 +644,102 @@ main {
 }
 
 .recommendCategoryTitle h3 {
-  margin: 0;
-
   color: #3d3c3c;
-
   font-family: "Syne", sans-serif;
-
   font-size: 18px;
-
   font-weight: 600;
 }
 
-/* =====================================================
-   SLIDER
-===================================================== */
-
 .recommendSlider {
   position: relative;
-
   width: 100%;
-  max-width: 100%;
-
   padding: 0 55px;
-
   overflow: hidden;
 }
 
 .recommendWindow {
   position: relative;
-
   width: 100%;
-  max-width: 100%;
-
   overflow: hidden;
 }
 
 .recommendList {
   display: flex;
   align-items: flex-start;
-
   width: max-content;
   min-width: max-content;
-
   gap: 50px;
-
   transform: translate3d(0, 0, 0);
-
   transition: transform 0.35s ease;
-
   will-change: transform;
-
   user-select: none;
-
   cursor: grab;
 }
 
 .recommendList.dragging {
   cursor: grabbing;
-
   transition: none;
 }
-
-/* =====================================================
-   BOOK CARD
-===================================================== */
 
 .bookCard {
   display: flex;
   flex-direction: column;
-
   width: 170px;
   min-width: 170px;
-
   flex: 0 0 170px;
-
   cursor: pointer;
-
   user-select: none;
 }
 
 .bookCard .bookImage,
 .recommendBookImage {
   display: block;
-
   width: 170px;
   height: 250px;
-
   flex: 0 0 250px;
-
   object-fit: cover;
-
   border-radius: 4px;
-
   user-select: none;
-
   -webkit-user-drag: none;
 }
 
 .bookCard .bookName,
 .recommendBookName {
   display: -webkit-box;
-
   width: 170px;
   height: 42px;
-
   margin: 10px 0 8px;
-
   flex: 0 0 42px;
-
   color: #333333;
-
   font-family: "Syne", sans-serif;
-
   font-size: 14px;
-
   line-height: 21px;
-
   text-align: center;
-
   overflow: hidden;
-
   -webkit-box-orient: vertical;
-
   -webkit-line-clamp: 2;
-  line-clamp: 2;
 }
 
 .recommendBuying {
   display: flex;
   align-items: center;
-
   width: 170px;
   height: 40px;
-
   gap: 8px;
-
-  flex: 0 0 40px;
 }
 
 .recommendPrice {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  flex: 1 1 auto;
-
-  min-width: 0;
-
-  width: auto;
+  flex: 1;
   height: 40px;
-
   padding: 0 8px;
-
   border: 2px solid #333333;
-
   border-radius: 22px;
-
   font-family: "Syne", sans-serif;
-
   font-size: 13px;
-
   white-space: nowrap;
-
   overflow: hidden;
 }
 
@@ -1220,22 +747,13 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 42px;
   min-width: 42px;
   height: 40px;
-
   padding: 0;
-
-  flex: 0 0 42px;
-
   border: 2px solid #333333;
-
   border-radius: 22px;
-
   background: #ffffff;
-
-  cursor: pointer;
 }
 
 .recommendBookMark.active {
@@ -1245,94 +763,51 @@ main {
 .recommendBookMark img {
   width: 20px;
   height: 20px;
-
   object-fit: contain;
-
-  pointer-events: none;
 }
 
 .recommendShoppingCart {
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 170px;
   height: 38px;
-
   margin-top: 8px;
-
-  padding: 0;
-
-  flex: 0 0 38px;
-
   border: 2px solid #333333;
-
   border-radius: 20px;
-
   background: #ffbf00;
-
-  cursor: pointer;
 }
 
 .recommendShoppingCart img {
   width: 22px;
   height: 22px;
-
   object-fit: contain;
-
-  pointer-events: none;
 }
-
-/* =====================================================
-   ARROWS
-===================================================== */
 
 .recommendArrow {
   position: absolute;
-
   top: 50%;
-
   z-index: 20;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 40px;
   height: 40px;
-
   padding: 0;
-
   border: 2px solid #3d3c3c;
-
   border-radius: 50%;
-
   background: #5fc4e8;
-
   transform: translateY(-50%);
-
-  cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .recommendArrow:hover {
   transform: translateY(-50%) scale(1.08);
 }
 
-.recommendArrow:active {
-  transform: translateY(-50%) scale(0.95);
-}
-
 .recommendArrow img {
   width: 20px;
   height: 20px;
-
-  object-fit: contain;
-
-  pointer-events: none;
 }
 
 .recommendPrev {
@@ -1346,159 +821,91 @@ main {
 .recommendArrow.disabled,
 .recommendArrow:disabled {
   opacity: 0.25;
-
-  cursor: default;
-
   pointer-events: none;
 }
 
-/* =====================================================
-   CART SIDEBAR
-===================================================== */
-
 .shoppingCartSidebar-bg {
-  position: fixed !important;
-
-  inset: 0 !important;
-
-  z-index: 2999 !important;
-
-  width: 100vw !important;
-  height: 100vh !important;
-
-  background: #676767 !important;
-
-  opacity: 0 !important;
-
-  visibility: hidden !important;
-
-  pointer-events: none !important;
-
-  transform: translateX(100%) !important;
-
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease,
-    visibility 0.3s ease !important;
+  position: fixed;
+  inset: 0;
+  z-index: 2999;
+  width: 100vw;
+  height: 100vh;
+  background: #676767;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(100%);
+  transition: 0.3s ease;
 }
 
 .shoppingCartSidebar-bg.active {
-  opacity: 0.5 !important;
-
-  visibility: visible !important;
-
-  pointer-events: auto !important;
-
-  transform: translateX(0) !important;
+  opacity: 0.5;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
 }
 
-/* =====================================================
-   SIDEBAR
-===================================================== */
-
 .shoppingCartSidebar {
-  position: fixed !important;
-
-  top: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-
-  z-index: 3000 !important;
-
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-
-  width: min(480px, 100vw) !important;
-  height: 100vh !important;
-
-  gap: 16px !important;
-
-  padding: 20px !important;
-
-  background: #ffffff !important;
-
-  overflow: hidden !important;
-
-  transform: translateX(100%) !important;
-
-  transition: transform 0.3s ease !important;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(480px, 100vw);
+  height: 100vh;
+  gap: 16px;
+  padding: 20px;
+  background: #ffffff;
+  overflow: hidden;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
 }
 
 .shoppingCartSidebar.active {
-  transform: translateX(0) !important;
+  transform: translateX(0);
 }
-
-/* =====================================================
-   CART HEADER
-===================================================== */
 
 .cartHeader {
   display: flex;
-
   align-items: center;
-
   width: 100%;
   min-height: 65px;
-
-  flex-shrink: 0;
 }
 
 .cartBack {
   display: flex;
-
   align-items: center;
-
   width: 100%;
-  height: 100%;
-
   gap: 15px;
-
   color: #3d3c3c;
-
   font-family: "Syne", sans-serif;
-
   font-size: 18px;
 }
 
 #backArrow {
   width: 28px;
   height: 28px;
-
   object-fit: contain;
-
-  cursor: pointer;
 }
 
 .cartCount {
   color: #3ab8eb;
-
   font-weight: 600;
 }
 
-/* =====================================================
-   CART ITEMS
-===================================================== */
-
 .cartItems {
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   width: 100%;
-
   flex: 1;
-
   min-height: 0;
-
   gap: 14px;
-
   padding: 4px 0 10px;
-
   overflow-x: hidden;
-
   overflow-y: auto;
 }
 
@@ -1512,74 +919,45 @@ main {
 
 .cartItems::-webkit-scrollbar-thumb {
   background: #bdbdbd;
-
   border-radius: 10px;
 }
 
 .emptyCart {
   margin: auto;
-
   color: #666666;
-
   font-family: "Syne", sans-serif;
-
   font-size: 15px;
-
   text-align: center;
 }
 
-/* =====================================================
-   CART ITEM
-===================================================== */
-
 .cartItem {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   width: 100%;
-
   min-height: 170px;
-
   gap: 14px;
-
   padding: 14px;
-
   border: 2px dashed #676767;
-
   border-radius: 20px;
-
   background: #ffffff;
-
-  flex-shrink: 0;
 }
 
 .cartItemImage {
   width: 70px;
   height: 105px;
-
   flex-shrink: 0;
-
   object-fit: cover;
-
   border-radius: 5px;
 }
 
 .cartItemInfo {
   display: flex;
-
   flex-direction: column;
-
   justify-content: space-between;
-
   align-items: flex-start;
-
   height: 105px;
-
   flex: 1;
-
   min-width: 0;
 }
 
@@ -1588,248 +966,149 @@ main {
 }
 
 .cartData p {
-  margin: 0 0 5px;
-
+  margin-bottom: 5px;
   font-family: "Syne", sans-serif;
-
   white-space: nowrap;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
 }
 
 .cartItemTitle {
   font-size: 16px;
-
   font-weight: 600;
 }
 
 .cartItemAuthor {
-  font-size: 13px;
-
   color: #555555;
+  font-size: 13px;
 }
 
 .cartItemQuantity {
   display: flex;
-
   align-items: center;
-
-  width: 100%;
-
   gap: 10px;
 }
 
 .cartItemQuantity img {
   width: 24px;
   height: 24px;
-
-  object-fit: contain;
-
-  cursor: pointer;
 }
 
 .cartItemQuantity div {
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   width: 30px;
   height: 30px;
-
-  color: #333333;
-
   font-family: "Syne", sans-serif;
-
   font-size: 16px;
-
   font-weight: 600;
 }
 
 .cartItemRight {
   display: flex;
-
   flex-direction: column;
-
   align-items: flex-end;
-
   justify-content: space-between;
-
   height: 105px;
-
   flex-shrink: 0;
 }
 
 .cartItemRight p {
-  margin: 0;
-
   color: #f9784b;
-
   font-family: "Syne", sans-serif;
-
   font-size: 18px;
-
   font-weight: 600;
 }
 
 .cartDelete {
   width: 22px;
   height: 22px;
-
-  object-fit: contain;
-
-  cursor: pointer;
 }
-
-/* =====================================================
-   CART BOTTOM
-===================================================== */
 
 .cartBottom {
   display: flex;
-
   flex-direction: column;
-
   justify-content: space-between;
-
   width: 100%;
-
-  min-height: 175px;
-
+  min-height: 180px;
   padding: 22px;
-
+  gap: 18px;
   border: 2px solid #3d3c3c;
-
   border-radius: 20px 20px 0 0;
-
   background: #ffffff;
-
-  flex-shrink: 0;
 }
 
 .cartTotal {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   width: 100%;
-
-  min-height: 48px;
-
-  gap: 10px;
-
+  min-height: 50px;
+  gap: 15px;
   font-family: "Syne", sans-serif;
-
   font-size: 20px;
+  font-weight: 600;
 }
 
 .cartTotal p {
-  margin: 0;
+  color: #3d3c3c;
+  font-size: 20px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .cartTotal div {
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
-  min-width: 120px;
-  min-height: 46px;
-
-  padding: 0 12px;
-
+  min-width: 135px;
+  min-height: 48px;
+  padding: 0 14px;
   background: #fdbf0f;
-
   border: 2px solid #3d3c3c;
-
   border-radius: 18px;
-
   font-family: "Syne", sans-serif;
-
-  font-size: 17px;
+  font-size: 20px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .checkoutButton {
   width: 100%;
-  height: 48px;
-
+  height: 50px;
   background: #f9784b;
-
   border: 2px solid #3d3c3c;
-
   border-radius: 20px;
-
   color: #222222;
-
   font-family: "Syne", sans-serif;
-
-  font-size: 16px;
-
+  font-size: 18px;
   font-weight: 600;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .checkoutButton:hover {
   transform: translateY(-2px);
 }
 
-.checkoutButton:active {
-  transform: translateY(0);
-}
-
 .checkoutButton:disabled {
   opacity: 0.5;
-
   cursor: not-allowed;
 }
 
-/* =====================================================
-   FOOTER
-===================================================== */
-
 .footer {
   width: 100%;
-  max-width: 100%;
-
   margin: 80px 0 0;
-
-  padding: 0;
-
   background: #3aabeb;
-
   overflow: hidden;
-
-  flex-shrink: 0;
 }
 
 .footer-container {
   display: grid;
-
   width: 100%;
-  max-width: 100%;
-
-  margin: 0;
-
   padding: 70px 9% 45px;
-
   background: #3aabeb;
-
-  grid-template-columns:
-    1fr
-    1.35fr
-    1fr;
-
+  grid-template-columns: 1fr 1.35fr 1fr;
   column-gap: 55px;
 }
 
@@ -1838,27 +1117,17 @@ main {
 }
 
 .footer-column h3 {
-  margin: 0 0 20px;
-
+  margin-bottom: 20px;
   color: #333333;
-
   font-family: "Unica One", sans-serif;
-
   font-size: 20px;
   font-weight: 400;
-
-  line-height: 1.2;
 }
 
 .footer-column p {
-  margin: 0;
-
   color: #333333;
-
   font-family: "Syne", sans-serif;
-
   font-size: 13px;
-
   line-height: 1.55;
 }
 
@@ -1868,126 +1137,70 @@ main {
 
 .footer-about {
   max-width: 430px;
-
-  margin: 0 auto;
-
-  text-align: center;
-}
-
-.footer-about p {
+  margin: auto;
   text-align: center;
 }
 
 .footer-newsletter {
   width: 100%;
-
   max-width: 420px;
 }
 
 .newsletter-form {
   display: flex;
-
   align-items: center;
-
   width: 100%;
-
   gap: 12px;
-
   margin-bottom: 20px;
 }
 
 .newsletter-form input {
   flex: 1;
-
   min-width: 0;
-
-  width: 100%;
-
   height: 42px;
-
   padding: 0 15px;
-
   border: none;
-
   border-radius: 10px;
-
   outline: none;
-
   background: #ffffff;
-
   font-family: "Syne", sans-serif;
-
   font-size: 13px;
 }
 
 .newsletter-form button {
   height: 42px;
-
   padding: 0 18px;
-
   border: none;
-
   border-radius: 9px;
-
   background: #303030;
-
   color: #ffffff;
-
   font-family: "Syne", sans-serif;
-
   font-size: 13px;
-
-  white-space: nowrap;
-
-  cursor: pointer;
 }
 
 .footer-brand {
   display: flex;
-
   align-items: center;
-
   gap: 18px;
-
   margin-top: 8px;
 }
 
 .footer-brand img {
   width: 110px;
   height: 110px;
-
   object-fit: contain;
-
-  flex-shrink: 0;
-}
-
-.footer-brand-text {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 4px;
 }
 
 .footer-brand-text h4 {
-  margin: 0;
-
   color: #333333;
-
   font-family: "Syne", sans-serif;
-
   font-size: 25px;
-
   font-weight: 400;
 }
 
 .footer-brand-text p {
   font-size: 13px;
 }
-
-/* =====================================================
-   TABLET 1200
-===================================================== */
 
 @media (max-width: 1200px) {
   body {
@@ -1996,17 +1209,35 @@ main {
   }
 
   header {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .header-menu {
+    gap: 10px;
+  }
+
+  .logo img {
+    width: 52px;
+    height: 52px;
+    flex-basis: 52px;
+  }
+
+  .logo span {
+    font-size: 17px;
+  }
+
+  .header-menu a {
+    font-size: 11px;
+  }
+
+  .header-menu a img {
+    width: 24px;
+    height: 24px;
   }
 
   .productDetail {
-    grid-template-columns:
-      minmax(220px, 280px)
-      minmax(0, 1fr);
-
-    max-width: 900px;
-
+    grid-template-columns: minmax(250px, 300px) minmax(0, 520px);
     gap: 45px;
   }
 
@@ -2015,8 +1246,8 @@ main {
     height: 390px;
   }
 
-  .recommendSlider {
-    padding: 0 50px;
+  .stock {
+    top: 160px;
   }
 
   .recommendList {
@@ -2026,7 +1257,6 @@ main {
   .bookCard {
     width: 165px;
     min-width: 165px;
-
     flex-basis: 165px;
   }
 
@@ -2034,99 +1264,101 @@ main {
   .recommendBookImage {
     width: 165px;
     height: 240px;
-
-    flex-basis: 240px;
   }
 
   .bookCard .bookName,
-  .recommendBookName {
-    width: 165px;
-  }
-
+  .recommendBookName,
   .recommendBuying,
   .recommendShoppingCart {
     width: 165px;
   }
 }
 
-/* =====================================================
-   TABLET 900
-===================================================== */
-
 @media (max-width: 900px) {
-  header {
-    height: 78px;
-    min-height: 78px;
-
-    padding: 9px 20px;
-  }
-
   body {
-    padding-top: 98px;
+    padding-top: 78px;
   }
 
-  .logo img {
-    width: 50px;
-    height: 50px;
-  }
-
-  .logo p,
-  .logo span {
-    font-size: 18px;
-  }
-
-  .headerButtons {
+  header {
+    height: 62px;
+    padding: 6px 17px;
     gap: 8px;
   }
 
-  .headerButtons > img,
-  .headerButtons > a,
-  .headerButtons .header-icon,
-  .headerButtons .product-icon {
-    width: 25px;
-    height: 25px;
+  .logo {
+    gap: 6px;
   }
 
-  .headerButtons > a img,
-  .headerButtons .header-icon img,
-  .headerButtons .product-icon img {
-    width: 21px;
-    height: 21px;
+  .logo img {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .logo span {
+    font-size: 14px;
+  }
+
+  .header-menu {
+    gap: 5px;
+  }
+
+  .header-menu a {
+    font-size: 8px;
+    gap: 3px;
+  }
+
+  .header-menu a img {
+    width: 19px;
+    height: 19px;
+  }
+
+  .sign-in {
+    gap: 4px;
+  }
+
+  .sign-in span {
+    font-size: 9px;
   }
 
   .sign-in img,
-  #signInButton img,
-  .user-info img {
-    width: 22px;
-    height: 22px;
+  .user-info > img {
+    width: 19px;
+    height: 19px;
   }
 
-  .sign-in span,
-  #signInButton span {
-    font-size: 9px;
+  .create-account,
+  #logoutButton {
+    height: 24px;
+    padding: 0 7px;
+    font-size: 8px;
   }
 
-  .sign-in small {
-    height: 22px;
-
-    font-size: 7px;
-  }
-
-  #createAccountButton {
-    width: 90px;
-
-    height: 28px;
-
-    font-size: 9px;
+  #usernameDisplay {
+    max-width: 70px;
+    font-size: 8px;
   }
 
   .productDetail {
+    grid-template-columns: minmax(220px, 250px) minmax(0, 1fr);
     gap: 30px;
   }
 
   .productImage img {
     width: 250px;
     height: 350px;
+  }
+
+  .productTitle p {
+    font-size: 30px;
+  }
+
+  .stock {
+    top: 160px;
+  }
+
+  .productDescription {
+    height: 180px;
   }
 
   .recommendSlider {
@@ -2137,201 +1369,115 @@ main {
     gap: 25px;
   }
 
-  .bookCard {
-    width: 160px;
-    min-width: 160px;
-
-    flex-basis: 160px;
-  }
-
-  .bookCard .bookImage,
-  .recommendBookImage {
-    width: 160px;
-    height: 230px;
-
-    flex-basis: 230px;
-  }
-
-  .bookCard .bookName,
-  .recommendBookName {
-    width: 160px;
-  }
-
-  .recommendBuying,
-  .recommendShoppingCart {
-    width: 160px;
-  }
-
-  .footer {
-    margin-top: 70px;
-  }
-
   .footer-container {
     grid-template-columns: 1fr 1fr;
-
     gap: 40px;
-
     padding: 55px 7% 40px;
   }
 
-  .footer-support {
+  .footer-support,
+  .footer-about {
     max-width: none;
   }
 
   .footer-about {
-    max-width: none;
-
     margin: 0;
-
-    text-align: left;
-  }
-
-  .footer-about p {
     text-align: left;
   }
 
   .footer-newsletter {
     grid-column: 1 / -1;
-
     max-width: none;
   }
 }
 
-/* =====================================================
-   MOBILE 700
-===================================================== */
-
-@media (max-width: 700px) {
+@media (max-width: 760px) {
   body {
-    padding: 85px 15px 0;
+    padding: 76px 15px 0;
   }
 
   header {
-    height: 70px;
-    min-height: 70px;
-
-    padding: 10px 15px;
-
-    gap: 8px;
-  }
-
-  .logo {
-    gap: 6px;
+    height: 58px;
+    padding: 5px 12px;
+    gap: 5px;
   }
 
   .logo img {
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
+    flex-basis: 35px;
   }
 
-  .logo p,
   .logo span {
-    max-width: 120px;
-
-    font-size: 17px;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-  }
-
-  .headerButtons {
-    gap: 5px;
-  }
-
-  .headerButtons > img,
-  .headerButtons > a,
-  .headerButtons .header-icon,
-  .headerButtons .product-icon {
-    width: 22px;
-    height: 22px;
-  }
-
-  .headerButtons > a img,
-  .headerButtons .header-icon img,
-  .headerButtons .product-icon img {
-    width: 19px;
-    height: 19px;
-  }
-
-  .sign-in img,
-  #signInButton img,
-  .user-info img {
-    width: 21px;
-    height: 21px;
-  }
-
-  .sign-in span,
-  #signInButton span,
-  .sign-in small {
     display: none;
   }
 
-  .user-info {
-    gap: 5px;
+  .header-menu {
+    gap: 3px;
   }
 
-  .user-info span {
-    max-width: 75px;
-
-    font-size: 9px;
+  .header-menu a {
+    width: 25px;
+    height: 25px;
+    font-size: 0;
   }
 
-  .user-info #logoutButton {
-    min-width: 58px;
-
-    height: 24px;
-
-    padding: 0 7px;
-
-    font-size: 8px;
+  .header-menu a img {
+    width: 18px;
+    height: 18px;
   }
 
-  #createAccountButton {
-    width: 85px;
-
-    height: 27px;
-
-    padding: 0 7px;
-
-    font-size: 9px;
+  .sign-in span {
+    display: none;
   }
 
-  /* SEARCH */
+  .sign-in img,
+  .user-info > img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .create-account,
+  #logoutButton {
+    height: 22px;
+    padding: 0 6px;
+    font-size: 7px;
+  }
+
+  #usernameDisplay {
+    display: none;
+  }
+
+  .productDetail {
+    gap: 25px;
+  }
 
   .searchBox {
-    width: 90%;
-
-    max-width: none;
+    width: 92%;
+    height: 44px;
   }
 
   .searchBar {
     padding-left: 14px;
-    padding-right: 40px;
+    padding-right: 42px;
   }
 
   .searchBar input {
     font-size: 13px;
   }
 
-  /* PRODUCT */
+  .searchBar img {
+    width: 20px;
+    height: 20px;
+    right: 13px;
+  }
 
   .productDetail {
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     width: 100%;
-
-    gap: 35px;
-
-    margin-top: 40px;
-  }
-
-  .productImage {
-    width: 100%;
+    margin-top: 38px;
   }
 
   .productImage img {
@@ -2341,7 +1487,6 @@ main {
 
   .productInfo {
     width: 100%;
-
     max-width: 560px;
   }
 
@@ -2350,7 +1495,7 @@ main {
   }
 
   .bookMarkBlock {
-    width: 48px;
+    width: 50px;
     height: 44px;
   }
 
@@ -2358,8 +1503,19 @@ main {
     height: 55px;
   }
 
+  .stock {
+    top: 150px;
+    height: 45px;
+    padding: 0 18px;
+    font-size: 13px;
+  }
+
   .productDescription {
-    height: 150px;
+    height: 175px;
+  }
+
+  .description {
+    padding: 48px 18px 14px;
   }
 
   .price {
@@ -2370,26 +1526,22 @@ main {
     font-size: 28px;
   }
 
-  /* BUYING */
+  .amount {
+    gap: 8px;
+  }
 
   .buying {
     gap: 10px;
   }
 
-  /* RECOMMEND */
-
   .recommend {
     margin-top: 70px;
-
     padding-bottom: 50px;
   }
 
   .recommendTitle {
     margin-bottom: 35px;
-
     padding: 0 5px;
-
-    gap: 10px;
   }
 
   .recommendTitle img {
@@ -2407,7 +1559,6 @@ main {
 
   .recommendCategoryTitle {
     margin-left: 5px;
-
     margin-bottom: 18px;
   }
 
@@ -2426,7 +1577,6 @@ main {
   .bookCard {
     width: 150px;
     min-width: 150px;
-
     flex-basis: 150px;
   }
 
@@ -2434,68 +1584,39 @@ main {
   .recommendBookImage {
     width: 150px;
     height: 210px;
-
-    flex-basis: 210px;
   }
 
   .bookCard .bookName,
   .recommendBookName {
     width: 150px;
-
     height: 40px;
-
     margin: 9px 0 7px;
-
     font-size: 12px;
-
     line-height: 19px;
+  }
 
-    flex-basis: 40px;
+  .recommendBuying,
+  .recommendShoppingCart {
+    width: 150px;
   }
 
   .recommendBuying {
-    width: 150px;
-
     height: 34px;
-
-    gap: 6px;
-
-    flex-basis: 34px;
   }
 
   .recommendPrice {
     height: 34px;
-
     font-size: 12px;
   }
 
   .recommendBookMark {
     width: 36px;
     min-width: 36px;
-
     height: 34px;
-
-    flex-basis: 36px;
-  }
-
-  .recommendBookMark img {
-    width: 14px;
-    height: 18px;
   }
 
   .recommendShoppingCart {
-    width: 150px;
-
     height: 34px;
-
-    margin-top: 7px;
-
-    flex-basis: 34px;
-  }
-
-  .recommendShoppingCart img {
-    width: 20px;
-    height: 20px;
   }
 
   .recommendArrow {
@@ -2516,29 +1637,24 @@ main {
     right: 3px;
   }
 
-  /* CART */
-
   .shoppingCartSidebar {
-    width: 100vw !important;
-
-    padding: 15px !important;
-
-    gap: 12px !important;
+    width: 100vw;
+    padding: 15px;
+    gap: 12px;
   }
 
-  .cartHeader {
-    min-height: 58px;
+  .shoppingCartSidebar-bg {
+    width: 100vw;
+    max-width: 100vw;
   }
 
-  .cartBack {
-    font-size: 16px;
+  .cartItems {
+    min-width: 0;
   }
 
   .cartItem {
     min-height: 155px;
-
     padding: 11px;
-
     gap: 9px;
   }
 
@@ -2547,7 +1663,8 @@ main {
     height: 88px;
   }
 
-  .cartItemInfo {
+  .cartItemInfo,
+  .cartItemRight {
     height: 88px;
   }
 
@@ -2557,10 +1674,6 @@ main {
 
   .cartItemAuthor {
     font-size: 11px;
-  }
-
-  .cartItemRight {
-    height: 88px;
   }
 
   .cartItemRight p {
@@ -2579,49 +1692,43 @@ main {
   .cartItemQuantity div {
     width: 25px;
     height: 25px;
-
     font-size: 14px;
   }
 
   .cartBottom {
-    min-height: 160px;
-
+    min-height: 175px;
     padding: 18px;
+    gap: 16px;
   }
 
   .cartTotal {
-    font-size: 18px;
+    min-height: 46px;
+    font-size: 20px;
+  }
+
+  .cartTotal p {
+    font-size: 20px;
   }
 
   .cartTotal div {
-    min-width: 105px;
-    min-height: 42px;
-
-    font-size: 15px;
+    min-width: 115px;
+    min-height: 44px;
+    padding: 0 10px;
+    font-size: 20px;
   }
 
   .checkoutButton {
-    height: 45px;
+    height: 47px;
+    font-size: 17px;
   }
 
-  /* FOOTER */
-
   .footer {
-    width: 100%;
-
     margin-top: 60px;
-    margin-bottom: 0;
-
-    padding: 0;
   }
 
   .footer-container {
-    width: 100%;
-
     grid-template-columns: 1fr;
-
     gap: 30px;
-
     padding: 50px 25px 35px;
   }
 
@@ -2629,9 +1736,7 @@ main {
   .footer-about,
   .footer-newsletter {
     width: 100%;
-
     max-width: none;
-
     text-align: center;
   }
 
@@ -2645,9 +1750,7 @@ main {
 
   .newsletter-form {
     flex-direction: column;
-
     align-items: stretch;
-
     gap: 8px;
   }
 
@@ -2658,11 +1761,8 @@ main {
 
   .footer-brand {
     flex-direction: column;
-
     justify-content: center;
-
     gap: 10px;
-
     text-align: center;
   }
 
@@ -2676,79 +1776,87 @@ main {
   }
 }
 
-/* =====================================================
-   MOBILE 400
-===================================================== */
-
-@media (max-width: 400px) {
+@media (max-width: 600px) {
   body {
-    padding: 78px 10px 0;
+    padding-top: 74px;
   }
 
   header {
-    height: 65px;
-    min-height: 65px;
-
-    padding: 8px 10px;
-  }
-
-  .logo img {
-    width: 40px;
-    height: 40px;
-  }
-
-  .logo p,
-  .logo span {
-    max-width: 90px;
-
-    font-size: 15px;
-  }
-
-  .headerButtons {
+    height: 56px;
+    padding: 5px 10px;
     gap: 4px;
   }
 
-  .headerButtons > img,
-  .headerButtons > a,
-  .headerButtons .header-icon,
-  .headerButtons .product-icon {
-    width: 20px;
-    height: 20px;
+  .header-menu {
+    gap: 2px;
   }
 
-  .headerButtons > a img,
-  .headerButtons .header-icon img,
-  .headerButtons .product-icon img {
-    width: 18px;
-    height: 18px;
+  .header-menu a {
+    width: 23px;
+    height: 23px;
   }
 
-  #createAccountButton {
-    width: 75px;
-
-    height: 26px;
-
-    font-size: 8px;
+  .header-menu a img {
+    width: 17px;
+    height: 17px;
   }
 
-  .user-info span {
-    max-width: 55px;
-
-    font-size: 8px;
+  .sign-in img,
+  .user-info > img {
+    width: 16px;
+    height: 16px;
   }
 
-  .user-info #logoutButton {
-    min-width: 52px;
+  .create-account,
+  #logoutButton {
+    height: 21px;
+    padding: 0 4px;
+    font-size: 6px;
+  }
+}
 
+@media (max-width: 480px) {
+  body {
+    padding: 70px 10px 0;
+  }
+
+  header {
+    height: 54px;
+    padding: 5px 7px;
+    gap: 3px;
+  }
+
+  .logo img {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+
+  .header-menu {
+    gap: 1px;
+  }
+
+  .header-menu a {
+    width: 22px;
     height: 22px;
-
-    padding: 0 6px;
-
-    font-size: 7px;
   }
 
-  .searchBox {
-    width: 94%;
+  .header-menu a img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .sign-in img,
+  .user-info > img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .create-account,
+  #logoutButton {
+    height: 20px;
+    padding: 0 3px;
+    font-size: 5.5px;
   }
 
   .productImage img {
@@ -2769,6 +1877,24 @@ main {
     height: 42px;
   }
 
+  .productAuthor {
+    height: 52px;
+  }
+
+  .stock {
+    top: 145px;
+    font-size: 12px;
+  }
+
+  .productDescription {
+    height: 170px;
+  }
+
+  .description {
+    padding: 46px 15px 12px;
+    font-size: 13px;
+  }
+
   .price {
     gap: 10px;
   }
@@ -2778,7 +1904,7 @@ main {
   }
 
   .amount {
-    gap: 7px;
+    gap: 6px;
   }
 
   .amount img {
@@ -2788,7 +1914,6 @@ main {
 
   .amount div {
     width: 25px;
-
     font-size: 15px;
   }
 
@@ -2798,7 +1923,7 @@ main {
 
   .shoppingCart,
   .buy {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .recommendSlider {
@@ -2812,7 +1937,6 @@ main {
   .bookCard {
     width: 140px;
     min-width: 140px;
-
     flex-basis: 140px;
   }
 
@@ -2820,114 +1944,104 @@ main {
   .recommendBookImage {
     width: 140px;
     height: 200px;
-
-    flex-basis: 200px;
   }
 
   .bookCard .bookName,
   .recommendBookName {
     width: 140px;
-
     height: 38px;
-
     margin: 8px 0 6px;
-
     font-size: 11px;
-
     line-height: 18px;
-
-    flex-basis: 38px;
   }
 
-  .recommendBuying {
-    width: 140px;
-
-    height: 32px;
-
-    gap: 5px;
-
-    flex-basis: 32px;
-  }
-
-  .recommendPrice {
-    height: 32px;
-
-    font-size: 11px;
-  }
-
-  .recommendBookMark {
-    width: 34px;
-    min-width: 34px;
-
-    height: 32px;
-
-    flex-basis: 34px;
-  }
-
+  .recommendBuying,
   .recommendShoppingCart {
     width: 140px;
-
-    height: 32px;
-
-    margin-top: 6px;
-
-    flex-basis: 32px;
   }
 
   .recommendArrow {
     width: 31px;
     height: 31px;
   }
+}
 
-  .footer {
-    margin-top: 50px;
+@media (max-width: 380px) {
+  body {
+    padding-top: 68px;
   }
 
-  .footer-container {
-    padding: 45px 20px 30px;
+  header {
+    padding-left: 6px;
+    padding-right: 6px;
   }
 
-  .footer-brand img {
-    width: 80px;
-    height: 80px;
+  .logo img {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+  }
+
+  .header-menu {
+    gap: 0;
+  }
+
+  .header-menu a {
+    width: 20px;
+    height: 20px;
+  }
+
+  .header-menu a img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .sign-in img,
+  .user-info > img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .create-account,
+  #logoutButton {
+    height: 19px;
+    padding: 0 2px;
+    font-size: 5px;
   }
 }
 
-/* =====================================================
-   EXTRA SMALL 340
-===================================================== */
-
 @media (max-width: 340px) {
-  .logo p,
+  .logo img {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+  }
+
   .logo span {
-    max-width: 75px;
-
-    font-size: 13px;
+    font-size: 12px;
   }
 
-  .headerButtons {
-    gap: 3px;
+  .header-menu a {
+    width: 19px;
+    height: 19px;
   }
 
-  .headerButtons > img,
-  .headerButtons > a,
-  .headerButtons .header-icon,
-  .headerButtons .product-icon {
-    width: 18px;
+  .header-menu a img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .sign-in img,
+  .user-info > img {
+    width: 13px;
+    height: 13px;
+  }
+
+  .create-account,
+  #logoutButton {
     height: 18px;
-  }
-
-  .headerButtons > a img,
-  .headerButtons .header-icon img,
-  .headerButtons .product-icon img {
-    width: 16px;
-    height: 16px;
-  }
-
-  #createAccountButton {
-    width: 68px;
-
-    font-size: 7px;
+    padding: 0 2px;
+    font-size: 4.5px;
   }
 
   .productImage img {
@@ -2937,6 +2051,17 @@ main {
 
   .productTitle p {
     font-size: 22px;
+  }
+
+  .stock {
+    top: 143px;
+    padding: 0 13px;
+    font-size: 11px;
+  }
+
+  .description {
+    padding-left: 13px;
+    padding-right: 13px;
   }
 
   .recommendSlider {
@@ -2950,7 +2075,6 @@ main {
   .bookCard {
     width: 135px;
     min-width: 135px;
-
     flex-basis: 135px;
   }
 
@@ -2958,14 +2082,11 @@ main {
   .recommendBookImage {
     width: 135px;
     height: 190px;
-
-    flex-basis: 190px;
   }
 
   .bookCard .bookName,
   .recommendBookName {
     width: 135px;
-
     font-size: 10px;
   }
 
@@ -2973,42 +2094,13 @@ main {
   .recommendShoppingCart {
     width: 135px;
   }
-}
 
-/* =====================================================
-   FINAL GLOBAL OVERFLOW
-===================================================== */
-
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-main,
-.productDetail,
-.recommend,
-.recommendSlider,
-.recommendWindow,
-.footer,
-.footer-container {
-  max-width: 100%;
-}
-
-/* =====================================================
-   MOBILE CART SAFETY
-===================================================== */
-
-@media (max-width: 700px) {
-  .shoppingCartSidebar,
-  .shoppingCartSidebar-bg {
-    max-width: 100vw !important;
+  .cartTotal p {
+    font-size: 19px;
   }
 
-  .cartItems {
-    min-width: 0;
+  .cartTotal div {
+    min-width: 100px;
+    font-size: 19px;
   }
 }

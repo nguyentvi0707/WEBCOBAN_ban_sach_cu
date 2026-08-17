@@ -1,52 +1,63 @@
-/* =====================================================
-   IUHSVBOOK - SHOPPING CART SIDEBAR
-===================================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-  /* =================================================
-     PATH HELPER
-  ================================================= */
-
-  const isInPagesFolder =
-    window.location.pathname.includes("/pages/");
+document.addEventListener("DOMContentLoaded", async () => {
+  const isInPagesFolder = window.location.pathname.includes("/pages/");
 
   const getImagePath = (fileName) => {
-    return isInPagesFolder
-      ? `../images/${fileName}`
-      : `./images/${fileName}`;
+    return isInPagesFolder ? `../images/${fileName}` : `./images/${fileName}`;
   };
 
   const getPagePath = (pageName) => {
-    return isInPagesFolder
-      ? `./${pageName}`
-      : `./pages/${pageName}`;
+    return isInPagesFolder ? `./${pageName}` : `./pages/${pageName}`;
   };
 
-  /* =================================================
-     CREATE ELEMENT
-  ================================================= */
+  let books = [];
 
-  const cartBackground =
-    document.createElement("div");
+  try {
+    const response = await fetch(
+      isInPagesFolder ? "../data/book.json" : "./data/book.json",
+      {
+        cache: "no-store",
+      },
+    );
 
-  const cartSidebar =
-    document.createElement("div");
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
 
-  cartBackground.className =
-    "shoppingCartSidebar-bg";
+    const data = await response.json();
 
-  cartSidebar.className =
-    "shoppingCartSidebar";
+    if (!Array.isArray(data)) {
+      throw new Error("book.json không phải là một mảng");
+    }
 
-  /* =================================================
-     SIDEBAR HTML
-  ================================================= */
+    books = data;
+  } catch (error) {
+    console.error("Lỗi load book.json:", error);
+
+    books = [];
+  }
+
+  const getStock = (productId) => {
+    const product = books.find((book) => String(book.id) === String(productId));
+
+    if (!product) {
+      return 0;
+    }
+
+    const stock = Number(product.stock ?? 0);
+
+    return Number.isFinite(stock) ? Math.max(0, Math.floor(stock)) : 0;
+  };
+
+  const cartBackground = document.createElement("div");
+
+  const cartSidebar = document.createElement("div");
+
+  cartBackground.className = "shoppingCartSidebar-bg";
+
+  cartSidebar.className = "shoppingCartSidebar";
 
   cartSidebar.innerHTML = `
     <div class="cartHeader">
-
-      <!-- NÚT ĐÓNG SIDEBAR -->
-
       <button
         type="button"
         class="cartCloseButton"
@@ -60,31 +71,23 @@ document.addEventListener("DOMContentLoaded", () => {
       </button>
 
       <div class="cartBack">
-
         <div>
           <span>Your Cart</span>
-
           <span class="cartCount">
             (0 items)
           </span>
         </div>
-
       </div>
-
     </div>
 
     <div class="cartItems"></div>
 
     <div class="cartBottom">
-
       <div class="cartTotal">
-
         <p>Tổng:</p>
-
         <div class="cartTotalPrice">
           0đ
         </div>
-
       </div>
 
       <button
@@ -93,139 +96,62 @@ document.addEventListener("DOMContentLoaded", () => {
       >
         Đặt hàng
       </button>
-
     </div>
   `;
 
-  document.body.appendChild(
-    cartBackground,
-  );
+  document.body.appendChild(cartBackground);
 
-  document.body.appendChild(
-    cartSidebar,
-  );
-
-  /* =================================================
-     DOM
-  ================================================= */
+  document.body.appendChild(cartSidebar);
 
   const cartButton =
-    document.querySelector("#cartIcon") ||
-    document.querySelector(".cart");
+    document.querySelector("#cartIcon") || document.querySelector(".cart");
 
-  const closeButton =
-    cartSidebar.querySelector(
-      "#cartCloseButton",
-    );
+  const closeButton = cartSidebar.querySelector("#cartCloseButton");
 
-  const cartItems =
-    cartSidebar.querySelector(
-      ".cartItems",
-    );
+  const cartItems = cartSidebar.querySelector(".cartItems");
 
-  const cartCount =
-    cartSidebar.querySelector(
-      ".cartCount",
-    );
+  const cartCount = cartSidebar.querySelector(".cartCount");
 
-  const totalPrice =
-    cartSidebar.querySelector(
-      ".cartTotalPrice",
-    );
+  const totalPrice = cartSidebar.querySelector(".cartTotalPrice");
 
-  const checkoutButton =
-    cartSidebar.querySelector(
-      ".checkoutButton",
-    );
-
-  /* =================================================
-     GET CURRENT USER
-  ================================================= */
+  const checkoutButton = cartSidebar.querySelector(".checkoutButton");
 
   const getCurrentUser = () => {
-    const currentUser =
-      localStorage.getItem(
-        "currentUser",
-      );
+    const currentUser = localStorage.getItem("currentUser");
 
     if (!currentUser) {
       return null;
     }
 
     try {
-      return JSON.parse(
-        currentUser,
-      );
+      return JSON.parse(currentUser);
     } catch (error) {
-      console.error(
-        "Lỗi đọc currentUser:",
-        error,
-      );
-
-      localStorage.removeItem(
-        "currentUser",
-      );
+      localStorage.removeItem("currentUser");
 
       return null;
     }
   };
 
-  /* =================================================
-     GET CART
-  ================================================= */
-
   const getCart = () => {
     try {
-      const cart =
-        JSON.parse(
-          localStorage.getItem(
-            "shoppingCart",
-          ),
-        );
+      const cart = JSON.parse(localStorage.getItem("shoppingCart"));
 
-      return Array.isArray(cart)
-        ? cart
-        : [];
+      return Array.isArray(cart) ? cart : [];
     } catch (error) {
-      console.error(
-        "Lỗi đọc shoppingCart:",
-        error,
-      );
-
       return [];
     }
   };
 
-  /* =================================================
-     SAVE CART
-  ================================================= */
-
   const saveCart = (cart) => {
     localStorage.setItem(
       "shoppingCart",
-      JSON.stringify(
-        Array.isArray(cart)
-          ? cart
-          : [],
-      ),
+      JSON.stringify(Array.isArray(cart) ? cart : []),
     );
   };
-
-  /* =================================================
-     FORMAT PRICE
-  ================================================= */
 
   const formatPrice = (price) => {
-    return (
-      Number(price || 0).toLocaleString(
-        "vi-VN",
-      ) + "đ"
-    );
+    return Number(price || 0).toLocaleString("vi-VN") + "đ";
   };
-
-  /* =================================================
-     EMPTY CART
-  ================================================= */
 
   const renderEmptyCart = () => {
     cartItems.innerHTML = `
@@ -234,96 +160,91 @@ document.addEventListener("DOMContentLoaded", () => {
       </p>
     `;
 
-    cartCount.textContent =
-      "(0 items)";
+    cartCount.textContent = "(0 items)";
 
-    totalPrice.textContent =
-      "0đ";
+    totalPrice.textContent = "0đ";
   };
 
-  /* =================================================
-     OPEN SIDEBAR
-  ================================================= */
-
   const openCart = () => {
-    /*
-     * CHƯA ĐĂNG NHẬP
-     */
-
     if (!getCurrentUser()) {
-      alert(
-        "Bạn cần đăng nhập trước khi xem giỏ hàng!",
-      );
+      alert("Bạn cần đăng nhập trước khi xem giỏ hàng!");
 
       const currentPage =
         window.location.pathname +
         window.location.search +
         window.location.hash;
 
-      const loginURL =
-        new URL(
-          getPagePath("login.html"),
-          window.location.href,
-        );
+      const loginURL = new URL(getPagePath("login.html"), window.location.href);
 
-      loginURL.searchParams.set(
-        "redirect",
-        currentPage,
-      );
+      loginURL.searchParams.set("redirect", currentPage);
 
-      window.location.href =
-        loginURL.href;
+      window.location.href = loginURL.href;
 
       return;
     }
 
     renderCart();
 
-    cartSidebar.classList.add(
-      "active",
-    );
+    cartSidebar.classList.add("active");
 
-    cartBackground.classList.add(
-      "active",
-    );
+    cartBackground.classList.add("active");
   };
-
-  /* =================================================
-     CLOSE SIDEBAR
-  ================================================= */
 
   const closeCart = () => {
-    cartSidebar.classList.remove(
-      "active",
-    );
+    cartSidebar.classList.remove("active");
 
-    cartBackground.classList.remove(
-      "active",
-    );
+    cartBackground.classList.remove("active");
   };
 
-  /* =================================================
-     RENDER CART
-  ================================================= */
+  const normalizeCartStock = (cart) => {
+    let changed = false;
+
+    const normalizedCart = cart
+      .map((item) => {
+        const stock = getStock(item.id);
+
+        let quantity = Math.max(1, Number(item.quantity || 1));
+
+        if (stock <= 0) {
+          changed = true;
+
+          return null;
+        }
+
+        if (quantity > stock) {
+          quantity = stock;
+          changed = true;
+        }
+
+        if (Number(item.quantity) !== quantity) {
+          changed = true;
+        }
+
+        return {
+          ...item,
+          quantity,
+        };
+      })
+      .filter(Boolean);
+
+    if (changed) {
+      saveCart(normalizedCart);
+    }
+
+    return normalizedCart;
+  };
 
   const renderCart = () => {
-    /*
-     * Không đăng nhập
-     * => luôn xem như giỏ trống
-     */
-
     if (!getCurrentUser()) {
       renderEmptyCart();
       return;
     }
 
-    const cart =
-      getCart();
+    let cart = getCart();
 
-    cartItems.innerHTML =
-      "";
+    cart = normalizeCartStock(cart);
 
-    /* EMPTY */
+    cartItems.innerHTML = "";
 
     if (cart.length === 0) {
       renderEmptyCart();
@@ -331,57 +252,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let total = 0;
-
     let totalQuantity = 0;
 
-    /* =================================================
-       CREATE ITEMS
-    ================================================= */
-
     cart.forEach((item) => {
-      const quantity =
-        Math.max(
-          1,
-          Number(
-            item.quantity || 1,
-          ),
-        );
+      const stock = getStock(item.id);
 
-      const price =
-        Number(
-          item.price || 0,
-        );
+      const quantity = Math.max(1, Number(item.quantity || 1));
 
-      total +=
-        price * quantity;
+      const price = Number(item.price || 0);
 
-      totalQuantity +=
-        quantity;
+      total += price * quantity;
 
-      item.quantity =
-        quantity;
+      totalQuantity += quantity;
 
-      const cartItem =
-        document.createElement(
-          "div",
-        );
+      item.quantity = quantity;
 
-      cartItem.className =
-        "cartItem";
+      const cartItem = document.createElement("div");
+
+      cartItem.className = "cartItem";
 
       cartItem.innerHTML = `
         <img
           class="cartItemImage"
-          src="${
-            item.image ||
-            getImagePath(
-              "COVER_BOOK.png",
-            )
-          }"
-          alt="${
-            item.name ||
-            "Book"
-          }"
+          src="${item.image || getImagePath("COVER_BOOK.png")}"
+          alt="${item.name || "Book"}"
         >
 
         <div class="cartItemInfo">
@@ -389,17 +283,15 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="cartData">
 
             <p class="cartItemTitle">
-              ${
-                item.name ||
-                "Không có tên"
-              }
+              ${item.name || "Không có tên"}
             </p>
 
             <p class="cartItemAuthor">
-              ${
-                item.author ||
-                "Chưa có tác giả"
-              }
+              ${item.author || "Chưa có tác giả"}
+            </p>
+
+            <p class="cartItemStock">
+              Stock: ${stock}
             </p>
 
           </div>
@@ -413,17 +305,13 @@ document.addEventListener("DOMContentLoaded", () => {
             >
               <img
                 class="cartMinus"
-                src="${getImagePath(
-                  "MINUS_CIRCLE.png",
-                )}"
+                src="${getImagePath("MINUS_CIRCLE.png")}"
                 alt="Giảm"
               >
             </button>
 
             <div class="cartQuantity">
-              ${String(
-                quantity,
-              ).padStart(2, "0")}
+              ${String(quantity).padStart(2, "0")}
             </div>
 
             <button
@@ -433,9 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
             >
               <img
                 class="cartPlus"
-                src="${getImagePath(
-                  "PLUS_CIRCLE.png",
-                )}"
+                src="${getImagePath("PLUS_CIRCLE.png")}"
                 alt="Tăng"
               >
             </button>
@@ -447,10 +333,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="cartItemRight">
 
           <p class="cartItemPrice">
-            ${formatPrice(
-              price *
-                quantity,
-            )}
+            ${formatPrice(price * quantity)}
           </p>
 
           <button
@@ -460,9 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
           >
             <img
               class="cartDelete"
-              src="${getImagePath(
-                "TRASH.png",
-              )}"
+              src="${getImagePath("TRASH.png")}"
               alt="Xóa"
             >
           </button>
@@ -470,388 +351,243 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
 
-      /* =================================================
-         PLUS
-      ================================================= */
-
-      const plus =
-        cartItem.querySelector(
-          ".cartPlusButton",
-        );
+      const plus = cartItem.querySelector(".cartPlusButton");
 
       if (plus) {
-        plus.addEventListener(
-          "click",
-          (event) => {
-            event.preventDefault();
-            event.stopPropagation();
+        plus.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
 
-            if (!getCurrentUser()) {
-              renderEmptyCart();
-              closeCart();
-              return;
-            }
+          if (!getCurrentUser()) {
+            renderEmptyCart();
+            closeCart();
+            return;
+          }
 
-            item.quantity =
-              quantity + 1;
+          const currentStock = getStock(item.id);
 
-            saveCart(cart);
+          if (currentStock <= 0) {
+            alert("Sản phẩm đã hết hàng!");
 
-            renderCart();
-          },
-        );
+            return;
+          }
+
+          if (quantity >= currentStock) {
+            alert("Không đủ số lượng trong kho!");
+
+            return;
+          }
+
+          item.quantity = quantity + 1;
+
+          saveCart(cart);
+
+          renderCart();
+        });
       }
 
-      /* =================================================
-         MINUS
-      ================================================= */
-
-      const minus =
-        cartItem.querySelector(
-          ".cartMinusButton",
-        );
+      const minus = cartItem.querySelector(".cartMinusButton");
 
       if (minus) {
-        minus.addEventListener(
-          "click",
-          (event) => {
-            event.preventDefault();
-            event.stopPropagation();
+        minus.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
 
-            if (!getCurrentUser()) {
-              renderEmptyCart();
-              closeCart();
-              return;
-            }
+          if (!getCurrentUser()) {
+            renderEmptyCart();
+            closeCart();
+            return;
+          }
 
-            if (
-              quantity <= 1
-            ) {
-              return;
-            }
+          if (quantity <= 1) {
+            return;
+          }
 
-            item.quantity =
-              quantity - 1;
+          item.quantity = quantity - 1;
 
-            saveCart(cart);
+          saveCart(cart);
 
-            renderCart();
-          },
-        );
+          renderCart();
+        });
       }
 
-      /* =================================================
-         DELETE
-      ================================================= */
-
-      const deleteButton =
-        cartItem.querySelector(
-          ".cartDeleteButton",
-        );
+      const deleteButton = cartItem.querySelector(".cartDeleteButton");
 
       if (deleteButton) {
-        deleteButton.addEventListener(
-          "click",
-          (event) => {
-            event.preventDefault();
-            event.stopPropagation();
+        deleteButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
 
-            if (!getCurrentUser()) {
-              renderEmptyCart();
-              closeCart();
-              return;
-            }
+          if (!getCurrentUser()) {
+            renderEmptyCart();
+            closeCart();
+            return;
+          }
 
-            const newCart =
-              cart.filter(
-                (
-                  cartItemData,
-                ) =>
-                  String(
-                    cartItemData.id,
-                  ) !==
-                  String(
-                    item.id,
-                  ),
-              );
+          const newCart = cart.filter(
+            (cartItemData) => String(cartItemData.id) !== String(item.id),
+          );
 
-            saveCart(
-              newCart,
-            );
+          saveCart(newCart);
 
-            renderCart();
-          },
-        );
+          renderCart();
+        });
       }
 
-      cartItems.appendChild(
-        cartItem,
-      );
+      cartItems.appendChild(cartItem);
     });
-
-    /* =================================================
-       SAVE NORMALIZED CART
-    ================================================= */
 
     saveCart(cart);
 
-    /* =================================================
-       UPDATE TOTAL
-    ================================================= */
+    cartCount.textContent = `(${totalQuantity} items)`;
 
-    cartCount.textContent =
-      `(${totalQuantity} items)`;
-
-    totalPrice.textContent =
-      formatPrice(total);
+    totalPrice.textContent = formatPrice(total);
   };
 
-  /* =================================================
-     CART ICON
-  ================================================= */
-
   if (cartButton) {
-    cartButton.addEventListener(
-      "click",
-      (event) => {
-        event.preventDefault();
-        event.stopPropagation();
+    cartButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-        openCart();
-      },
-    );
+      openCart();
+    });
   }
-
-  /* =================================================
-     CLOSE BUTTON
-  ================================================= */
 
   if (closeButton) {
-    closeButton.addEventListener(
-      "click",
-      (event) => {
-        event.preventDefault();
-        event.stopPropagation();
+    closeButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-        closeCart();
-      },
-    );
+      closeCart();
+    });
   }
 
-  /* =================================================
-     CLICK OUTSIDE
-  ================================================= */
-
-  cartBackground.addEventListener(
-    "click",
-    () => {
-      closeCart();
-    },
-  );
-
-  /* =================================================
-     CHECKOUT
-  ================================================= */
+  cartBackground.addEventListener("click", () => {
+    closeCart();
+  });
 
   if (checkoutButton) {
-    checkoutButton.addEventListener(
-      "click",
-      (event) => {
-        event.preventDefault();
-        event.stopPropagation();
+    checkoutButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-        /* LOGIN */
+      const currentUser = getCurrentUser();
 
-        const currentUser =
-          getCurrentUser();
+      if (!currentUser) {
+        alert("Bạn cần đăng nhập trước khi đặt hàng!");
 
-        if (!currentUser) {
-          alert(
-            "Bạn cần đăng nhập trước khi đặt hàng!",
-          );
+        const currentPage =
+          window.location.pathname +
+          window.location.search +
+          window.location.hash;
 
-          const currentPage =
-            window.location.pathname +
-            window.location.search +
-            window.location.hash;
-
-          const loginURL =
-            new URL(
-              getPagePath(
-                "login.html",
-              ),
-              window.location.href,
-            );
-
-          loginURL.searchParams.set(
-            "redirect",
-            currentPage,
-          );
-
-          closeCart();
-
-          window.location.href =
-            loginURL.href;
-
-          return;
-        }
-
-        /* CART */
-
-        const cart =
-          getCart();
-
-        if (cart.length === 0) {
-          alert(
-            "Giỏ hàng đang trống!",
-          );
-
-          return;
-        }
-
-        /* =================================================
-           TOTAL
-        ================================================= */
-
-        const total =
-          cart.reduce(
-            (
-              sum,
-              item,
-            ) =>
-              sum +
-              Number(
-                item.price || 0,
-              ) *
-                Number(
-                  item.quantity ||
-                    1,
-                ),
-            0,
-          );
-
-        /* =================================================
-           ORDER
-        ================================================= */
-
-        const order = {
-          userId:
-            currentUser.id ||
-            currentUser.username ||
-            currentUser.email ||
-            null,
-
-          username:
-            currentUser.username ||
-            currentUser.name ||
-            currentUser.email ||
-            "",
-
-          items:
-            cart.map(
-              (item) => ({
-                id: item.id,
-
-                name: item.name,
-
-                author:
-                  item.author,
-
-                image:
-                  item.image,
-
-                price:
-                  Number(
-                    item.price ||
-                      0,
-                  ),
-
-                quantity:
-                  Number(
-                    item.quantity ||
-                      1,
-                  ),
-              }),
-            ),
-
-          total:
-            total,
-
-          createdAt:
-            new Date().toISOString(),
-        };
-
-        /* SAVE ORDER */
-
-        sessionStorage.setItem(
-          "lastOrder",
-          JSON.stringify(
-            order,
-          ),
+        const loginURL = new URL(
+          getPagePath("login.html"),
+          window.location.href,
         );
 
-        /* CLEAR CART */
+        loginURL.searchParams.set("redirect", currentPage);
 
-        localStorage.removeItem(
-          "shoppingCart",
-        );
+        closeCart();
+
+        window.location.href = loginURL.href;
+
+        return;
+      }
+
+      let cart = getCart();
+
+      if (cart.length === 0) {
+        alert("Giỏ hàng đang trống!");
+
+        return;
+      }
+
+      const invalidItem = cart.find((item) => {
+        const stock = getStock(item.id);
+
+        const quantity = Number(item.quantity || 1);
+
+        return stock <= 0 || quantity > stock;
+      });
+
+      if (invalidItem) {
+        const stock = getStock(invalidItem.id);
+
+        if (stock <= 0) {
+          alert(`${invalidItem.name || "Sản phẩm"} đã hết hàng!`);
+        } else {
+          alert(
+            `Không đủ số lượng trong kho! ${invalidItem.name || "Sản phẩm"} chỉ còn ${stock} cuốn.`,
+          );
+        }
 
         renderCart();
 
-        closeCart();
+        return;
+      }
 
-        /* SUCCESS */
+      cart = normalizeCartStock(cart);
 
-        window.location.href =
-          getPagePath(
-            "success.html",
-          );
-      },
-    );
+      if (cart.length === 0) {
+        alert("Sản phẩm trong giỏ hàng đã hết hàng!");
+
+        renderCart();
+
+        return;
+      }
+
+      const total = cart.reduce(
+        (sum, item) =>
+          sum + Number(item.price || 0) * Number(item.quantity || 1),
+        0,
+      );
+
+      const order = {
+        userId:
+          currentUser.id || currentUser.username || currentUser.email || null,
+
+        username:
+          currentUser.username || currentUser.name || currentUser.email || "",
+
+        items: cart.map((item) => ({
+          id: item.id,
+
+          name: item.name,
+
+          author: item.author,
+
+          image: item.image,
+
+          price: Number(item.price || 0),
+
+          quantity: Number(item.quantity || 1),
+
+          stock: getStock(item.id),
+        })),
+
+        total,
+
+        createdAt: new Date().toISOString(),
+      };
+
+      sessionStorage.setItem("lastOrder", JSON.stringify(order));
+
+      localStorage.removeItem("shoppingCart");
+
+      renderCart();
+
+      closeCart();
+
+      window.location.href = getPagePath("success.html");
+    });
   }
 
-  /* =================================================
-     GLOBAL FUNCTIONS
-  ================================================= */
+  window.renderCart = renderCart;
 
-  window.renderCart =
-    renderCart;
+  window.openCartSidebar = openCart;
 
-  window.openCartSidebar =
-    openCart;
-
-  window.closeCartSidebar =
-    closeCart;
-
-  /* =================================================
-     INITIAL
-  ================================================= */
+  window.closeCartSidebar = closeCart;
 
   renderCart();
-
-  /* =================================================
-     DEBUG
-  ================================================= */
-
-  console.log(
-    "=================================",
-  );
-
-  console.log(
-    "SHOPPING CART SIDEBAR READY",
-  );
-
-  console.log(
-    "CURRENT USER:",
-    getCurrentUser(),
-  );
-
-  console.log(
-    "CURRENT CART:",
-    getCart(),
-  );
-
-  console.log(
-    "=================================",
-  );
 });

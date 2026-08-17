@@ -6,167 +6,160 @@
 
     <title>Create Account - IUHSVBOOK</title>
 
-    <!-- =====================================================
-         FONT
-    ====================================================== -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter&family=Unica+One&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unica+One&display=swap"
       rel="stylesheet"
     />
-
-    <!-- =====================================================
-         CSS
-    ====================================================== -->
 
     <link rel="stylesheet" href="../css/create.css" />
   </head>
 
   <body>
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+    <main class="create-page">
+      <header class="header">
+        <a href="../index.html" class="logo" aria-label="IUHSVBOOK Home">
+          <img src="../images/logo.jpg" alt="IUHSVBOOK" />
 
-    <header class="header">
-      <!-- LOGO -->
-      <a href="../index.html" class="logo">
-        <img src="../images/logo.jpg" alt="IUHSVBOOK" />
+          <span>IUHSVBOOK</span>
+        </a>
 
-        <p>IUHSVBOOK</p>
-      </a>
+        <div class="header-right">
+          <a href="../index.html" class="home-link" aria-label="Home">
+            <img src="../images/iconhome.png" alt="Home" />
 
-      <!-- LOGIN BUTTON -->
-      <button id="Login" type="button">Login</button>
-    </header>
+            <span>Home</span>
+          </a>
 
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
-
-    <main class="main">
-      <!-- ===================================================
-           CREATE FORM
-      ==================================================== -->
-
-      <section class="create-form">
-        <!-- FORM HEADER -->
-        <div class="form-header">
-          <h1>Create now</h1>
-
-          <p>Hi, Welcome to IUHSVBOOK 👋</p>
+          <button id="Login" type="button" class="login-button">Login</button>
         </div>
+      </header>
 
-        <!-- FORM BODY -->
-        <div class="form-body">
-          <form id="createForm">
-            <!-- USERNAME -->
-            <div class="input-group" id="usernameGroup">
-              <label for="username"> Username </label>
+      <main class="main">
+        <section class="create-form">
+          <div class="form-header">
+            <h1>Create now</h1>
 
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Enter your username"
-                autocomplete="username"
-                required
-              />
-            </div>
-
-            <!-- PASSWORD -->
-            <div class="input-group" id="passwordGroup">
-              <label for="password"> Password </label>
-
-              <div class="passwordBox">
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Enter your password"
-                  autocomplete="new-password"
-                  required
-                />
-
-                <button
-                  type="button"
-                  class="password-toggle"
-                  aria-label="Show password"
-                >
-                  <img
-                    src="../images/eye.png"
-                    alt="Show Password"
-                    id="togglePassword"
-                  />
-                </button>
-              </div>
-            </div>
-
-            <!-- CONFIRM PASSWORD -->
-            <div class="input-group" id="confirmPasswordGroup">
-              <label for="confirmPassword">Confirm password</label>
-
-              <div class="passwordBox">
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  placeholder="Enter your confirm password"
-                  autocomplete="new-password"
-                  required
-                />
-
-                <button
-                  type="button"
-                  class="password-toggle"
-                  aria-label="Show confirm password"
-                >
-                  <img
-                    src="../images/eye.png"
-                    alt="Show Password"
-                    id="toggleConfirmPassword"
-                  />
-                </button>
-              </div>
-            </div>
-
-            <!-- CREATE ACCOUNT -->
-            <button type="submit" class="create-account-btn">
-              Create account
-            </button>
-          </form>
-
-          <!-- LOGIN -->
-          <div class="Login">
-            <p>
-              Have an account?
-              <a href="../pages/login.html"> Login </a>
-            </p>
+            <p>Hi, Welcome to IUHSVBOOK 👋</p>
           </div>
-        </div>
-      </section>
 
-      <!-- ===================================================
-           IMAGE
-      ==================================================== -->
+          <div class="form-body">
+            <form id="createForm" novalidate>
+              <div class="input-group" id="usernameGroup">
+                <label for="username"> Username </label>
 
-      <section class="login-image">
-        <div class="img-bg"></div>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Enter your username"
+                  autocomplete="username"
+                  required
+                />
 
-        <img src="../images/loginImage.jpg" alt="IUHSVBOOK" />
-      </section>
+                <small class="input-error" id="usernameError"></small>
+              </div>
+
+              <div class="input-group" id="emailGroup">
+                <label for="email"> Email </label>
+
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  autocomplete="email"
+                  required
+                />
+
+                <small class="input-error" id="emailError"></small>
+              </div>
+
+              <div class="input-group" id="passwordGroup">
+                <label for="password"> Password </label>
+
+                <div class="passwordBox">
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="new-password"
+                    required
+                  />
+
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    aria-label="Show password"
+                  >
+                    <img
+                      src="../images/eye.png"
+                      alt="Show password"
+                      id="togglePassword"
+                    />
+                  </button>
+                </div>
+
+                <small class="input-error" id="passwordError"></small>
+              </div>
+
+              <div class="input-group" id="confirmPasswordGroup">
+                <label for="confirmPassword"> Confirm password </label>
+
+                <div class="passwordBox">
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Enter your confirm password"
+                    autocomplete="new-password"
+                    required
+                  />
+
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    aria-label="Show confirm password"
+                  >
+                    <img
+                      src="../images/eye.png"
+                      alt="Show password"
+                      id="toggleConfirmPassword"
+                    />
+                  </button>
+                </div>
+
+                <small class="input-error" id="confirmPasswordError"></small>
+              </div>
+
+              <button type="submit" class="create-account-btn">
+                Create account
+              </button>
+
+              <p class="create-message" id="createMessage"></p>
+            </form>
+
+            <div class="Login">
+              <p>
+                Have an account?
+                <a href="../pages/login.html"> Login </a>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="login-image">
+          <div class="img-bg"></div>
+
+          <img src="../images/loginImage.jpg" alt="IUHSVBOOK Library" />
+        </section>
+      </main>
     </main>
 
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
-
-    <!-- Local Storage -->
     <script src="../js/localStore.js"></script>
-
-    <!-- Create Account -->
     <script src="../js/create.js"></script>
   </body>
 </html>

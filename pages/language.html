@@ -2,17 +2,11 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>LANGUAGE - IUHSVBOOK</title>
 
-    <!-- =====================================================
-         GOOGLE FONTS
-    ====================================================== -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
@@ -20,79 +14,64 @@
       rel="stylesheet"
     />
 
-    <!-- =====================================================
-         CSS
-    ====================================================== -->
-
     <link rel="stylesheet" href="../css/language.css" />
-
     <link rel="stylesheet" href="../css/shoppingCartSideBar.css" />
   </head>
 
   <body>
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+    <header class="header">
+      <a href="../index.html" class="logo">
+        <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
+        <span>IUHSVBOOK</span>
+      </a>
 
-    <header class="site-header">
-      <div class="site-header-left">
-        <a href="../index.html" class="site-logo">
-          <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
-          <span>IUHSVBOOK</span>
-        </a>
-      </div>
-
-      <div class="site-header-right">
-        <!-- CHƯA ĐĂNG NHẬP -->
-        <div id="signInButton" class="header-auth">
-          <img src="../images/iconlogin.png" alt="User" />
-
-          <span>SIGN IN</span>
-
-          <button id="createAccountButton" type="button">Create account</button>
-        </div>
-
-        <!-- ĐÃ ĐĂNG NHẬP -->
-        <div id="userInfo" class="header-user" style="display: none">
-          <img src="../images/iconlogin.png" alt="User" />
-
-          <span id="usernameDisplay">duy</span>
-
-          <button id="logoutButton" type="button">Đăng xuất</button>
-        </div>
-
-        <!-- HOME -->
-        <a href="../index.html" class="header-icon" aria-label="Home">
-          <img src="../images/iconhome.png" alt="Home" />
+      <nav class="header-menu">
+        <a href="../index.html" class="home">
+          <img src="../images/HOME_SIMPLE.png" alt="Home" />
+          <span>Home</span>
         </a>
 
-        <!-- BOOKMARK -->
-        <a href="#" class="header-icon" aria-label="Bookmark">
+        <a href="../bookmark.html" class="bookmark">
           <img src="../images/iconbookmark.png" alt="Bookmark" />
+          <span>Yêu Thích</span>
         </a>
-        <a
-          href="./catalog.html"
-          class="product"
-          id="productIcon"
-          aria-label="Products"
-        >
-          <img src="../images/iconproduct.png" alt="Products" />
+
+        <a href="../catalog.html" class="product">
+          <img src="../images/iconsach.png" alt="Products" />
+          <span>Tất cả sản phẩm</span>
         </a>
-        <!-- CART -->
-        <a href="#" class="header-icon cart" id="cartIcon" aria-label="Cart">
+
+        <a href="#" class="cart" id="cartButton">
           <img src="../images/iconcart.png" alt="Cart" />
+          <span>Giỏ hàng</span>
         </a>
+      </nav>
+
+      <div class="auth-menu">
+        <div class="user-area">
+          <a href="../login.html" class="sign-in" id="signInButton">
+            <img src="../images/iconlogin.png" alt="Login" />
+            <span>LOGIN</span>
+          </a>
+
+          <a
+            href="../register.html"
+            class="create-account"
+            id="createAccountButton"
+          >
+            SIGN UP
+          </a>
+        </div>
+
+        <div class="user-info" id="userInfo">
+          <img src="../images/iconlogin.png" alt="User" />
+          <span id="usernameDisplay"></span>
+          <button type="button" id="logoutButton">LOGOUT</button>
+        </div>
       </div>
     </header>
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
 
     <main class="category-page">
-      <!-- ===================================================
-           SEARCH
-      ==================================================== -->
-
       <div class="category-search">
         <input
           id="categorySearchInput"
@@ -101,104 +80,101 @@
           autocomplete="off"
         />
 
-        <button id="categorySearchButton" type="button" aria-label="Search">
+        <button id="categorySearchButton" type="button" aria-label="Tìm kiếm">
           <img src="../images/iconkinhlup.png" alt="Search" />
         </button>
       </div>
 
-      <!-- ===================================================
-           CATEGORY
-      ==================================================== -->
-
       <section class="category-section">
         <h2 class="category-title">
           <img src="../images/iconthumuc.png" alt="Danh mục" />
-
           <span>Danh mục</span>
         </h2>
 
         <div class="category-list">
-          <!-- ĐẠI CƯƠNG -->
-
-          <a href="./category.html" class="category-item active">
-            <span> Sách đại cương </span>
+          <a href="./category.html" class="category-item">
+            <span>Sách đại cương</span>
           </a>
 
-          <!-- NGOẠI NGỮ -->
-
-          <a href="./language.html" class="category-item">
-            <span> Sách ngoại ngữ </span>
+          <a
+            href="./language.html"
+            class="category-item active"
+            aria-current="page"
+          >
+            <span>Sách ngoại ngữ</span>
           </a>
-
-          <!-- KỸ THUẬT - CÔNG NGHỆ -->
 
           <a href="./technology.html" class="category-item">
-            <span> Sách khối kỹ thuật - công nghệ </span>
+            <span>Sách khối kỹ thuật - công nghệ</span>
           </a>
 
-          <!-- KỸ NĂNG - VĂN HỌC -->
-
           <a href="./literature.html" class="category-item">
-            <span> Sách kỹ năng - văn học </span>
+            <span>Sách kỹ năng - văn học</span>
           </a>
         </div>
       </section>
 
-      <!-- ===================================================
-           PRODUCTS
-      ==================================================== -->
-
       <section class="category-products">
-        <!-- HEADER -->
-
         <div class="category-products-header">
           <h2>
             <img src="../images/icongit.png" alt="" />
-
-            SÁCH NGOẠI NGỮ
+            <span>SÁCH NGOẠI NGỮ</span>
           </h2>
 
-          <select class="category-filter" id="categoryFilter">
-            <option value="default">Lọc</option>
+          <div
+            class="category-filter-dropdown"
+            id="categoryFilterDropdown"
+            data-value="default"
+          >
+            <button
+              class="category-filter-dropdown-btn"
+              id="categoryFilterDropdownBtn"
+              type="button"
+              aria-expanded="false"
+            >
+              <span id="categoryFilterSelected">Lọc</span>
+              <span class="category-filter-arrow">⌄</span>
+            </button>
 
-            <option value="price-asc">Giá thấp - cao</option>
+            <div
+              class="category-filter-dropdown-menu"
+              id="categoryFilterDropdownMenu"
+            >
+              <button type="button" data-filter="default" class="active">
+                Mặc định
+              </button>
 
-            <option value="price-desc">Giá cao - thấp</option>
+              <button type="button" data-filter="price-asc">
+                Giá thấp - cao
+              </button>
 
-            <option value="name-asc">Tên A - Z</option>
+              <button type="button" data-filter="price-desc">
+                Giá cao - thấp
+              </button>
 
-            <option value="name-desc">Tên Z - A</option>
-          </select>
+              <button type="button" data-filter="name-asc">Tên A - Z</button>
+
+              <button type="button" data-filter="name-desc">Tên Z - A</button>
+            </div>
+          </div>
         </div>
 
-        <!-- =================================================
-             PRODUCT GRID
-        ================================================== -->
-
-        <div class="products-grid" id="productsGrid">
-          <!-- category.js render sách tại đây -->
-        </div>
-
-        <!-- =================================================
-             EMPTY RESULT
-        ================================================== -->
+        <div class="products-grid" id="productsGrid"></div>
 
         <div class="empty-results" id="emptyResults" style="display: none">
+          <div class="empty-book">
+            <div class="book-left"></div>
+            <div class="book-right"></div>
+            <div class="book-center"></div>
+          </div>
+
           <p>Không tìm thấy sách phù hợp.</p>
         </div>
       </section>
     </main>
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
     <footer class="footer">
       <div class="footer-container">
-        <!-- =================================================
-             COLUMN 1
-        ================================================== -->
-
         <div class="footer-column footer-support">
           <h3>HỖ TRỢ KHÁCH HÀNG</h3>
 
@@ -210,10 +186,6 @@
             Hồ Chí Minh 700000, Vietnam
           </p>
         </div>
-
-        <!-- =================================================
-             COLUMN 2
-        ================================================== -->
 
         <div class="footer-column footer-about">
           <h3>VỀ CHÚNG TÔI</h3>
@@ -229,10 +201,6 @@
           </p>
         </div>
 
-        <!-- =================================================
-             COLUMN 3
-        ================================================== -->
-
         <div class="footer-column footer-newsletter">
           <h3>NHẬN THÔNG BÁO TỪ CHÚNG TÔI</h3>
 
@@ -242,14 +210,11 @@
             <button type="button">Submit</button>
           </div>
 
-          <!-- LOGO -->
-
           <div class="footer-brand">
             <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
 
             <div class="footer-brand-text">
               <h4>IUHSVBOOK</h4>
-
               <p>Sách cũ, giá trị mới.</p>
             </div>
           </div>
@@ -257,16 +222,8 @@
       </div>
     </footer>
 
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
-
-    <!-- SHOPPING CART SIDEBAR -->
-
     <script src="../js/shoppingCartSidebar.js"></script>
     <script src="../js/bookMarkButton.js"></script>
-    <!-- LANGUAGE -->
-
     <script src="../js/language.js"></script>
   </body>
 </html>

@@ -2,14 +2,9 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Product Detail | IUHSVBOOK</title>
-
-    <!-- =====================================================
-         GOOGLE FONTS
-    ====================================================== -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,88 +19,63 @@
       rel="stylesheet"
     />
 
-    <!-- =====================================================
-         CSS
-    ====================================================== -->
-
     <link rel="stylesheet" href="../css/productDetail.css" />
-
     <link rel="stylesheet" href="../css/shoppingCartSideBar.css" />
   </head>
 
   <body>
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+    <header class="header">
+      <a href="../index.html" class="logo">
+        <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
+        <span>IUHSVBOOK</span>
+      </a>
 
-    <header class="product-header">
-      <!-- LOGO -->
+      <nav class="header-menu">
+        <a href="../index.html" class="home">
+          <img src="../images/HOME_SIMPLE.png" alt="Home" />
+          <span>Home</span>
+        </a>
 
-      <div class="logo">
-        <img src="../images/logo.jpg" alt="IUHSVBOOK Logo" />
+        <a href="../bookmark.html" class="bookmark">
+          <img src="../images/iconbookmark.png" alt="Bookmark" />
+          <span>Yêu Thích</span>
+        </a>
 
-        <p>IUHSVBOOK</p>
-      </div>
+        <a href="../catalog.html" class="product">
+          <img src="../images/iconsach.png" alt="Products" />
+          <span>Tất cả sản phẩm</span>
+        </a>
 
-      <!-- HEADER BUTTONS -->
+        <a href="#" class="cart" id="cartButton">
+          <img src="../images/iconcart.png" alt="Cart" />
+          <span>Giỏ hàng</span>
+        </a>
+      </nav>
 
-      <div class="headerButtons">
-        <!-- USER -->
+      <div class="auth-menu">
         <div class="user-area">
-          <!-- CHƯA ĐĂNG NHẬP -->
-          <a href="./login.html" class="sign-in" id="signInButton">
-            <img src="../images/user 1.png" alt="User" />
-
-            <span>SIGN IN</span>
-
-            <small>Create account</small>
+          <a href="../login.html" class="sign-in" id="signInButton">
+            <img src="../images/iconlogin.png" alt="Login" />
+            <span>LOGIN</span>
           </a>
 
-          <!-- ĐÃ ĐĂNG NHẬP -->
-          <div class="user-info" id="userInfo" style="display: none">
-            <img src="../images/user 1.png" alt="User" />
-
-            <span id="usernameDisplay"></span>
-
-            <button type="button" id="logoutButton">Đăng xuất</button>
-          </div>
+          <a
+            href="../register.html"
+            class="create-account"
+            id="createAccountButton"
+          >
+            SIGN UP
+          </a>
         </div>
 
-        <!-- HOME -->
-        <img src="../images/HOME_SIMPLE.png" alt="Home" id="homeIcon" />
-
-        <!-- BOOKMARK -->
-        <img
-          src="../images/BOOKMARK_SIMPLE.png"
-          alt="Bookmark"
-          id="bookmarkIcon"
-        />
-        <a
-          href="./catalog.html"
-          class="product"
-          id="productIcon"
-          aria-label="Products"
-        >
-          <img src="../images/iconproduct.png" alt="Products" />
-        </a>
-        <!-- CART -->
-        <img
-          src="../images/SHOPPING_CART.png"
-          alt="Shopping Cart"
-          id="cartIcon"
-        />
+        <div class="user-info" id="userInfo">
+          <img src="../images/iconlogin.png" alt="User" />
+          <span id="usernameDisplay"></span>
+          <button type="button" id="logoutButton">LOGOUT</button>
+        </div>
       </div>
     </header>
-
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
-
     <main>
-      <!-- ===================================================
-           SEARCH
-      ==================================================== -->
-
       <div class="searchBox">
         <div class="search-bg"></div>
 
@@ -121,15 +91,7 @@
         </div>
       </div>
 
-      <!-- ===================================================
-           PRODUCT DETAIL
-      ==================================================== -->
-
       <section class="productDetail">
-        <!-- =================================================
-             PRODUCT IMAGE
-        ================================================== -->
-
         <div class="productImage">
           <img
             id="productImage"
@@ -138,13 +100,7 @@
           />
         </div>
 
-        <!-- =================================================
-             PRODUCT INFORMATION
-        ================================================== -->
-
         <div class="productInfo">
-          <!-- TITLE + BOOKMARK -->
-
           <div class="productTitle">
             <p id="productName">Đang tải...</p>
 
@@ -158,57 +114,37 @@
             </button>
           </div>
 
-          <!-- =================================================
-               AUTHOR
-          ================================================== -->
-
           <div class="productAuthor">
             <div class="productInfo-bg"></div>
 
             <div class="author">
               <p>
                 Tác giả:
-
-                <span id="productAuthorText"> Đang tải... </span>
+                <span id="productAuthorText">Đang tải...</span>
               </p>
             </div>
           </div>
 
-          <!-- =================================================
-               DESCRIPTION
-          ================================================== -->
-
           <div class="productDescription">
-            <div class="productInfo-bg"></div>
-
             <div class="description">
               <p>Mô tả:</p>
 
               <p id="productDescriptionText">Đang tải...</p>
 
-              <p>
-                Tình trạng:
+              <div class="description-divider"></div>
 
-                <span id="productStatus"> Còn hàng </span>
-              </p>
+              <div class="description-stock">
+                <span class="stock-label">Tồn kho:</span>
+                <span id="productStock">Đang tải...</span>
+              </div>
             </div>
           </div>
 
-          <!-- =================================================
-               SHOPPING
-          ================================================== -->
-
           <div class="shopping">
-            <!-- PRICE + QUANTITY -->
-
             <div class="price">
               <p id="productPrice">0đ</p>
 
-              <!-- QUANTITY -->
-
               <div class="amount">
-                <!-- MINUS -->
-
                 <button
                   id="minusProduct"
                   class="quantityButton"
@@ -218,11 +154,7 @@
                   <img src="../images/MINUS_CIRCLE.png" alt="Giảm" />
                 </button>
 
-                <!-- VALUE -->
-
                 <div id="productQuantity" class="quantityValue">01</div>
-
-                <!-- PLUS -->
 
                 <button
                   id="plusProduct"
@@ -235,11 +167,7 @@
               </div>
             </div>
 
-            <!-- BUYING -->
-
             <div class="buying">
-              <!-- ADD TO CART -->
-
               <button
                 class="shoppingCart"
                 id="addToCartButton"
@@ -252,8 +180,6 @@
                 />
               </button>
 
-              <!-- BUY NOW -->
-
               <button class="buy" id="buyNowButton" type="button">
                 Buy now
               </button>
@@ -263,36 +189,18 @@
       </section>
     </main>
 
-    <!-- =====================================================
-         RECOMMENDATION
-         FOOTER KHÔNG ĐƯỢC NẰM TRONG SECTION NÀY
-    ====================================================== -->
-
     <section class="recommend">
-      <!-- MAIN TITLE -->
-
       <div class="recommendTitle">
         <img src="../images/Path.png" alt="Gợi ý" />
-
         <p>Có thể bạn sẽ thích</p>
       </div>
 
-      <!-- ===================================================
-           SAME CATEGORY
-      ==================================================== -->
-
       <div class="recommendCategory" id="sameCategorySection">
-        <!-- TITLE -->
-
         <div class="recommendCategoryTitle">
           <h3>Sách cùng danh mục</h3>
         </div>
 
-        <!-- SLIDER -->
-
         <div class="recommendSlider" data-slider="same">
-          <!-- PREVIOUS -->
-
           <button
             class="recommendArrow recommendPrev"
             id="sameCategoryPrev"
@@ -302,15 +210,9 @@
             <img src="../images/CARET_LEFT.png" alt="Previous" />
           </button>
 
-          <!-- WINDOW -->
-
           <div class="recommendWindow" id="sameCategoryWindow">
-            <div class="recommendList" id="sameCategoryList">
-              <!-- JS tạo sách -->
-            </div>
+            <div class="recommendList" id="sameCategoryList"></div>
           </div>
-
-          <!-- NEXT -->
 
           <button
             class="recommendArrow recommendNext"
@@ -323,22 +225,12 @@
         </div>
       </div>
 
-      <!-- ===================================================
-           OTHER CATEGORY
-      ==================================================== -->
-
       <div class="recommendCategory" id="otherCategorySection">
-        <!-- TITLE -->
-
         <div class="recommendCategoryTitle">
           <h3>Sách khác danh mục</h3>
         </div>
 
-        <!-- SLIDER -->
-
         <div class="recommendSlider" data-slider="other">
-          <!-- PREVIOUS -->
-
           <button
             class="recommendArrow recommendPrev"
             id="otherCategoryPrev"
@@ -348,15 +240,9 @@
             <img src="../images/CARET_LEFT.png" alt="Previous" />
           </button>
 
-          <!-- WINDOW -->
-
           <div class="recommendWindow" id="otherCategoryWindow">
-            <div class="recommendList" id="otherCategoryList">
-              <!-- JS tạo sách -->
-            </div>
+            <div class="recommendList" id="otherCategoryList"></div>
           </div>
-
-          <!-- NEXT -->
 
           <button
             class="recommendArrow recommendNext"
@@ -370,17 +256,8 @@
       </div>
     </section>
 
-    <!-- =====================================================
-         FOOTER
-         ĐẶT NGOÀI .recommend
-    ====================================================== -->
-
     <footer class="footer">
       <div class="footer-container">
-        <!-- =================================================
-             COLUMN 1
-        ================================================== -->
-
         <div class="footer-column footer-support">
           <h3>HỖ TRỢ KHÁCH HÀNG</h3>
 
@@ -392,10 +269,6 @@
             Hồ Chí Minh 700000, Vietnam
           </p>
         </div>
-
-        <!-- =================================================
-             COLUMN 2
-        ================================================== -->
 
         <div class="footer-column footer-about">
           <h3>VỀ CHÚNG TÔI</h3>
@@ -411,10 +284,6 @@
           </p>
         </div>
 
-        <!-- =================================================
-             COLUMN 3
-        ================================================== -->
-
         <div class="footer-column footer-newsletter">
           <h3>NHẬN THÔNG BÁO TỪ CHÚNG TÔI</h3>
 
@@ -424,14 +293,11 @@
             <button type="button">Submit</button>
           </div>
 
-          <!-- LOGO -->
-
           <div class="footer-brand">
             <img src="../images/iconlogo.png" alt="IUHSVBOOK" />
 
             <div class="footer-brand-text">
               <h4>IUHSVBOOK</h4>
-
               <p>Sách cũ, giá trị mới.</p>
             </div>
           </div>
@@ -439,18 +305,9 @@
       </div>
     </footer>
 
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
-
-    <!-- SHOPPING CART SIDEBAR -->
-
     <script src="../js/shoppingCartSidebar.js"></script>
-
     <script src="../js/shoppingCartButton.js"></script>
     <script src="../js/bookMarkButton.js"></script>
-    <!-- PRODUCT DETAIL -->
-
     <script src="../js/productDetail.js"></script>
   </body>
 </html>

@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -18,27 +17,26 @@ body {
   background: #fff;
 }
 
-/* =====================================================
-   HEADER
-===================================================== */
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
 
 header {
   width: 100%;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* =====================================================
-   LOGO
-===================================================== */
-
 .logo {
   display: flex;
   align-items: center;
   gap: 10px;
-
   text-decoration: none;
   color: #222;
 }
@@ -46,21 +44,15 @@ header {
 .logo img {
   width: 62px;
   height: 62px;
-
   object-fit: cover;
   border-radius: 50%;
 }
 
-.logo p {
-  margin: 0;
-
+.logo span {
   font-family: "Unica One", sans-serif;
   font-size: 21px;
+  letter-spacing: 1px;
 }
-
-/* =====================================================
-   HEADER ACTIONS
-===================================================== */
 
 .header-actions {
   display: flex;
@@ -68,187 +60,139 @@ header {
   gap: 18px;
 }
 
-/* HOME BUTTON */
-
-#homeButton {
+.home-link {
   width: 44px;
-  height: 44px;
-
+  min-height: 44px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  border: none;
+  gap: 3px;
   border-radius: 50%;
-
-  background-color: transparent;
-
-  cursor: pointer;
-
+  color: #222;
+  text-decoration: none;
   transition:
     background-color 0.2s ease,
     transform 0.2s ease;
 }
 
-#homeButton img {
+.home-link img {
   width: 25px;
   height: 25px;
-
   object-fit: contain;
 }
 
-#homeButton:hover {
+.home-link span {
+  font-size: 10px;
+  line-height: 1;
+}
+
+.home-link:hover {
   background-color: rgba(249, 120, 75, 0.12);
   transform: translateY(-1px);
 }
 
-/* =====================================================
-   CREATE ACCOUNT BUTTON
-===================================================== */
-
 #createAccount {
   width: 210px;
   height: 44px;
-
-  border: none;
+  border: 1px solid #333;
   border-radius: 40px;
-
   background-color: #f9784b;
-
   color: #fff;
-
   font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 700;
-
-  cursor: pointer;
-
   transition:
     transform 0.2s ease,
-    opacity 0.2s ease;
+    opacity 0.2s ease,
+    background-color 0.2s ease;
 }
 
 #createAccount:hover {
-  opacity: 0.9;
+  background-color: #ff865e;
+  opacity: 0.95;
   transform: translateY(-1px);
 }
 
-/* =====================================================
-   MAIN
-===================================================== */
-
 .main {
   width: 100%;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 100px;
-
-  margin-top: 75px;
+  margin-top: 65px;
+  padding-bottom: 35px;
 }
-
-/* =====================================================
-   LOGIN FORM
-===================================================== */
 
 .login-form {
   width: 500px;
-
   display: flex;
   flex-direction: column;
-
   flex-shrink: 0;
 }
 
-/* =====================================================
-   FORM HEADER
-===================================================== */
-
 .form-header {
-  margin-bottom: 48px;
+  margin-bottom: 42px;
 }
 
 .form-header h1 {
   margin-bottom: 10px;
-
   font-size: 42px;
   font-weight: 700;
+  line-height: 1.1;
+  color: #171717;
 }
 
 .form-header p {
   font-size: 17px;
+  line-height: 1.4;
 }
-
-/* =====================================================
-   INPUT GROUP
-===================================================== */
 
 .input-group {
   display: flex;
   flex-direction: column;
-
-  gap: 13px;
-
-  margin-bottom: 30px;
+  gap: 9px;
+  margin-bottom: 24px;
 }
 
 #passwordGroup {
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
-/* =====================================================
-   LABEL
-===================================================== */
-
-label {
-  font-size: 21px;
+.input-group label {
+  font-size: 18px;
   font-weight: 600;
+  color: #222;
 }
-
-/* =====================================================
-   INPUT
-===================================================== */
 
 .input-group > input,
 .passwordBox input {
   width: 100%;
   height: 50px;
-
   padding: 0 14px;
-
-  border: none;
-  border-radius: 6px;
-
+  border: 1px solid rgba(249, 120, 75, 0.9);
+  border-radius: 7px;
   outline: none;
-
   background-color: rgba(249, 120, 75, 0.7);
-
   color: #222;
-
   font-family: "Inter", sans-serif;
   font-size: 15px;
-
   transition:
     background-color 0.2s ease,
+    border-color 0.2s ease,
     box-shadow 0.2s ease;
 }
 
 .input-group > input:focus,
 .passwordBox input:focus {
   background-color: rgba(249, 120, 75, 0.82);
-
-  box-shadow: 0 0 0 2px rgba(249, 120, 75, 0.2);
+  border-color: #f9784b;
+  box-shadow: 0 0 0 2px rgba(249, 120, 75, 0.15);
 }
 
 .input-group input::placeholder {
   color: rgba(34, 34, 34, 0.6);
 }
-
-/* =====================================================
-   PASSWORD
-===================================================== */
 
 .passwordBox {
   position: relative;
@@ -256,11 +200,7 @@ label {
 }
 
 .passwordBox input {
-  width: 100%;
-  height: 50px;
   padding: 0 52px 0 14px;
-  border: none;
-  border-radius: 6px;
 }
 
 .password-toggle {
@@ -268,120 +208,115 @@ label {
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
-
-  width: 24px;
-  height: 24px;
-
+  width: 28px;
+  height: 28px;
   padding: 0;
   margin: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border: none;
   background: transparent;
-
-  cursor: pointer;
 }
 
 .password-toggle img {
   width: 20px;
   height: 20px;
   object-fit: contain;
+  display: block;
 }
-/* =====================================================
-   FORGOT PASSWORD
-===================================================== */
 
-.forgot-password {
+.input-error {
+  display: block;
+  min-height: 15px;
+  margin-top: -3px;
+  color: #d93620;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.login-options {
   width: 100%;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  margin-bottom: 38px;
+  gap: 15px;
+  margin-bottom: 32px;
 }
-
-/* =====================================================
-   REMEMBER ME
-===================================================== */
 
 .remember-me {
   display: flex;
   align-items: center;
-
   gap: 8px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 #rememberMe {
-  width: 18px;
-  height: 18px;
-
+  width: 17px;
+  height: 17px;
   margin: 0;
-
+  accent-color: #f9784b;
   cursor: pointer;
 }
 
-.remember-me label {
-  font-size: 16px;
-  font-weight: 500;
-
-  cursor: pointer;
-}
-
-/* =====================================================
-   FORGOT PASSWORD LINK
-===================================================== */
-
-.forgot-password a {
-  font-size: 16px;
+#forgotPassword {
+  font-size: 14px;
   font-weight: 600;
-
   text-decoration: none;
-
   color: #474bca;
 }
 
-.forgot-password a:hover {
+#forgotPassword:hover {
   text-decoration: underline;
 }
 
-/* =====================================================
-   LOGIN BUTTON
-===================================================== */
-
+.login-submit,
 form > button {
   width: 100%;
   height: 50px;
-
-  border: none;
-  border-radius: 6px;
-
+  border: 1px solid #333;
+  border-radius: 7px;
   background-color: #f9784b;
-
   color: #fff;
-
   font-family: "Inter", sans-serif;
   font-size: 18px;
   font-weight: 600;
-
   cursor: pointer;
-
   transition:
     transform 0.2s ease,
-    opacity 0.2s ease;
+    opacity 0.2s ease,
+    background-color 0.2s ease;
 }
 
+.login-submit:hover,
 form > button:hover {
-  opacity: 0.9;
+  background-color: #ff865e;
+  opacity: 0.95;
   transform: translateY(-1px);
 }
 
-/* =====================================================
-   REGISTER
-===================================================== */
+.login-submit:active,
+form > button:active {
+  transform: translateY(0);
+}
+
+.login-message {
+  min-height: 20px;
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.login-message.success {
+  color: #198754;
+}
+
+.login-message.error {
+  color: #d93620;
+}
 
 .register {
   margin-top: 18px;
@@ -389,11 +324,11 @@ form > button:hover {
 
 .register p {
   font-size: 15px;
+  line-height: 1.4;
 }
 
 .register a {
   text-decoration: none;
-
   color: #474bca;
   font-weight: 600;
 }
@@ -402,64 +337,36 @@ form > button:hover {
   text-decoration: underline;
 }
 
-/* =====================================================
-   IMAGE SECTION
-===================================================== */
-
 .login-image {
   position: relative;
-
   width: 550px;
   height: 540px;
-
   flex-shrink: 0;
 }
 
-/* =====================================================
-   BLUE BACKGROUND
-===================================================== */
-
 .img-bg {
   position: absolute;
-
   top: 0;
   left: 0;
-
   width: 385px;
   height: 400px;
-
   background-color: #3ab8eb;
-
   border-radius: 12px;
-
   z-index: 1;
 }
 
-/* =====================================================
-   IMAGE
-===================================================== */
-
 .login-image img {
   position: absolute;
-
   top: 28px;
   left: 35px;
-
   width: 495px;
   height: 515px;
-
   object-fit: cover;
-
   border-radius: 10px;
-
+  border: 1px solid #333;
   box-shadow: 8px 12px 20px rgba(0, 0, 0, 0.25);
-
   z-index: 2;
 }
-
-/* =====================================================
-   TABLET
-===================================================== */
 
 @media (max-width: 1200px) {
   body {
@@ -490,10 +397,6 @@ form > button:hover {
   }
 }
 
-/* =====================================================
-   SMALL LAPTOP / TABLET
-===================================================== */
-
 @media (max-width: 950px) {
   body {
     padding: 25px 30px;
@@ -515,7 +418,6 @@ form > button:hover {
   .login-image img {
     top: 22px;
     left: 25px;
-
     width: 365px;
     height: 390px;
   }
@@ -529,10 +431,6 @@ form > button:hover {
     width: 170px;
   }
 }
-
-/* =====================================================
-   MOBILE
-===================================================== */
 
 @media (max-width: 750px) {
   body {
@@ -548,23 +446,38 @@ form > button:hover {
     height: 48px;
   }
 
-  .logo p {
+  .logo span {
     font-size: 17px;
+  }
+
+  .header-actions {
+    gap: 12px;
+  }
+
+  .home-link {
+    width: 42px;
+    min-height: 42px;
+  }
+
+  .home-link img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .home-link span {
+    font-size: 9px;
   }
 
   #createAccount {
     width: 140px;
     height: 38px;
-
     font-size: 13px;
   }
 
   .main {
     flex-direction: column;
-
-    gap: 50px;
-
-    margin-top: 45px;
+    gap: 40px;
+    margin-top: 40px;
   }
 
   .login-form {
@@ -573,7 +486,7 @@ form > button:hover {
   }
 
   .form-header {
-    margin-bottom: 35px;
+    margin-bottom: 32px;
   }
 
   .form-header h1 {
@@ -584,37 +497,41 @@ form > button:hover {
     font-size: 14px;
   }
 
-  label {
-    font-size: 18px;
+  .input-group label {
+    font-size: 17px;
+  }
+
+  .input-group > input,
+  .passwordBox input {
+    height: 48px;
   }
 
   .login-image {
     width: 100%;
     max-width: 500px;
-    height: 480px;
+    height: 450px;
   }
 
   .login-image img {
     top: 25px;
     left: 8%;
-
     width: 84%;
-    height: 440px;
+    height: 410px;
   }
 
   .img-bg {
     width: 65%;
-    height: 350px;
+    height: 330px;
   }
 }
-
-/* =====================================================
-   SMALL MOBILE
-===================================================== */
 
 @media (max-width: 480px) {
   body {
     padding: 18px 15px 30px;
+  }
+
+  .logo {
+    gap: 7px;
   }
 
   .logo img {
@@ -622,19 +539,41 @@ form > button:hover {
     height: 42px;
   }
 
-  .logo p {
+  .logo span {
     font-size: 15px;
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .home-link {
+    width: 36px;
+    min-height: 36px;
+  }
+
+  .home-link img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .home-link span {
+    font-size: 8px;
   }
 
   #createAccount {
     width: 115px;
     height: 35px;
-
     font-size: 11px;
   }
 
   .main {
-    margin-top: 35px;
+    gap: 30px;
+    margin-top: 32px;
+  }
+
+  .form-header {
+    margin-bottom: 28px;
   }
 
   .form-header h1 {
@@ -646,26 +585,55 @@ form > button:hover {
   }
 
   .input-group {
-    margin-bottom: 25px;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  #passwordGroup {
+    margin-bottom: 16px;
+  }
+
+  .input-group label {
+    font-size: 15px;
   }
 
   .input-group > input,
   .passwordBox input {
     height: 46px;
-  }
-
-  .forgot-password {
-    margin-bottom: 30px;
-  }
-
-  .remember-me label,
-  .forgot-password a {
     font-size: 13px;
   }
 
+  .input-error {
+    font-size: 11px;
+  }
+
+  .login-options {
+    margin-bottom: 25px;
+    gap: 10px;
+  }
+
+  .remember-me,
+  #forgotPassword {
+    font-size: 12px;
+  }
+
+  #rememberMe {
+    width: 15px;
+    height: 15px;
+  }
+
+  .login-submit,
   form > button {
-    height: 46px;
+    height: 47px;
     font-size: 16px;
+  }
+
+  .register {
+    margin-top: 16px;
+  }
+
+  .register p {
+    font-size: 13px;
   }
 
   .login-image {
@@ -678,5 +646,55 @@ form > button:hover {
 
   .img-bg {
     height: 280px;
+  }
+}
+
+@media (max-width: 360px) {
+  body {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .logo span {
+    display: none;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  #createAccount {
+    width: 100px;
+    height: 34px;
+    font-size: 10px;
+  }
+
+  .form-header h1 {
+    font-size: 27px;
+  }
+
+  .form-header p {
+    font-size: 12px;
+  }
+
+  .login-options {
+    gap: 6px;
+  }
+
+  .remember-me,
+  #forgotPassword {
+    font-size: 10px;
+  }
+
+  .login-image {
+    height: 310px;
+  }
+
+  .login-image img {
+    height: 260px;
+  }
+
+  .img-bg {
+    height: 210px;
   }
 }

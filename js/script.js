@@ -1,73 +1,80 @@
-/* =====================================================
-   IUHSVBOOK - SCRIPT
-   Trang INDEX
-===================================================== */
-
 document.addEventListener("DOMContentLoaded", async () => {
-  console.log("=================================");
-  console.log("IUHSVBOOK SCRIPT START");
-  console.log("PAGE:", window.location.href);
-  console.log("=================================");
-
-  /* =====================================================
-     LOAD BOOK.JSON
-  ===================================================== */
+  "use strict";
 
   let books = [];
 
+  const signInButton = document.querySelector("#signInButton");
+  const createAccountButton = document.querySelector("#createAccountButton");
+  const userInfo = document.querySelector("#userInfo");
+  const usernameDisplay = document.querySelector("#usernameDisplay");
+  const logoutButton = document.querySelector("#logoutButton");
+
+  const homeIcon =
+    document.querySelector("#homeIcon") ||
+    document.querySelector(".home") ||
+    document.querySelector('a[aria-label="Home"]');
+
+  const productIcon =
+    document.querySelector("#productIcon") ||
+    document.querySelector(".product") ||
+    document.querySelector('a[aria-label="Products"]');
+
+  const bookmarkIcon =
+    document.querySelector("#bookmarkIcon") ||
+    document.querySelector(".bookmark") ||
+    document.querySelector('a[aria-label="Bookmark"]');
+
+  const cartIcon =
+    document.querySelector("#cartIcon") ||
+    document.querySelector(".cart") ||
+    document.querySelector('a[aria-label="Cart"]');
+
+  const loadBookJSON = async () => {
+    const paths = ["./data/book.json", "../data/book.json", "/data/book.json"];
+    const triedURLs = [];
+
+    for (const path of paths) {
+      try {
+        const url = new URL(path, window.location.href);
+        triedURLs.push(url.href);
+
+        const response = await fetch(url.href, {
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          continue;
+        }
+
+        const text = await response.text();
+
+        let data;
+
+        try {
+          data = JSON.parse(text);
+        } catch (error) {
+          continue;
+        }
+
+        if (!Array.isArray(data)) {
+          continue;
+        }
+
+        return data;
+      } catch (error) {
+        console.warn("LOAD JSON ERROR:", error);
+      }
+    }
+
+    throw new Error("Không tải được book.json.\n" + triedURLs.join("\n"));
+  };
+
   try {
-    const jsonURL = new URL("./data/book.json", window.location.href);
-
-    console.log("BOOK.JSON URL:", jsonURL.href);
-
-    const response = await fetch(jsonURL.href, {
-      cache: "no-store",
-    });
-
-    console.log("BOOK.JSON STATUS:", response.status);
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    const text = await response.text();
-
-    let data;
-
-    try {
-      data = JSON.parse(text);
-    } catch (error) {
-      console.error("BOOK.JSON PARSE ERROR:", error);
-
-      console.error("SERVER TRẢ VỀ:", text.slice(0, 500));
-
-      throw error;
-    }
-
-    if (!Array.isArray(data)) {
-      throw new Error("book.json không phải là mảng.");
-    }
-
-    books = data;
-
-    console.log("BOOK.JSON LOADED:", books);
-
-    console.log("TOTAL BOOKS:", books.length);
+    books = await loadBookJSON();
   } catch (error) {
-    console.error("=================================");
-
-    console.error("LỖI LOAD BOOK.JSON:", error);
-
-    console.error("Kiểm tra:", "./data/book.json");
-
-    console.error("=================================");
-
+    console.error("Không tải được book.json:", error);
     books = [];
   }
-
-  /* =====================================================
-     CURRENT USER
-  ===================================================== */
 
   const getCurrentUser = () => {
     const raw = localStorage.getItem("currentUser");
@@ -85,25 +92,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       return user;
     } catch (error) {
-      console.error("LỖI ĐỌC currentUser:", error);
-
       localStorage.removeItem("currentUser");
-
       return null;
     }
   };
 
-  /* =====================================================
-     PATH
-  ===================================================== */
-
   const getPagePath = (fileName) => {
     return `./pages/${fileName}`;
   };
-
-  /* =====================================================
-     GO LOGIN
-  ===================================================== */
 
   const goToLogin = () => {
     const currentPage =
@@ -113,14 +109,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     loginURL.searchParams.set("redirect", currentPage);
 
-    console.log("LOGIN REDIRECT:", loginURL.href);
-
     window.location.href = loginURL.href;
   };
-
-  /* =====================================================
-     REQUIRE LOGIN
-  ===================================================== */
 
   const requireLogin = () => {
     if (getCurrentUser()) {
@@ -128,385 +118,59 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     alert("Bạn cần đăng nhập trước khi thực hiện thao tác này!");
-
     goToLogin();
 
     return false;
   };
 
-  /* =====================================================
-     NORMALIZE
-  ===================================================== */
-
   const normalizeText = (value) => {
     return String(value ?? "")
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
-      .replace(/đ/g, "d")
+      .replace(/[đĐ]/g, "d")
+      .replace(/[_-]+/g, " ")
+      .replace(/\s+/g, " ")
       .trim()
       .toLowerCase();
   };
 
-  /* =====================================================
-     BOOK ID
-  ===================================================== */
-
   const getBookId = (book) => {
-    if (
-      !book ||
-      book.id === undefined ||
-      book.id === null ||
-      String(book.id).trim() === ""
-    ) {
+    if (!book) {
       return "";
     }
 
-    return String(book.id).trim();
-  };
+    const values = [
+      book.id,
+      book.bookId,
+      book.bookID,
+      book.book_id,
+      book.productId,
+      book.productID,
+      book.product_id,
+    ];
 
-  /* =====================================================
-     IMAGE
-     
-     QUAN TRỌNG:
-     book.json phải chứa URL ảnh.
-
-     Ví dụ:
-     "image": "https://....jpg"
-
-     Không tải ảnh về project.
-  ===================================================== */
-
-  const getBookImage = (book) => {
-    const image = String(book?.image ?? "").trim();
-
-    if (!image) {
-      return "./images/COVER_BOOK.png";
-    }
-
-    /*
-     * URL online:
-     * dùng nguyên link.
-     */
-
-    if (image.startsWith("http://") || image.startsWith("https://")) {
-      return image;
-    }
-
-    /*
-     * Nếu sau này JSON có
-     * đường dẫn local thì dùng nguyên.
-     */
-
-    if (
-      image.startsWith("./") ||
-      image.startsWith("../") ||
-      image.startsWith("/")
-    ) {
-      return image;
-    }
-
-    /*
-     * Tên file local:
-     * chỉ dùng trong trường hợp
-     * JSON thực sự chứa tên file.
-     */
-
-    return `./images/${encodeURI(image)}`;
-  };
-
-  /* =====================================================
-     OPEN PRODUCT DETAIL
-  ===================================================== */
-
-  const openProductDetail = (book) => {
-    if (!book) {
-      return;
-    }
-
-    if (!requireLogin()) {
-      return;
-    }
-
-    const id = getBookId(book);
-
-    if (!id) {
-      console.error("BOOK KHÔNG CÓ ID:", book);
-
-      return;
-    }
-
-    const detailURL = new URL(
-      getPagePath("productDetail.html"),
-      window.location.href,
-    );
-
-    detailURL.searchParams.set("id", id);
-
-    console.log("OPEN PRODUCT DETAIL:", detailURL.href);
-
-    window.location.href = detailURL.href;
-  };
-
-  /* =====================================================
-     BOOKMARK SYSTEM
-     
-     Chỉ kiểm tra.
-     KHÔNG toggle tại đây.
-     
-     bookMarkButton.js là nơi duy nhất
-     xử lý bookmark click.
-  ===================================================== */
-
-  const bookmarkReady =
-    typeof window.isBookmarked === "function" &&
-    typeof window.updateBookmarkButtons === "function";
-
-  if (!bookmarkReady) {
-    console.warn("bookMarkButton.js chưa được load.");
-  }
-
-  /* =====================================================
-     CREATE TOP BOOK CARD
-  ===================================================== */
-
-  const createBookCard = (book) => {
-    const id = getBookId(book);
-
-    const card = document.createElement("article");
-
-    card.className = "book-card";
-
-    card.dataset.productId = id;
-
-    const name = String(book?.name || "Không có tên");
-
-    const image = getBookImage(book);
-
-    card.innerHTML = `
-      <img
-        src="${image}"
-        alt="${name}"
-        draggable="false"
-        loading="lazy"
-      />
-
-      <p
-        title="${name}"
-      >
-        ${name}
-      </p>
-    `;
-
-    /* =================================================
-       IMAGE
-    ================================================= */
-
-    const imageElement = card.querySelector("img");
-
-    if (imageElement) {
-      imageElement.addEventListener(
-        "error",
-        () => {
-          if (imageElement.dataset.fallback !== "true") {
-            imageElement.dataset.fallback = "true";
-
-            imageElement.src = "./images/COVER_BOOK.png";
-          }
-        },
-        {
-          once: true,
-        },
-      );
-
-      imageElement.addEventListener("dragstart", (event) => {
-        event.preventDefault();
-      });
-    }
-
-    /* =================================================
-       CLICK
-    ================================================= */
-
-    card.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      const list = document.querySelector(".books-list");
-
-      if (list?.dataset.justDragged === "true") {
-        return;
+    for (const value of values) {
+      if (
+        value !== undefined &&
+        value !== null &&
+        String(value).trim() !== ""
+      ) {
+        return String(value).trim();
       }
+    }
 
-      openProductDetail(book);
-    });
-
-    return card;
+    return "";
   };
 
-  /* =====================================================
-     CREATE PRODUCT CARD
-     
-     KHÔNG GẮN CLICK BOOKMARK.
-  ===================================================== */
-
-  const createProductCard = (book) => {
-    const id = getBookId(book);
-
-    if (!id) {
-      console.warn("BOOK KHÔNG CÓ ID:", book);
-
+  const findBookById = (id) => {
+    if (id === undefined || id === null || String(id).trim() === "") {
       return null;
     }
 
-    const card = document.createElement("article");
+    const targetId = String(id).trim();
 
-    card.className = "product-card";
-
-    card.dataset.productId = id;
-
-    const name = String(book?.name || "Không có tên");
-
-    const price = Number(book?.price || 0).toLocaleString("vi-VN");
-
-    const image = getBookImage(book);
-
-    const bookmarked =
-      typeof window.isBookmarked === "function"
-        ? window.isBookmarked(id)
-        : false;
-
-    card.innerHTML = `
-      <div class="product-image">
-
-        <img
-          src="${image}"
-          alt="${name}"
-          draggable="false"
-          loading="lazy"
-        />
-
-      </div>
-
-      <p
-        class="product-name"
-        title="${name}"
-      >
-        ${name}
-      </p>
-
-      <div class="product-info">
-
-        <span class="product-price">
-          ${price}đ
-        </span>
-
-        <button
-          type="button"
-          class="product-bookmark ${bookmarked ? "active" : ""}"
-          data-bookmark-id="${id}"
-          aria-label="${bookmarked ? "Bỏ yêu thích" : "Thêm yêu thích"}"
-          aria-pressed="${String(bookmarked)}"
-        >
-          <img
-            src="./images/iconbookmark.png"
-            alt="Bookmark"
-            draggable="false"
-          />
-        </button>
-
-      </div>
-
-      <button
-        type="button"
-        class="add-cart"
-        aria-label="Xem chi tiết"
-      >
-        <img
-          src="./images/iconcart.png"
-          alt="Xem chi tiết"
-          draggable="false"
-        />
-      </button>
-    `;
-
-    /* =================================================
-       IMAGE
-    ================================================= */
-
-    const imageElement = card.querySelector(".product-image img");
-
-    if (imageElement) {
-      imageElement.addEventListener(
-        "error",
-        () => {
-          if (imageElement.dataset.fallback !== "true") {
-            imageElement.dataset.fallback = "true";
-
-            imageElement.src = "./images/COVER_BOOK.png";
-          }
-        },
-        {
-          once: true,
-        },
-      );
-
-      imageElement.addEventListener("dragstart", (event) => {
-        event.preventDefault();
-      });
-    }
-
-    /* =================================================
-       DETAIL BUTTON
-    ================================================= */
-
-    const detailButton = card.querySelector(".add-cart");
-
-    if (detailButton) {
-      detailButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        openProductDetail(book);
-      });
-    }
-
-    /* =================================================
-       CARD CLICK
-    ================================================= */
-
-    card.addEventListener("click", (event) => {
-      /*
-       * Bookmark do
-       * bookMarkButton.js xử lý.
-       */
-
-      if (event.target.closest("[data-bookmark-id]")) {
-        return;
-      }
-
-      /*
-       * Detail button.
-       */
-
-      if (event.target.closest(".add-cart")) {
-        return;
-      }
-
-      const list = card.closest(".product-list");
-
-      if (list?.dataset.justDragged === "true") {
-        return;
-      }
-
-      openProductDetail(book);
-    });
-
-    return card;
+    return books.find((book) => getBookId(book) === targetId) || null;
   };
-
-  /* =====================================================
-     BOOK CATEGORY
-  ===================================================== */
 
   const getBookCategory = (book) => {
     if (!book) {
@@ -525,7 +189,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return value
         .map((item) => {
           if (item && typeof item === "object") {
-            return item.name || item.label || item.title || "";
+            return item.name ?? item.label ?? item.title ?? item.category ?? "";
           }
 
           return String(item ?? "");
@@ -534,15 +198,249 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (value && typeof value === "object") {
-      return String(value.name ?? value.label ?? value.title ?? "");
+      return String(
+        value.name ?? value.label ?? value.title ?? value.category ?? "",
+      ).trim();
     }
 
     return String(value).trim();
   };
 
-  /* =====================================================
-     CATEGORY BOOKS
-  ===================================================== */
+  const getImageCandidates = (book) => {
+    if (!book) {
+      return ["./images/COVER_BOOK.png"];
+    }
+
+    const values = [
+      book.image,
+      book.imageUrl,
+      book.imageURL,
+      book.image_url,
+      book.thumbnail,
+      book.thumbnailUrl,
+      book.thumbnailURL,
+      book.thumbnail_url,
+      book.cover,
+      book.coverImage,
+      book.coverUrl,
+      book.coverURL,
+    ];
+
+    const candidates = [];
+
+    const addValue = (value) => {
+      if (value === undefined || value === null) {
+        return;
+      }
+
+      const text = String(value).trim();
+
+      if (text) {
+        candidates.push(text);
+      }
+    };
+
+    values.forEach((value) => {
+      if (Array.isArray(value)) {
+        value.forEach(addValue);
+      } else {
+        addValue(value);
+      }
+    });
+
+    candidates.push("./images/COVER_BOOK.png");
+
+    return [...new Set(candidates)];
+  };
+
+  const resolveImageURL = (value) => {
+    const image = String(value ?? "").trim();
+
+    if (!image) {
+      return "./images/COVER_BOOK.png";
+    }
+
+    if (
+      image.startsWith("http://") ||
+      image.startsWith("https://") ||
+      image.startsWith("data:") ||
+      image.startsWith("blob:")
+    ) {
+      return image;
+    }
+
+    try {
+      return new URL(image, window.location.href).href;
+    } catch (error) {
+      return `./images/${encodeURI(image)}`;
+    }
+  };
+
+  const setupImage = (imageElement, book) => {
+    if (!imageElement) {
+      return;
+    }
+
+    const candidates = getImageCandidates(book).map(resolveImageURL);
+
+    let index = 0;
+
+    const loadNext = () => {
+      if (index >= candidates.length) {
+        imageElement.src = "./images/COVER_BOOK.png";
+        return;
+      }
+
+      imageElement.src = candidates[index];
+
+      index += 1;
+    };
+
+    imageElement.addEventListener("error", loadNext);
+
+    imageElement.addEventListener("dragstart", (event) => {
+      event.preventDefault();
+    });
+
+    loadNext();
+  };
+
+  const openProductDetail = (book) => {
+    if (!book) {
+      return;
+    }
+
+    const id = getBookId(book);
+
+    if (!id) {
+      console.error("BOOK KHÔNG CÓ ID:", book);
+      return;
+    }
+
+    if (!requireLogin()) {
+      return;
+    }
+
+    const detailURL = new URL(
+      getPagePath("productDetail.html"),
+      window.location.href,
+    );
+
+    detailURL.searchParams.set("id", id);
+
+    window.location.href = detailURL.href;
+  };
+
+  const createBookCard = (book) => {
+    const id = getBookId(book);
+
+    if (!id) {
+      return null;
+    }
+
+    const card = document.createElement("article");
+
+    card.className = "book-card";
+    card.dataset.productId = id;
+
+    const name = String(book?.name || "Không có tên");
+
+    card.innerHTML = `
+      <img
+        src="./images/COVER_BOOK.png"
+        alt="${name}"
+        draggable="false"
+      />
+
+      <p title="${name}">
+        ${name}
+      </p>
+    `;
+
+    const imageElement = card.querySelector("img");
+
+    setupImage(imageElement, book);
+
+    return card;
+  };
+
+  const createProductCard = (book) => {
+    const id = getBookId(book);
+
+    if (!id) {
+      return null;
+    }
+
+    const card = document.createElement("article");
+
+    card.className = "product-card";
+
+    card.dataset.productId = id;
+
+    const name = String(book?.name || "Không có tên");
+
+    const price = Number(book?.price || 0).toLocaleString("vi-VN");
+
+    const bookmarked =
+      typeof window.isBookmarked === "function"
+        ? window.isBookmarked(id)
+        : false;
+
+    card.innerHTML = `
+      <div class="product-image">
+        <img
+          src="./images/COVER_BOOK.png"
+          alt="${name}"
+          draggable="false"
+        />
+      </div>
+
+      <p
+        class="product-name"
+        title="${name}"
+      >
+        ${name}
+      </p>
+
+      <div class="product-info">
+        <span class="product-price">
+          ${price}đ
+        </span>
+
+        <button
+          type="button"
+          class="product-bookmark ${bookmarked ? "active" : ""}"
+          data-bookmark-id="${id}"
+          aria-label="${bookmarked ? "Bỏ yêu thích" : "Thêm yêu thích"}"
+          aria-pressed="${String(bookmarked)}"
+        >
+          <img
+            src="./images/iconbookmark.png"
+            alt="Bookmark"
+            draggable="false"
+          />
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="add-cart"
+        aria-label="Xem chi tiết"
+      >
+        <img
+          src="./images/iconcart.png"
+          alt="Xem chi tiết"
+          draggable="false"
+        />
+      </button>
+    `;
+
+    const imageElement = card.querySelector(".product-image img");
+
+    setupImage(imageElement, book);
+
+    return card;
+  };
 
   const getCategoryBooks = (categoryNames) => {
     if (!Array.isArray(categoryNames)) {
@@ -552,122 +450,211 @@ document.addEventListener("DOMContentLoaded", async () => {
     return books.filter((book) => {
       const category = normalizeText(getBookCategory(book));
 
+      if (!category) {
+        return false;
+      }
+
       return categoryNames.some((name) => {
         const target = normalizeText(name);
 
-        return category === target || category.includes(target);
+        if (!target) {
+          return false;
+        }
+
+        return (
+          category === target ||
+          category.includes(target) ||
+          target.includes(category)
+        );
       });
     });
   };
 
-  /* =====================================================
-     TOP BOOKS
-  ===================================================== */
+  const setupSlider = ({ viewport, list, prev, next, fallbackStep = 200 }) => {
+    if (!viewport || !list) {
+      return null;
+    }
 
-  const booksBox = document.querySelector(".books-box");
-
-  const booksList = document.querySelector(".books-list");
-
-  const booksPrev = document.querySelector(".books-prev");
-
-  const booksNext = document.querySelector(".books-next");
-
-  if (booksBox && booksList) {
     let position = 0;
     let dragging = false;
-    let startX = 0;
-    let startPosition = 0;
     let moved = false;
     let pointerId = null;
+    let startX = 0;
+    let startPosition = 0;
+    let clickTarget = null;
+    let resizeObserver = null;
 
-    const renderTopBooks = () => {
-      booksList.innerHTML = "";
+    const getVisibleWidth = () => {
+      const styles = window.getComputedStyle(viewport);
 
-      /*
-       * Hiển thị tối đa 12 sách.
-       */
+      const paddingLeft = parseFloat(styles.paddingLeft) || 0;
 
-      books.slice(0, 12).forEach((book) => {
-        const card = createBookCard(book);
+      const paddingRight = parseFloat(styles.paddingRight) || 0;
 
-        if (card) {
-          booksList.appendChild(card);
-        }
-      });
+      const borderLeft = parseFloat(styles.borderLeftWidth) || 0;
 
-      position = 0;
+      const borderRight = parseFloat(styles.borderRightWidth) || 0;
 
-      requestAnimationFrame(() => {
-        updateSlider();
-      });
+      const width = viewport.getBoundingClientRect().width;
+
+      return Math.max(
+        0,
+        width - paddingLeft - paddingRight - borderLeft - borderRight,
+      );
+    };
+
+    const getContentWidth = () => {
+      return Math.max(list.scrollWidth, list.getBoundingClientRect().width);
     };
 
     const getMaxPosition = () => {
-      return Math.max(0, booksList.scrollWidth - booksBox.clientWidth);
+      const visibleWidth = getVisibleWidth();
+
+      const contentWidth = getContentWidth();
+
+      return Math.max(0, contentWidth - visibleWidth);
     };
 
-    const updateSlider = () => {
+    const clampPosition = (value) => {
       const max = getMaxPosition();
 
-      position = Math.max(0, Math.min(position, max));
+      const numeric = Number(value);
 
-      booksList.style.transform = `translate3d(-${position}px,0,0)`;
-
-      if (booksPrev) {
-        booksPrev.disabled = position <= 0;
+      if (!Number.isFinite(numeric)) {
+        return 0;
       }
 
-      if (booksNext) {
-        booksNext.disabled = position >= max;
+      return Math.max(0, Math.min(numeric, max));
+    };
+
+    const updateButtons = () => {
+      const max = getMaxPosition();
+
+      if (prev) {
+        const disabled = position <= 0.5;
+
+        prev.disabled = disabled;
+
+        prev.classList.toggle("disabled", disabled);
       }
+
+      if (next) {
+        const disabled = position >= max - 0.5;
+
+        next.disabled = disabled;
+
+        next.classList.toggle("disabled", disabled);
+      }
+    };
+
+    const render = () => {
+      position = clampPosition(position);
+
+      list.style.transform = `translate3d(${-position}px, 0, 0)`;
+
+      updateButtons();
     };
 
     const getStep = () => {
-      const card = booksList.querySelector(".book-card");
+      const card = list.querySelector(".book-card, .product-card");
 
       if (!card) {
-        return 200;
+        return fallbackStep;
       }
 
-      const styles = getComputedStyle(booksList);
+      const styles = window.getComputedStyle(list);
 
       const gap = parseFloat(styles.columnGap) || parseFloat(styles.gap) || 0;
 
-      return card.getBoundingClientRect().width + gap;
+      const cardWidth = card.getBoundingClientRect().width;
+
+      const step = cardWidth + gap;
+
+      return step > 0 ? step : fallbackStep;
     };
 
-    /* PREV */
-
-    booksPrev?.addEventListener("click", (event) => {
+    const nextHandler = (event) => {
       event.preventDefault();
       event.stopPropagation();
 
-      position -= getStep();
+      if (dragging) {
+        return;
+      }
 
-      updateSlider();
-    });
+      const max = getMaxPosition();
 
-    /* NEXT */
+      position = Math.min(position + getStep(), max);
 
-    booksNext?.addEventListener("click", (event) => {
+      render();
+    };
+
+    const prevHandler = (event) => {
       event.preventDefault();
       event.stopPropagation();
 
-      position += getStep();
+      if (dragging) {
+        return;
+      }
 
-      updateSlider();
-    });
+      position = Math.max(position - getStep(), 0);
 
-    /* POINTER DOWN */
+      render();
+    };
 
-    booksList.addEventListener("pointerdown", (event) => {
+    prev?.addEventListener("click", prevHandler);
+
+    next?.addEventListener("click", nextHandler);
+
+    const openCard = (target) => {
+      if (!target) {
+        return;
+      }
+
+      if (list.dataset.justDragged === "true") {
+        return;
+      }
+
+      if (target.closest("button")) {
+        return;
+      }
+
+      const card = target.closest(".book-card, .product-card");
+
+      if (!card) {
+        return;
+      }
+
+      const productId = card.dataset.productId;
+
+      if (!productId) {
+        return;
+      }
+
+      const book = findBookById(productId);
+
+      if (!book) {
+        return;
+      }
+
+      openProductDetail(book);
+    };
+
+    const pointerDownHandler = (event) => {
       if (event.pointerType === "mouse" && event.button !== 0) {
         return;
       }
 
-      if (event.target.closest("button")) {
+      if (event.target.closest("button") || event.target.closest("a")) {
         return;
       }
+
+      const card = event.target.closest(".book-card, .product-card");
+
+      if (!card) {
+        return;
+      }
+
+      clickTarget = event.target;
 
       if (getMaxPosition() <= 0) {
         return;
@@ -675,19 +662,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       dragging = true;
       moved = false;
-
+      pointerId = event.pointerId;
       startX = event.clientX;
-
       startPosition = position;
 
-      pointerId = event.pointerId;
+      list.classList.add("dragging");
 
-      booksList.classList.add("dragging");
-    });
+      list.style.transition = "none";
 
-    /* POINTER MOVE */
+      list.style.cursor = "grabbing";
 
-    booksList.addEventListener("pointermove", (event) => {
+      try {
+        list.setPointerCapture(event.pointerId);
+      } catch (error) {}
+
+      event.preventDefault();
+    };
+
+    const pointerMoveHandler = (event) => {
       if (!dragging) {
         return;
       }
@@ -698,7 +690,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const distance = startX - event.clientX;
 
-      if (Math.abs(distance) >= 8) {
+      if (Math.abs(distance) >= 5) {
         moved = true;
       }
 
@@ -706,57 +698,231 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
+      position = clampPosition(startPosition + distance);
+
+      list.style.transform = `translate3d(${-position}px, 0, 0)`;
+
       event.preventDefault();
+    };
 
-      position = startPosition + distance;
-
-      updateSlider();
-    });
-
-    /* STOP */
-
-    const stopDrag = (event) => {
+    const finishDrag = (event) => {
       if (!dragging) {
         return;
       }
 
-      if (pointerId !== null && event.pointerId !== pointerId) {
+      if (
+        pointerId !== null &&
+        event &&
+        event.pointerId !== undefined &&
+        event.pointerId !== pointerId
+      ) {
         return;
       }
 
-      const wasDragged = moved;
+      const wasMoved = moved;
+
+      const target = clickTarget;
 
       dragging = false;
       moved = false;
       pointerId = null;
+      clickTarget = null;
 
-      booksList.classList.remove("dragging");
+      list.classList.remove("dragging");
 
-      if (wasDragged) {
-        booksList.dataset.justDragged = "true";
+      list.style.cursor = "grab";
+
+      list.style.transition = "transform 0.35s ease";
+
+      try {
+        if (event && event.pointerId !== undefined) {
+          list.releasePointerCapture(event.pointerId);
+        }
+      } catch (error) {}
+
+      if (wasMoved) {
+        list.dataset.justDragged = "true";
 
         setTimeout(() => {
-          delete booksList.dataset.justDragged;
-        }, 250);
+          delete list.dataset.justDragged;
+        }, 350);
+      } else {
+        openCard(target);
       }
 
-      updateSlider();
+      render();
     };
 
-    booksList.addEventListener("pointerup", stopDrag);
+    const pointerUpHandler = (event) => {
+      finishDrag(event);
+    };
 
-    booksList.addEventListener("pointercancel", stopDrag);
+    const pointerCancelHandler = (event) => {
+      if (!dragging) {
+        clickTarget = null;
+        return;
+      }
 
-    booksList.style.touchAction = "pan-y";
+      dragging = false;
+      moved = false;
+      pointerId = null;
+      clickTarget = null;
 
-    window.addEventListener("resize", updateSlider);
+      list.classList.remove("dragging");
 
-    renderTopBooks();
+      list.style.cursor = "grab";
+
+      list.style.transition = "transform 0.35s ease";
+
+      render();
+    };
+
+    const lostPointerCaptureHandler = (event) => {
+      if (dragging) {
+        finishDrag(event);
+      }
+    };
+
+    const clickHandler = (event) => {
+      if (list.dataset.justDragged === "true") {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      openCard(event.target);
+    };
+
+    list.addEventListener("pointerdown", pointerDownHandler);
+
+    list.addEventListener("pointermove", pointerMoveHandler, {
+      passive: false,
+    });
+
+    list.addEventListener("pointerup", pointerUpHandler);
+
+    list.addEventListener("pointercancel", pointerCancelHandler);
+
+    list.addEventListener("lostpointercapture", lostPointerCaptureHandler);
+
+    list.addEventListener("click", clickHandler);
+
+    list.addEventListener("dragstart", (event) => {
+      event.preventDefault();
+    });
+
+    list.style.touchAction = "pan-y";
+
+    list.style.userSelect = "none";
+
+    list.style.webkitUserSelect = "none";
+
+    list.style.cursor = "grab";
+
+    const resizeHandler = () => {
+      position = clampPosition(position);
+
+      requestAnimationFrame(() => {
+        render();
+      });
+    };
+
+    window.addEventListener("resize", resizeHandler);
+
+    if ("ResizeObserver" in window) {
+      resizeObserver = new ResizeObserver(() => {
+        position = clampPosition(position);
+
+        render();
+      });
+
+      resizeObserver.observe(viewport);
+
+      resizeObserver.observe(list);
+    }
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        render();
+      });
+    });
+
+    return {
+      update: render,
+
+      cleanup: () => {
+        prev?.removeEventListener("click", prevHandler);
+
+        next?.removeEventListener("click", nextHandler);
+
+        list.removeEventListener("pointerdown", pointerDownHandler);
+
+        list.removeEventListener("pointermove", pointerMoveHandler);
+
+        list.removeEventListener("pointerup", pointerUpHandler);
+
+        list.removeEventListener("pointercancel", pointerCancelHandler);
+
+        list.removeEventListener(
+          "lostpointercapture",
+          lostPointerCaptureHandler,
+        );
+
+        list.removeEventListener("click", clickHandler);
+
+        window.removeEventListener("resize", resizeHandler);
+
+        if (resizeObserver) {
+          resizeObserver.disconnect();
+          resizeObserver = null;
+        }
+
+        dragging = false;
+        moved = false;
+        pointerId = null;
+        clickTarget = null;
+        position = 0;
+
+        list.classList.remove("dragging");
+
+        list.style.transition = "transform 0.35s ease";
+
+        list.style.transform = "translate3d(0, 0, 0)";
+
+        list.style.cursor = "grab";
+
+        delete list.dataset.justDragged;
+      },
+    };
+  };
+
+  const booksBox = document.querySelector(".books-box");
+
+  const booksList = document.querySelector(".books-list");
+
+  const booksPrev = document.querySelector(".books-prev");
+
+  const booksNext = document.querySelector(".books-next");
+
+  if (booksBox && booksList) {
+    booksList.innerHTML = "";
+
+    books.forEach((book) => {
+      const card = createBookCard(book);
+
+      if (card) {
+        booksList.appendChild(card);
+      }
+    });
+
+    setupSlider({
+      viewport: booksBox,
+      list: booksList,
+      prev: booksPrev,
+      next: booksNext,
+      fallbackStep: 200,
+    });
   }
-
-  /* =====================================================
-     PRODUCT CATEGORY SLIDERS
-  ===================================================== */
 
   const productSliders = document.querySelectorAll(".product-slider");
 
@@ -781,32 +947,34 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let categoryBooks = [];
 
-    /* =================================================
-         CATEGORY - ĐẠI CƯƠNG
-      ================================================= */
-
     if (title.includes("đại cương") || title.includes("general")) {
-      categoryBooks = getCategoryBooks(["Đại cương", "General"]);
+      categoryBooks = getCategoryBooks([
+        "Đại cương",
+        "Sách đại cương",
+        "General",
+      ]);
     } else if (
-
-    /* =================================================
-         CATEGORY - CÔNG NGHỆ
-      ================================================= */
       title.includes("công nghệ") ||
       title.includes("technology") ||
-      title.includes("information technology")
+      title.includes("information technology") ||
+      title.includes("kỹ thuật") ||
+      title.includes("cntt")
     ) {
       categoryBooks = getCategoryBooks([
         "Kỹ thuật - Công nghệ",
         "Kỹ thuật công nghệ",
+        "Sách kỹ thuật - công nghệ",
         "Công nghệ thông tin",
+        "Sách công nghệ thông tin",
         "Technology",
+        "Technologies",
+        "Information Technology",
+        "Information Technologies",
+        "CNTT",
       ]);
+    } else {
+      categoryBooks = books.slice();
     }
-
-    /* =================================================
-         RENDER
-      ================================================= */
 
     productList.innerHTML = "";
 
@@ -818,174 +986,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
-    /* =================================================
-         SLIDER STATE
-      ================================================= */
-
-    let position = 0;
-    let dragging = false;
-    let startX = 0;
-    let startPosition = 0;
-    let moved = false;
-    let pointerId = null;
-
-    const getMax = () => {
-      return Math.max(0, productList.scrollWidth - productWindow.clientWidth);
-    };
-
-    const update = () => {
-      const max = getMax();
-
-      position = Math.max(0, Math.min(position, max));
-
-      productList.style.transform = `translate3d(-${position}px,0,0)`;
-
-      if (prev) {
-        prev.disabled = position <= 0;
-      }
-
-      if (next) {
-        next.disabled = position >= max;
-      }
-    };
-
-    const getStep = () => {
-      const card = productList.querySelector(".product-card");
-
-      if (!card) {
-        return 180;
-      }
-
-      const styles = getComputedStyle(productList);
-
-      const gap = parseFloat(styles.columnGap) || parseFloat(styles.gap) || 0;
-
-      return card.getBoundingClientRect().width + gap;
-    };
-
-    /* PREV */
-
-    prev?.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      position -= getStep();
-
-      update();
-    });
-
-    /* NEXT */
-
-    next?.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      position += getStep();
-
-      update();
-    });
-
-    /* POINTER DOWN */
-
-    productList.addEventListener("pointerdown", (event) => {
-      if (event.pointerType === "mouse" && event.button !== 0) {
-        return;
-      }
-
-      if (event.target.closest("button")) {
-        return;
-      }
-
-      if (getMax() <= 0) {
-        return;
-      }
-
-      dragging = true;
-      moved = false;
-
-      startX = event.clientX;
-
-      startPosition = position;
-
-      pointerId = event.pointerId;
-
-      productList.classList.add("dragging");
-    });
-
-    /* POINTER MOVE */
-
-    productList.addEventListener("pointermove", (event) => {
-      if (!dragging) {
-        return;
-      }
-
-      if (pointerId !== null && event.pointerId !== pointerId) {
-        return;
-      }
-
-      const distance = startX - event.clientX;
-
-      if (Math.abs(distance) >= 8) {
-        moved = true;
-      }
-
-      if (!moved) {
-        return;
-      }
-
-      event.preventDefault();
-
-      position = startPosition + distance;
-
-      update();
-    });
-
-    /* STOP */
-
-    const stopProductDrag = (event) => {
-      if (!dragging) {
-        return;
-      }
-
-      if (pointerId !== null && event.pointerId !== pointerId) {
-        return;
-      }
-
-      const wasDragged = moved;
-
-      dragging = false;
-      moved = false;
-      pointerId = null;
-
-      productList.classList.remove("dragging");
-
-      if (wasDragged) {
-        productList.dataset.justDragged = "true";
-
-        setTimeout(() => {
-          delete productList.dataset.justDragged;
-        }, 250);
-      }
-
-      update();
-    };
-
-    productList.addEventListener("pointerup", stopProductDrag);
-
-    productList.addEventListener("pointercancel", stopProductDrag);
-
-    productList.style.touchAction = "pan-y";
-
-    window.addEventListener("resize", update);
-
-    requestAnimationFrame(() => {
-      update();
+    setupSlider({
+      viewport: productWindow,
+      list: productList,
+      prev,
+      next,
+      fallbackStep: 180,
     });
   });
-
-  /* =====================================================
-     HERO SEARCH
-  ===================================================== */
 
   const heroSearchInput = document.querySelector(".hero-search-input");
 
@@ -1006,46 +1014,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = catalogURL.href;
   };
 
-  if (heroSearchInput) {
-    heroSearchInput.addEventListener("keydown", (event) => {
-      if (event.key !== "Enter") {
-        return;
-      }
+  heroSearchInput?.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") {
+      return;
+    }
 
-      event.preventDefault();
+    event.preventDefault();
 
-      goToCatalog();
-    });
-  }
+    goToCatalog();
+  });
 
-  if (searchIcon) {
-    searchIcon.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+  searchIcon?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-      goToCatalog();
-    });
-  }
-
-  /* =====================================================
-     EXPLORE
-  ===================================================== */
+    goToCatalog();
+  });
 
   const exploreButton = document.querySelector(".explore-btn");
 
-  if (exploreButton) {
-    exploreButton.addEventListener("click", (event) => {
-      event.preventDefault();
+  exploreButton?.addEventListener("click", (event) => {
+    event.preventDefault();
 
-      goToCatalog();
-    });
-  }
-
-  /* =====================================================
-     HEADER USER UI
-     
-     Không khai báo const lần 2.
-  ===================================================== */
+    goToCatalog();
+  });
 
   const updateUserUI = () => {
     const user = getCurrentUser();
@@ -1053,6 +1045,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!user) {
       if (signInButton) {
         signInButton.style.display = "flex";
+      }
+
+      if (createAccountButton) {
+        createAccountButton.style.display = "flex";
       }
 
       if (userInfo) {
@@ -1070,6 +1066,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       signInButton.style.display = "none";
     }
 
+    if (createAccountButton) {
+      createAccountButton.style.display = "none";
+    }
+
     if (userInfo) {
       userInfo.style.display = "flex";
     }
@@ -1080,12 +1080,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   };
 
-  updateUserUI();
-
-  /* =====================================================
-     LOGIN
-  ===================================================== */
-
   signInButton?.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -1093,9 +1087,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     goToLogin();
   });
 
-  /* =====================================================
-     LOGOUT
-  ===================================================== */
+  createAccountButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const currentPage =
+      window.location.pathname + window.location.search + window.location.hash;
+
+    const createURL = new URL(getPagePath("create.html"), window.location.href);
+
+    createURL.searchParams.set("redirect", currentPage);
+
+    window.location.href = createURL.href;
+  });
 
   logoutButton?.addEventListener("click", (event) => {
     event.preventDefault();
@@ -1126,23 +1130,81 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.reload();
   });
 
-  /* =====================================================
-     SYNC LOGIN
-  ===================================================== */
+  homeIcon?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    window.location.href = "./index.html";
+  });
+
+  productIcon?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    window.location.href = getPagePath("catalog.html");
+  });
+
+  bookmarkIcon?.addEventListener("click", (event) => {
+    if (!getCurrentUser()) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      goToLogin();
+    }
+  });
+
+  cartIcon?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!getCurrentUser()) {
+      alert("Bạn cần đăng nhập trước khi xem giỏ hàng!");
+
+      goToLogin();
+
+      return;
+    }
+
+    if (typeof window.openCartSidebar === "function") {
+      window.openCartSidebar();
+
+      return;
+    }
+
+    const sidebar = document.querySelector(".shoppingCartSidebar");
+
+    const background = document.querySelector(".shoppingCartSidebar-bg");
+
+    if (typeof window.renderCart === "function") {
+      window.renderCart();
+    }
+
+    sidebar?.classList.add("active");
+
+    background?.classList.add("active");
+  });
+
+  window.addEventListener("bookmarkchange", () => {
+    if (typeof window.updateBookmarkButtons === "function") {
+      window.updateBookmarkButtons();
+    }
+  });
 
   window.addEventListener("storage", (event) => {
     if (event.key === "currentUser") {
       updateUserUI();
     }
+
+    if (event.key === "bookmarks") {
+      if (typeof window.updateBookmarkButtons === "function") {
+        window.updateBookmarkButtons();
+      }
+    }
   });
 
-  console.log("=================================");
+  updateUserUI();
 
-  console.log("IUHSVBOOK SCRIPT READY");
-
-  console.log("BOOK COUNT:", books.length);
-
-  console.log("CURRENT USER:", getCurrentUser());
-
-  console.log("=================================");
+  if (typeof window.updateBookmarkButtons === "function") {
+    window.updateBookmarkButtons();
+  }
 });

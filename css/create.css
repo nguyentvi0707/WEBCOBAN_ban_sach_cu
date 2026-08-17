@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -12,545 +11,616 @@ body {
 }
 
 body {
-  padding: 35px 7.5%;
+  padding: 30px 6%;
   font-family: "Inter", sans-serif;
   color: #222;
   background: #fff;
 }
 
-/* =====================================================
-   HEADER
-===================================================== */
+button,
+input {
+  font-family: inherit;
+}
 
-header {
+button {
+  cursor: pointer;
+}
+
+.header {
   width: 100%;
-
+  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 25px;
 }
-
-/* =====================================================
-   LOGO
-===================================================== */
 
 .logo {
   display: flex;
   align-items: center;
   gap: 10px;
-
   text-decoration: none;
   color: #222;
-}
-
-.logo img {
-  width: 64px;
-  height: 64px;
-
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.logo p {
-  margin: 0;
-
-  font-family: "Unica One", sans-serif;
-  font-size: 21px;
-
-  text-decoration: none;
-}
-
-/* =====================================================
-   LOGIN HEADER BUTTON
-===================================================== */
-
-#Login {
-  width: 220px;
-  height: 45px;
-
-  border: none;
-  border-radius: 40px;
-
-  background-color: #f9784b;
-
-  color: #fff;
-
-  font-family: "Inter", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-#Login:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-/* =====================================================
-   MAIN
-===================================================== */
-
-.main {
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 100px;
-
-  margin-top: 80px;
-}
-
-/* =====================================================
-   CREATE FORM
-===================================================== */
-
-.create-form {
-  width: 520px;
-
-  display: flex;
-  flex-direction: column;
-
   flex-shrink: 0;
 }
 
-/* =====================================================
-   FORM HEADER
-===================================================== */
+.logo img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.logo span {
+  font-family: "Unica One", sans-serif;
+  font-size: 20px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.home-link {
+  width: 58px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: #222;
+  text-decoration: none;
+}
+
+.home-link img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.home-link span {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.login-button,
+#Login {
+  width: 180px;
+  height: 44px;
+  border: 1px solid #333;
+  border-radius: 24px;
+  background: #f9784b;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.login-button:hover,
+#Login:hover {
+  background: #ff865e;
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.main {
+  width: 100%;
+  min-height: calc(100vh - 100px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(470px, 0.95fr);
+  align-items: center;
+  gap: 55px;
+  margin-top: 45px;
+  padding-bottom: 35px;
+}
+
+.create-form {
+  width: 100%;
+  max-width: 560px;
+  justify-self: center;
+}
 
 .form-header {
-  margin-bottom: 55px;
+  margin-bottom: 32px;
 }
 
 .form-header h1 {
-  margin: 0 0 12px;
-
-  font-size: 43px;
+  margin-bottom: 10px;
+  font-size: 40px;
+  line-height: 1.1;
   font-weight: 700;
+  color: #171717;
 }
 
 .form-header p {
-  margin: 0;
-
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 1.4;
+  color: #222;
 }
 
-/* =====================================================
-   INPUT GROUP
-===================================================== */
+.form-body {
+  width: 100%;
+}
+
+#emailGroup {
+  margin-bottom: 22px;
+}
 
 .input-group {
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  margin-bottom: 22px;
+}
 
-  gap: 13px;
-
+#confirmPasswordGroup {
   margin-bottom: 30px;
 }
 
-/* Khoảng cách sau confirm password */
-
-#confirmPasswordGroup {
-  margin-bottom: 40px;
-}
-
-/* =====================================================
-   LABEL
-===================================================== */
-
-label {
-  font-size: 21px;
+.input-group label {
+  font-size: 16px;
   font-weight: 600;
+  color: #222;
 }
-
-/* =====================================================
-   INPUT
-===================================================== */
 
 .input-group > input,
 .passwordBox input {
   width: 100%;
-  height: 52px;
-
+  height: 48px;
   padding: 0 15px;
-
-  border: none;
-  border-radius: 6px;
-
+  border: 1px solid rgba(249, 120, 75, 0.9);
+  border-radius: 7px;
   outline: none;
-
-  background-color: rgba(249, 120, 75, 0.7);
-
+  background: rgba(249, 120, 75, 0.72);
   color: #222;
-
-  font-family: "Inter", sans-serif;
-  font-size: 16px;
-
+  font-size: 14px;
   transition:
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .input-group > input:focus,
 .passwordBox input:focus {
-  background-color: rgba(249, 120, 75, 0.82);
-
-  box-shadow: 0 0 0 2px rgba(249, 120, 75, 0.2);
+  background: rgba(249, 120, 75, 0.84);
+  border-color: #f9784b;
+  box-shadow: 0 0 0 2px rgba(249, 120, 75, 0.14);
 }
 
 .input-group input::placeholder {
-  color: rgba(34, 34, 34, 0.6);
+  color: rgba(34, 34, 34, 0.65);
 }
-
-/* =====================================================
-   PASSWORD
-===================================================== */
 
 .passwordBox {
   position: relative;
-
   width: 100%;
 }
 
 .passwordBox input {
-  padding-right: 55px;
+  padding-right: 50px;
 }
-
-/* NÚT MẮT */
 
 .password-toggle {
   position: absolute;
-
-  right: 14px;
   top: 50%;
-
-  width: 25px;
-  height: 25px;
-
-  padding: 0;
-
-  border: none;
-  background: transparent;
-
+  right: 12px;
+  width: 30px;
+  height: 30px;
   transform: translateY(-50%);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  cursor: pointer;
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
-
-/* ICON MẮT */
 
 .password-toggle img {
-  position: static;
-
-  width: 20px;
-  height: 20px;
-
+  width: 19px;
+  height: 19px;
   object-fit: contain;
-
-  transform: none;
+  display: block;
 }
 
-/* =====================================================
-   CREATE ACCOUNT BUTTON
-===================================================== */
+.input-error {
+  display: block;
+  min-height: 15px;
+  margin-top: -3px;
+  color: #d93620;
+  font-size: 12px;
+  line-height: 1.2;
+}
 
+.create-account-btn,
 form > button {
   width: 100%;
-  height: 52px;
-
-  border: none;
-  border-radius: 6px;
-
-  background-color: #f9784b;
-
+  height: 49px;
+  border: 1px solid #333;
+  border-radius: 7px;
+  background: #f9784b;
   color: #fff;
-
-  font-family: "Inter", sans-serif;
-  font-size: 19px;
+  font-size: 16px;
   font-weight: 600;
-
-  cursor: pointer;
-
   transition:
     transform 0.2s ease,
-    opacity 0.2s ease;
+    background-color 0.2s ease;
 }
 
+.create-account-btn:hover,
 form > button:hover {
-  opacity: 0.9;
+  background: #ff865e;
   transform: translateY(-1px);
 }
 
-/* =====================================================
-   LOGIN TEXT
-===================================================== */
+.create-message {
+  min-height: 20px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.create-message.success {
+  color: #198754;
+}
+
+.create-message.error {
+  color: #d93620;
+}
 
 .Login {
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 .Login p {
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 .Login a {
-  text-decoration: none;
-  color: #ffa3be;
+  color: #ff7d9c;
   font-weight: 600;
+  text-decoration: none;
 }
 
 .Login a:hover {
   text-decoration: underline;
 }
 
-/* =====================================================
-   IMAGE SECTION
-===================================================== */
-
 .login-image {
   position: relative;
-
-  width: 560px;
-  height: 550px;
-
-  flex-shrink: 0;
+  width: 100%;
+  max-width: 560px;
+  height: 540px;
+  justify-self: center;
 }
-
-/* =====================================================
-   NỀN XANH
-===================================================== */
 
 .img-bg {
   position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 390px;
-  height: 405px;
-
-  background-color: #3ab8eb;
-
-  border-radius: 12px;
-
-  z-index: 1;
+  top: 20px;
+  left: 5%;
+  width: 78%;
+  height: 340px;
+  background: #3ab8eb;
+  border-radius: 8px;
 }
-
-/* =====================================================
-   ẢNH
-===================================================== */
 
 .login-image img {
   position: absolute;
-
-  top: 28px;
-  left: 35px;
-
-  width: 500px;
-  height: 520px;
-
-  object-fit: cover;
-
-  border-radius: 11px;
-
-  border: 1px solid #333;
-
-  box-shadow: 8px 12px 20px rgba(0, 0, 0, 0.25);
-
+  top: 48px;
+  left: 11%;
   z-index: 2;
+  width: 80%;
+  height: 430px;
+  object-fit: cover;
+  border: 1px solid #333;
+  border-radius: 10px;
+  box-shadow: 8px 10px 18px rgba(0, 0, 0, 0.18);
 }
-
-/* =====================================================
-   TABLET
-===================================================== */
 
 @media (max-width: 1200px) {
   body {
-    padding: 35px 5%;
+    padding: 28px 4.5%;
   }
 
   .main {
-    gap: 50px;
+    grid-template-columns: minmax(0, 1fr) minmax(410px, 0.9fr);
+    gap: 40px;
+    margin-top: 35px;
   }
 
   .create-form {
-    width: 480px;
+    max-width: 500px;
   }
 
   .login-image {
-    width: 500px;
+    max-width: 500px;
     height: 500px;
   }
 
   .login-image img {
-    width: 450px;
-    height: 470px;
+    top: 42px;
+    height: 400px;
   }
 
   .img-bg {
-    width: 350px;
-    height: 370px;
+    height: 315px;
   }
 }
 
-/* =====================================================
-   SMALL LAPTOP / TABLET
-===================================================== */
-
 @media (max-width: 950px) {
   body {
-    padding: 30px;
+    padding: 25px 30px 40px;
   }
 
   .main {
-    gap: 40px;
+    grid-template-columns: minmax(0, 1fr) minmax(350px, 0.9fr);
+    gap: 28px;
   }
 
-  .create-form {
-    width: 420px;
+  .form-header h1 {
+    font-size: 36px;
+  }
+
+  .form-header p {
+    font-size: 15px;
   }
 
   .login-image {
-    width: 430px;
+    min-height: 450px;
     height: 450px;
   }
 
   .login-image img {
-    top: 25px;
-    left: 25px;
-
-    width: 390px;
-    height: 410px;
+    width: 86%;
+    left: 8%;
+    height: 360px;
   }
 
   .img-bg {
-    width: 320px;
-    height: 340px;
+    width: 72%;
+    height: 280px;
+    left: 4%;
   }
 
+  .login-button,
   #Login {
-    width: 180px;
+    width: 150px;
   }
 }
 
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media (max-width: 750px) {
+@media (max-width: 760px) {
   body {
-    padding: 25px 20px 40px;
+    padding: 20px 20px 40px;
+  }
+
+  .header {
+    min-height: 62px;
+  }
+
+  .logo img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .logo span {
+    font-size: 17px;
+  }
+
+  .header-right {
+    gap: 15px;
+  }
+
+  .home-link {
+    width: 48px;
+  }
+
+  .home-link img {
+    width: 27px;
+    height: 27px;
+  }
+
+  .home-link span {
+    font-size: 10px;
+  }
+
+  .login-button,
+  #Login {
+    width: 125px;
+    height: 40px;
+    font-size: 14px;
   }
 
   .main {
+    display: flex;
     flex-direction: column;
-
-    gap: 50px;
-
-    margin-top: 50px;
+    gap: 35px;
+    margin-top: 30px;
   }
 
   .create-form {
-    width: 100%;
-    max-width: 520px;
+    max-width: 550px;
   }
 
   .login-image {
     width: 100%;
     max-width: 520px;
-    height: 520px;
+    height: 420px;
+    order: -1;
   }
 
   .login-image img {
-    width: 90%;
-    height: 470px;
+    top: 30px;
+    left: 10%;
+    width: 80%;
+    height: 350px;
   }
 
   .img-bg {
+    top: 10px;
+    left: 8%;
     width: 70%;
-    height: 390px;
+    height: 270px;
   }
 }
 
-/* =====================================================
-   SMALL MOBILE
-===================================================== */
-
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   body {
-    padding: 20px 15px 35px;
+    padding: 16px 15px 30px;
+  }
+
+  .header {
+    min-height: 54px;
+  }
+
+  .logo {
+    gap: 7px;
   }
 
   .logo img {
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
   }
 
-  .logo p {
-    font-size: 17px;
+  .logo span {
+    font-size: 15px;
   }
 
+  .header-right {
+    gap: 9px;
+  }
+
+  .home-link {
+    width: 40px;
+  }
+
+  .home-link img {
+    width: 23px;
+    height: 23px;
+  }
+
+  .home-link span {
+    font-size: 9px;
+  }
+
+  .login-button,
   #Login {
-    width: 120px;
-    height: 38px;
-
-    font-size: 13px;
+    width: 92px;
+    height: 36px;
+    font-size: 12px;
   }
 
   .main {
-    margin-top: 40px;
+    gap: 25px;
+    margin-top: 24px;
   }
 
   .form-header {
-    margin-bottom: 35px;
+    margin-bottom: 25px;
   }
 
   .form-header h1 {
-    font-size: 32px;
+    font-size: 30px;
   }
 
   .form-header p {
     font-size: 14px;
   }
 
-  label {
-    font-size: 18px;
+  .input-group {
+    gap: 8px;
+    margin-bottom: 17px;
+  }
+
+  #emailGroup {
+    margin-bottom: 17px;
+  }
+
+  #confirmPasswordGroup {
+    margin-bottom: 22px;
+  }
+
+  .input-group label {
+    font-size: 14px;
   }
 
   .input-group > input,
   .passwordBox input {
-    height: 46px;
+    height: 45px;
+    font-size: 13px;
   }
 
+  .create-account-btn,
   form > button {
-    height: 48px;
-    font-size: 17px;
+    height: 46px;
+    font-size: 14px;
+  }
+
+  .Login p {
+    font-size: 13px;
   }
 
   .login-image {
-    height: 400px;
+    height: 310px;
   }
 
   .login-image img {
-    top: 20px;
+    top: 24px;
     left: 8%;
-
     width: 84%;
-    height: 360px;
+    height: 260px;
   }
 
   .img-bg {
-    width: 70%;
-    height: 300px;
+    top: 8px;
+    left: 6%;
+    width: 72%;
+    height: 205px;
+  }
+}
+
+@media (max-width: 360px) {
+  body {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .logo span {
+    display: none;
+  }
+
+  .header-right {
+    gap: 7px;
+  }
+
+  .login-button,
+  #Login {
+    width: 82px;
+    height: 34px;
+    font-size: 11px;
+  }
+
+  .form-header h1 {
+    font-size: 27px;
+  }
+
+  .form-header p {
+    font-size: 13px;
+  }
+
+  .login-image {
+    height: 275px;
+  }
+
+  .login-image img {
+    height: 230px;
+  }
+
+  .img-bg {
+    height: 180px;
   }
 }
